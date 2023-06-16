@@ -6,6 +6,7 @@ import PlusIcon from 'public/images/plus-icon.svg'
 import TwitterIcon from 'public/images/twitter-icon.svg'
 import EmailIcon from 'public/images/email-icon.svg'
 import LimechainLogo from 'public/images/limechain-logo.svg'
+import GithubIcon from 'public/images/github-icon.svg'
 
 const Footer = () => {
     return (
@@ -32,6 +33,13 @@ const Footer = () => {
                     className={styles.link}
                 >
                     <TwitterIcon fill="var(--icon-color)" />
+                </Link>
+                <Link
+                    href={'https://github.com/LimeChain/rollup-codes'}
+                    target="_target"
+                    className={styles.link}
+                >
+                    <GithubIcon fill="var(--icon-color)" />
                 </Link>
                 <Link
                     href={'mailto:contact@limelabs.tech'}
