@@ -1,0 +1,146 @@
+:root {
+    --neutral100: #000000;
+    --neutral90: #131313;
+    --neutral80: #1D1D1D;
+    --neutral70: #3C3C3C;
+    --neutral60: #565656;
+    --neutral50: #717070;
+    --neutral40: #949494;
+    --neutral30: #C3C3C3;
+    --neutral20: #E1E1E1;
+    --neutral10: #F6F6F6;
+    --neutral: #ffffff;
+
+    --success100: #003A14;
+    --success90: #005720;
+    --success80: #00722D;
+    --success70: #048B3A;
+    --success60: #0DA048;
+    --success50: #29BC63;
+    --success40: #53D47F;
+    --success30: #7CE69D;
+    --success20: #A6F3BB;
+    --success10: #E3FFEB;
+
+    --warning100: #4D2200;
+    --warning90: #793600;
+    --warning80: #A64B00;
+    --warning70: #D25F00;
+    --warning60: #F17400;
+    --warning50: #FF8A29;
+    --warning40: #FFA053;
+    --warning30: #FFB77C;
+    --warning20: #FFCDA6;
+    --warning10: #FFEEE0;
+
+    --error100: #4B0213;
+    --error90: #75041F;
+    --error80: #9D092C;
+    --error70: #C40E3A;
+    --error60: #EA1548;
+    --error50: #FD2B5E;
+    --error40: #FF5376;
+    --error30: #FF7C92;
+    --error20: #FFA6B1;
+    --error10: #FFD8DD;
+
+    --red: #FF0420;
+
+    /* Your default theme */
+    --background: var(--neutral100);
+    --text-color: var(--neutral);
+    --border-color: var(--neutral);
+    --opposite-background-color: var(--neutral);
+    --opposite-text-color: var(--neutral100);
+    --icon-color: var(--neutral);
+}
+
+.light {
+    --background: var(--neutral);
+    --text-color: var(--neutral100);
+    --border-color: var(--neutral100);
+    --opposite-background-color: var(--neutral100);
+    --opposite-text-color: var(--neutral);
+    --icon-color: var(--neutral100);
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    max-width: 100vw;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+body {
+    background: var(--background);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.gradientBg {
+    margin: 0 auto;
+    max-width: max-content;
+    background: linear-gradient(5deg, #FFEB36 0%, #6AFF36 100%);
+    padding: 0 12px;
+}
+
+.topLeftShadow {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+.bottomRightShadow {
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    right: 0;
+}
+
+// ========================
+// Markdown styles
+// ========================
+
+.labels {
+    display: flex;
+    flex-direction: row;
+    margin: 12px 0;
+}
+
+.color-1 {
+    color: white;
+    border: 1px solid white;
+    padding: 2px 4px;
+    margin: 0 0 4px 4px;
+}
+
+.color-2 {
+    color: green;
+    border: 1px solid green;
+    padding: 2px 4px;
+    margin: 0 0 4px 4px;
+}
+
+.color-3 {
+    color: red;
+    border: 1px solid red;
+    padding: 2px 4px;
+    margin: 0 0 4px 4px;
+}

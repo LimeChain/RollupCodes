@@ -1,0 +1,22 @@
+.centered {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.number {
+    font-weight: 700;
+    font-size: 92px;
+    line-height: 125%;
+    font-family: var(--font-chakra-petch);
+    color: var(--text-color);
+    margin-left: 24px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
