@@ -1,0 +1,77 @@
+---
+name: Optimism
+summary: Optimism is an Optimistic Rollup which has close to 1:1 parity with Ethereum. The protocol team centrally operates the sequencer and has no fraud proofs enabled yet. The protocol has a good abstraction over the different parts of the stack, which makes it suitable for external teams to reuse the technology and create/deploy their own rollups.
+
+badges:
+    - Optimistic Rollup
+    - EVM
+    - Mainnet
+---
+
+Optimistic Rollup ЕVM Mainnet
+
+#### Overview
+
+Optimism is an Optimistic Rollup which has close to 1:1 parity with Ethereum. The protocol team centrally operates the sequencer and has no fraud proofs enabled yet. The protocol has a good abstraction over the different parts of the stack, which makes it suitable for external teams to reuse the technology and create/deploy their own rollups.
+
+#### Focus
+
+> -   RetroPGF funding model where valuable projects are funded retroactively through a community vote
+>
+> -   Optimism SuperChain
+
+<div class="labels">
+    <span class="color-1">Optimistic Rollup</span>
+    <span class="color-2">EVM</span>
+    <span class="color-3">Mainnet</span>
+</div>
+
+##### Badges
+
+> Optimistic Rollup
+>
+> EVM
+>
+> Mainnet
+>
+> Block Time -> 2 seconds
+>
+> System Precompiles
+>
+> Native L1 L2 Messaging
+>
+> Transaction Types Support -> 0 (legacy), 1, 2
+
+#### Incompatibilities
+
+##### OPCODEs
+
+The following EVM OPCODES behave differently compared to the canonical Ethereum L1 implementation
+
+##### Precompiles
+
+No changes have been made to the native precompiles supported by Ethereum L1
+
+##### Transaction Fees
+
+Optimism charges an additional L1 data fee. You can use @eth-optimism/sdk for wrapping the RPC ethers provider and get access to the L1 and L2 gas costs information.
+
+#### Additional Features
+
+##### System Precompiles
+
+> L1Block Contract
+>
+> address: 0x4200000000000000000000000000000000000015
+>
+> API
+>
+> number → The latest L1 block number known to L2
+>
+> timestamp → The timestamp of the latest L1 block
+>
+> basefee → The base fee of the latest L1 block
+>
+> hash → The hash of the latest L1 block
+>
+> sequenceNumber → The number of the L2 block within the epoch (the epoch changes when there is a new L1 block)
