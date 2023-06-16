@@ -1,0 +1,70 @@
+.defaultStyles { 
+    color: var(--text-color); 
+}
+
+.Inter {
+    font-family: var(--font-inter);
+}
+
+.ChakraPetch {
+    font-family: var(--font-chakra-petch);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.h1 {
+    font-size: 64px;
+    letter-spacing: -0.03em;
+    line-height: 125%;
+}
+
+.h2 {
+    font-size: 48px;
+    letter-spacing: -0.03em;
+    line-height: 134%;
+}
+
+.h3 {
+    font-size: 32px;
+    line-height: 48px;
+}
+
+.h4 {
+    font-size: 24px;
+    line-height: 36px;
+}
+
+.h5 {
+    font-size: 18px;
+    line-height: 158%;
+}
+
+.body1 {
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.body2 {
+    font-size: 14px;
+    line-height: 146%;
+}
+
+.body3 {
+    font-size: 12px;
+    line-height: 136%;
+}
+
+.body4 {
+    font-size: 10px;
+    line-height: 144%;
+}

@@ -1,0 +1,37 @@
+.loadingContainer {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loading {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 10rem;
+    background: linear-gradient(5deg, #FFEB36 0%, #6AFF36 100%);
+    animation: animate 1s linear infinite;
+}
+
+.loading::before {
+    position: absolute;
+    content: "";
+    background: var(--background);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    border-radius: 10rem;
+}
+
+@keyframes animate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,34 @@
+@import '@styles/mixins.scss';
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 16px;
+    padding: 10px 0;
+    @include tablet {
+        flex-direction: row;
+    }
+}
+
+.group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.pipe {
+    margin: 0 16px;
+}
+
+.link {
+    margin-right: 10px;
+}
+
+.defaultButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
