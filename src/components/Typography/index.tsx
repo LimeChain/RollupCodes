@@ -18,6 +18,7 @@ const Typography = ({
     color,
     letterSpacing,
     fontSize,
+    breakWord = 'normal',
 }: ITypography): React.ReactElement => {
     const style = {
         fontWeight,
@@ -31,6 +32,7 @@ const Typography = ({
         color,
         letterSpacing,
         fontSize,
+        breakWord,
     }
 
     switch (variant) {

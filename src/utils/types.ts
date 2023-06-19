@@ -50,6 +50,8 @@ export enum Font {
 
 export type TextTrnasform = 'none' | 'uppercase' | 'capitalize' | 'lowercase'
 
+export type BreakWord =  'normal' | 'break-all' | 'keep-all' | 'break-word '| 'inherit' | 'initial' | 'revert' | 'revert-layer' | 'unset'
+
 export interface ITypography {
     variant: Headings | Text
     fontWeight?: FontWeight
@@ -66,6 +68,7 @@ export interface ITypography {
     color?: string
     letterSpacing?: string
     fontSize?: string
+    breakWord?: BreakWord
 }
 
 export interface IRollupMeta {
