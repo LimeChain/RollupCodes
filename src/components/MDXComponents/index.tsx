@@ -7,7 +7,12 @@ type Props = {
 }
 
 const P = ({ children }: Props) => (
-    <Typography variant={Text.BODY2} fontWeight="400" marginBottom={8}>
+    <Typography
+        variant={Text.BODY2}
+        fontWeight="400"
+        marginBottom={8}
+        breakWord={'break-all'}
+    >
         {children}
     </Typography>
 )
@@ -35,7 +40,7 @@ const H4 = ({ children }: Props) => (
         variant={Headings.H4}
         fontWeight="700"
         marginBottom={24}
-        marginTop={48}
+        marginTop={32}
     >
         {children}
     </Typography>

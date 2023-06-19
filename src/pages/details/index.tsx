@@ -9,10 +9,12 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import styles from './styles.module.scss'
-import LinksGroup from './components/LinksGroup'
+// import LinksGroup from './components/LinksGroup'
 import { MDXRemote } from 'next-mdx-remote'
 import MDXComponentsMap from '@components/MDXComponents'
 import Head from 'next/head'
+import Sidebar from '../../components/Sidebar'
+import Collapse from '@components/Collapse'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -44,12 +46,23 @@ export default function Details({ rollups, paths }: IDetailsProps) {
                             size={AvatarSize.LARGE}
                             name={details?.meta?.name as string}
                         />
-                        <LinksGroup />
+                        {/* <LinksGroup /> */}
                     </div>
-                    <MDXRemote
-                        {...details.mdxSource}
-                        components={MDXComponentsMap}
-                    />
+                    <div className={styles.pageGrid}>
+                        <Sidebar />
+                        <div className={styles.markdownContent}>
+                            <Collapse title="Overview" id="overview">
+                                Overview content
+                            </Collapse>
+                            <Collapse title="General" id="general">
+                                General content
+                            </Collapse>
+                            <MDXRemote
+                                {...details.mdxSource}
+                                components={MDXComponentsMap}
+                            />
+                        </div>
+                    </div>
                 </div>
             )}
         </Layout>
