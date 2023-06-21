@@ -23,6 +23,7 @@ export enum Headings {
     H3 = 'h3',
     H4 = 'h4',
     H5 = 'h5',
+    H6 = 'h6'
 }
 
 export enum Text {
@@ -74,7 +75,7 @@ export interface ITypography {
 export interface IRollupMeta {
     name: string
     summary: string
-    badges: string[]
+    labels: string[]
 }
 
 export enum AvatarSize {

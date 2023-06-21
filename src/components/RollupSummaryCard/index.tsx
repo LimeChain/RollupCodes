@@ -9,7 +9,7 @@ import ArrowIcon from 'public/images/arrow-icon.svg'
 const RollupSummaryCard = ({
     name,
     summary,
-    badges,
+    labels,
 }: IRollupMeta): React.ReactElement => {
     return (
         <div className={styles.card}>
@@ -22,8 +22,12 @@ const RollupSummaryCard = ({
                 </Typography>
             </div>
             <div className={styles.cardFooter}>
-                {badges?.map((badge: string, index: number) => (
-                    <Label key={`label-${index}`} text={badge} />
+                {labels?.map((label: string, index: number) => (
+                    <Label
+                        key={`label-${index}`}
+                        text={label}
+                        color={`var(--label-color-${index + 1})`}
+                    />
                 ))}
             </div>
             <Link

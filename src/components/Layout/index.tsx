@@ -24,7 +24,7 @@ const Layout = ({ children, loading }: ILayout) => {
     }, [])
 
     if (!mounted) {
-        return <Loading />
+        return null
     }
 
     return (

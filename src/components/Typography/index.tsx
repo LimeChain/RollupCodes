@@ -92,7 +92,7 @@ const Typography = ({
                     {children}
                 </h4>
             )
-        case Headings.H4:
+        case Headings.H5:
             return (
                 <h5
                     className={classNames(
@@ -105,6 +105,20 @@ const Typography = ({
                 >
                     {children}
                 </h5>
+            )
+        case Headings.H6:
+            return (
+                <h6
+                    className={classNames(
+                        styles.defaultStyles,
+                        styles[Headings.H6],
+                        styles[Font[font]],
+                        className
+                    )}
+                    style={style}
+                >
+                    {children}
+                </h6>
             )
         default:
             return (
