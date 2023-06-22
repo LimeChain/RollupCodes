@@ -11,6 +11,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
+import MDXShortcodes from '@components/MDXShortcodes'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -63,12 +64,15 @@ export default function Details({ content }: IContent) {
                     <div className={styles.pageGrid}>
                         <div id="sidebar" className={styles.sidebar} />
                         <div id="markdown" className={styles.docContent}>
-                            <MDXRemote {...content.mdxContent} />
+                            <MDXRemote
+                                {...content.mdxContent}
+                                components={MDXShortcodes}
+                            />
                         </div>
                     </div>
                 </div>
             )}
-            <Script src="js/details.js" />
+            <Script src="../js/details.js" />
         </Layout>
     )
 }
@@ -90,7 +94,7 @@ const getDocsContent = async (): Promise<DocsContent> => {
 
             const meta = {
                 title: data?.title,
-                logo: `images/${fileName.replace('.mdx', '')}-logo.svg`,
+                logo: `../images/${fileName.replace('.mdx', '')}-logo.svg`,
                 subtitle: data?.subtitle,
                 slug: fileName.replace('.mdx', ''),
                 labels: data?.labels,

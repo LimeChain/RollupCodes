@@ -32,7 +32,7 @@ const RollupSummaryCard = ({
                     />
                 ))}
             </div>
-            <Link href={slug} className={styles.link}>
+            <Link href={`details/${slug}`} className={styles.link}>
                 <Typography
                     variant={Text.BODY2}
                     fontWeight="700"
