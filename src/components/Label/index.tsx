@@ -9,8 +9,8 @@ interface ILabel {
 
 const Label = ({ text, color }: ILabel) => {
     return (
-        <div className={styles.label} style={{ border: `1px solid ${color}` }}>
-            <Typography variant={Text.BODY2} fontWeight="700" color={color}>
+        <div className={styles.label} style={{ background: `${color}` }}>
+            <Typography variant={Text.BODY2} fontWeight="700">
                 {text}
             </Typography>
         </div>
