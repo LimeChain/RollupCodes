@@ -6,8 +6,12 @@ import styles from './styles.module.scss'
 import Container from '@components/Container'
 import { useEffect, useState } from 'react'
 import Loading from '@components/Loading'
-import TopLeftShadow from 'public/images/top-left-shadow.svg'
-import BottomRightShadow from 'public/images/bottom-right-shadow.svg'
+import TopLeftCornerLight from 'public/images/top-left-corner-light.svg'
+import BottomRightCornerLight from 'public/images/bottom-right-corner-light.svg'
+import TopLeftCornerDark from 'public/images/top-left-corner-dark.svg'
+import BottomRightCornerDark from 'public/images/bottom-right-corner-dark.svg'
+import { useTheme } from 'next-themes'
+import { ThemeMode } from '@utils/types'
 
 interface ILayout {
     children: React.ReactNode
@@ -16,6 +20,8 @@ interface ILayout {
 
 const Layout = ({ children, loading }: ILayout) => {
     const { title, description } = useMetadata()
+    const { theme } = useTheme()
+    const isDark = Boolean(theme === ThemeMode[ThemeMode.DARK])
 
     const [mounted, setMounted] = useState(false)
     // useEffect only runs on the client, so now we can safely show the UI
@@ -26,6 +32,18 @@ const Layout = ({ children, loading }: ILayout) => {
     if (!mounted) {
         return null
     }
+
+    const topLeftShadow = isDark ? (
+        <TopLeftCornerDark className={'topLeftShadow'} />
+    ) : (
+        <TopLeftCornerLight className={'topLeftShadow'} />
+    )
+
+    const bottomRightShadow = isDark ? (
+        <BottomRightCornerDark className={'bottomRightShadow'} />
+    ) : (
+        <BottomRightCornerLight className={'bottomRightShadow'} />
+    )
 
     return (
         <>
@@ -38,7 +56,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 {/* <link rel="icon" href="/favicon.ico" /> */}
             </Head>
-            {/* <TopLeftShadow className={'topLeftShadow'} /> */}
+            {topLeftShadow}
             <Container>
                 <Nav />
                 <div className={styles.content}>
@@ -46,7 +64,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 </div>
                 <Footer />
             </Container>
-            {/* <BottomRightShadow className={'bottomRightShadow'} /> */}
+            {bottomRightShadow}
         </>
     )
 }
