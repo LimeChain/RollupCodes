@@ -12,6 +12,7 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import MDXShortcodes from '@components/MDXShortcodes'
+import remarkGfm from 'remark-gfm'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -90,7 +91,9 @@ const getDocsContent = async (): Promise<DocsContent> => {
         markdownDocs.map(async (fileName) => {
             const fileContents = fs.readFileSync(`${folder}${fileName}`, 'utf8')
             const { data, content } = matter(fileContents)
-            const mdxContent = await serialize(content)
+            const mdxContent = await serialize(content, {
+                mdxOptions: { remarkPlugins: [remarkGfm] },
+            })
 
             const meta = {
                 title: data?.title,
