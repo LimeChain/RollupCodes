@@ -72,9 +72,11 @@ export interface ITypography {
     breakWord?: BreakWord
 }
 
-export interface IRollupMeta {
-    name: string
-    summary: string
+export interface IDocMeta {
+    title: string
+    subtitle: string
+    logo: string
+    slug: string
     labels: string[]
 }
 
@@ -84,7 +86,7 @@ export enum AvatarSize {
 }
 
 export interface IRollup {
-    meta?: IRollupMeta
+    meta?: IDocMeta
     mdxSource?: any
 }
 

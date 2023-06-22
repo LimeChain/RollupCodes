@@ -1,39 +1,55 @@
 import Avatar from '@components/Avatar'
 import Layout from '@components/Layout'
-import { AvatarSize, IDocMeta, IRollup } from '@utils/types'
+import { AvatarSize, IDocMeta } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
 import getConfig from 'next/config'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
-import { useRouter } from 'next/router'
-import { useMemo } from 'react'
 import styles from './styles.module.scss'
 import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
 import Script from 'next/script'
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 
 const { serverRuntimeConfig } = getConfig()
 
-interface IDetailsProps {
-    rollups: Record<any, IRollup>
-    name: string
-    contents: any
+type Path = { params: { slug: string } }
+
+type Paths = Path[]
+
+type StaticPathsResult = {
+    paths: Paths
+    fallback: boolean
 }
 
-export default function Details({ contents }: IDetailsProps) {
-    const router = useRouter()
+type Content = {
+    meta: IDocMeta
+    mdxContent: {
+        compiledSource: string
+        frontmatter: Record<string, unknown>
+        scope: Record<string, unknown>
+    }
+}
 
-    const content = useMemo(
-        () => contents[`${router?.query?.slug}`],
-        [router?.query?.slug]
-    )
+type StaticPropsResult = {
+    props: {
+        content: Content
+    }
+}
 
+type DocsContent = Record<string, Content>
+
+interface IContent {
+    content: Content
+}
+
+export default function Details({ content }: IContent) {
     return (
         <Layout loading={!content}>
             <Head>
                 <title>{`ROLLUPCODES | ${content?.meta?.title}`}</title>
-                <meta name="description" content={content?.meta?.summary} />
+                <meta name="description" content={content?.meta?.subtitle} />
             </Head>
             {content && (
                 <div className={styles.pageContent}>
@@ -57,7 +73,7 @@ export default function Details({ contents }: IDetailsProps) {
     )
 }
 
-const getDocsContent = async () => {
+const getDocsContent = async (): Promise<DocsContent> => {
     const folder = 'src/docs/'
     const path = join(serverRuntimeConfig.APP_ROOT, folder)
     const files = fs.readdirSync(path)
@@ -90,43 +106,34 @@ const getDocsContent = async () => {
     return docs
 }
 
-const getDocsPaths = () => {
+const getDocsPaths = (): Paths => {
     const folder = 'src/docs/'
     const path = join(serverRuntimeConfig.APP_ROOT, folder)
     const files = fs.readdirSync(path)
     const markdownDocs = files.filter((file) => file.endsWith('.mdx'))
 
     // Get gray-matter data from each file.
-    const paths: Record<string, Record<string, { slug: string }>>[] = []
+    const paths: Paths = []
 
     markdownDocs?.map((fileName) => {
         return { params: { slug: fileName.replace('.mdx', '') } }
     })
 
-    // await Promise.all(
-    //     markdownDocs.map((fileName) => {
-    //         const fileContents = fs.readFileSync(`${folder}${fileName}`, 'utf8')
-    //         const matterResult = matter(fileContents)
-    //         docs.push({
-    //             title: matterResult?.data?.title,
-    //             logo: `images/${fileName.replace('.mdx', '')}-logo.svg`,
-    //             subtitle: matterResult?.data?.subtitle,
-    //             slug: fileName.replace('.mdx', ''),
-    //             labels: matterResult?.data?.labels,
-    //         })
-    //     })
-    // )
-
     return paths
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths(): Promise<StaticPathsResult> {
     const paths = getDocsPaths()
     return { paths, fallback: false }
 }
 
-export const getStaticProps = async () => {
-    const contents = await getDocsContent()
+export const getStaticProps = async ({
+    params,
+}: Params): Promise<StaticPropsResult> => {
+    const { slug } = params
 
-    return { props: { contents } }
+    const contents = await getDocsContent()
+    const content = contents[slug]
+
+    return { props: { content } }
 }
