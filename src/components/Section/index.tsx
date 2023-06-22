@@ -5,27 +5,27 @@ import { Headings, Text } from '@utils/types'
 import PlusIcon from 'public/images/plus-gradient-icon.svg'
 import MinusIcon from 'public/images/minus-gradient-icon.svg'
 
-interface ICollapse {
+interface ISection {
     title: string
     children: React.ReactNode
 }
 
-const Collapse = ({ title, children }: ICollapse) => {
-    const [isExpanded, setExpanded] = useState<boolean>(false)
+const Section = ({ title, children }: ISection) => {
+    const [isExpanded, setExpanded] = useState<boolean>(true)
     const ref = useRef<any>(0)
 
     const toggle = () => setExpanded((prev) => !prev)
 
     return (
         <div
-            data-element-type="collapse"
-            className={styles.collapse}
+            data-element-type="section"
+            className={styles.section}
             id={title.toLowerCase().replace(' ', '-')}
         >
             <div
                 onClick={toggle}
                 className={styles.button}
-                data-element-type="collapse-button"
+                data-element-type="section-button"
                 data-element-value={title}
             >
                 <Typography variant={Headings.H4} fontWeight={'700'}>
@@ -54,4 +54,4 @@ const Collapse = ({ title, children }: ICollapse) => {
     )
 }
 
-export default Collapse
+export default Section
