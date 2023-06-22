@@ -1,102 +1,38 @@
 ---
-name: Optimism
-summary: Optimism is an Optimistic Rollup which has close to 1:1 parity with Ethereum. The protocol team centrally operates the sequencer and has no fraud proofs enabled yet. The protocol has a good abstraction over the different parts of the stack, which makes it suitable for external teams to reuse the technology and create/deploy their own rollups.
-
+title: Optimism
+subtitle: Optimism is an Optimistic Rollup which has close to 1:1 parity with Ethereum. The protocol team centrally operates the sequencer and has no fraud proofs enabled yet. The protocol has a good abstraction over the different parts of the stack, which makes it suitable for external teams to reuse the technology and create/deploy their own rollups.
 labels:
     - Optimistic Rollup
     - EVM
     - Mainnet
 ---
 
-<details id="overview">
-    <summary>Overview ![plus](images/plus-gradient-icon.png)</summary>
-
+<Collapse title="Overview">
     Optimism is an Optimistic Rollup which has close to 1:1 parity with Ethereum. The protocol team centrally operates the sequencer and has no fraud proofs enabled yet. The protocol has a good abstraction over the different parts of the stack, which makes it suitable for external teams to reuse the technology and create/deploy their own rollups.
 
-    ###### Focus
+    <Heading6>Focus</Heading6>
 
-    -   RetroPGF funding model where valuable projects are funded retroactively through a community vote
-    -   Optimism SuperChain
+    <UnorderedList>
+        <ListItem>RetroPGF funding model where valuable projects are funded retroactively through a community vote</ListItem>
+        <ListItem>Optimism SuperChain</ListItem>
+    </UnorderedList>
 
-    <div id="labels">
-        <span>Optimistic Rollup</span>
-        <span>EVM</span>
-        <span>Mainnet</span>
-        <span>
-            System Precompiles (tooltip - System contracts exist on the network
-            providing additional functionality and information)
-        </span>
-        <span>
-            Messaging (tooltip - Native L1 &lt;&ndash;&gt; L2 messaging is provided
-            by the Rollup)
-        </span>
-    </div>
+    <Labels labels={['Optimistic Rollup', 'EVM', 'Mainnet']} />
 
-</details>
+</Collapse>
 
-<details id="general">
-    <summary>General ![plus](images/plus-gradient-icon.png)</summary>
+<Collapse title="General"></Collapse>
 
-    ###### Transaction Types ![question-mark-icon](images/question-mark-icon.png)
+<Collapse title="OPCODEs"></Collapse>
 
-    **Type 0** - User Transactions. Represent pre-EIP-2718 transactions.<br/>
-    **Type 1** - User Transactions. Represent legacy transactions post EIP-2718.<br/>
-    **Type 2** - User Transactions. Represent EIP-1559 transactions.<br/>
-    **Type 126** - System Transaction. Transactions that were derived from L1 and included in an L2 block
+<Collapse title="Precompiled Contracts"></Collapse>
 
-</details>
+<Collapse title="RPC-API"></Collapse>
 
-<details id="opcodes">
-    <summary>OPCODEs ![plus](images/plus-gradient-icon.png)</summary>
+<Collapse title="Transaction Fees"></Collapse>
 
-    ###### Modified
+<Collapse title="Tools">
 
-    The following EVM OPCODES behave differently compared to the canonical Ethereum L1 implementation.
+    <Mark>@eth-optimism/sdk</Mark> is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees
 
-    ###### Added
-
-    There are no new OPCODEs introduced by the Rollup
-
-</details>
-
-<details id="precompiled-contracts">
-    <summary>Precompiled Contracts ![plus](images/plus-gradient-icon.png)</summary>
-
-    ###### Modified
-
-    All Precompiled Contracts defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.
-
-    ###### Added
-
-    The following precompiled (system) contracts have been introduced on the Rollup.
-
-</details>
-
-<details id="rpc-api">
-    <summary>RPC-API ![plus](images/plus-gradient-icon.png)</summary>
-
-    ###### Modified
-
-    All RPC Endpoints defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.
-
-    ###### Added
-
-    The following RPC endpoints have been added to the RPC API
-
-</details>
-
-<details id="transaction-fees">
-    <summary>Transaction Fees ![plus](images/plus-gradient-icon.png)</summary>
-
-    Optimism charges an additional L1 data fee. You can use [@eth-optimism/sdk](https://sdk.optimism.io/modules.html#asL2Provider) for wrapping the RPC ethers provider and get access to the L1 and L2 gas costs information.
-
-</details>
-
-<details id="tools">
-    <summary>Tools ![plus](images/plus-gradient-icon.png)</summary>
-
-    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
-
-    @eth-optimism/sdk is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
-
-</details>
+</Collapse>
