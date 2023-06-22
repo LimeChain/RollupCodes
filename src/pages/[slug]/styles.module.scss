@@ -8,10 +8,13 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.pageContent {
+.docContent {
     padding-bottom: 40px;
     display: flex;
     flex-direction: column;
+    @include tablet {
+        margin-left: 64px;
+    }
 }
 
 .pageGrid {
@@ -19,6 +22,6 @@
     flex-direction: column;
     @include tablet {
         flex-direction: row;
-        margin-right: 64px;
     }
 }
+
