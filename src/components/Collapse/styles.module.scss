@@ -4,10 +4,7 @@
     flex: 1;
     background: var(--background);
     padding: 40px 0;
-}
-
-.border {
-    border-bottom: 1px solid #3C3C3C;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .body {
@@ -20,6 +17,7 @@
     flex: 1;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .children {

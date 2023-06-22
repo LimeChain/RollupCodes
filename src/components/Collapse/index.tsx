@@ -8,12 +8,10 @@ import classNames from 'classnames'
 
 interface ICollapse {
     title: string
-    id: string
     children: React.ReactNode
-    border?: boolean
 }
 
-const Collapse = ({ title, children, border = true, id }: ICollapse) => {
+const Collapse = ({ title, children }: ICollapse) => {
     const [isExpanded, setExpanded] = useState<boolean>(false)
     const ref = useRef<any>(0)
 
@@ -21,8 +19,8 @@ const Collapse = ({ title, children, border = true, id }: ICollapse) => {
 
     return (
         <div
-            className={classNames(styles.collapse, { [styles.border]: border })}
-            id={id}
+            className={styles.collapse}
+            id={title.toLowerCase().replace(' ', '-')}
         >
             <div onClick={toggle} className={styles.button}>
                 <Typography variant={Headings.H4} fontWeight={'700'}>
