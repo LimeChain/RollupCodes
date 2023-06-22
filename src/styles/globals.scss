@@ -1,3 +1,5 @@
+@import './mixins.scss';
+
 :root {
     --neutral100: #000000;
     --neutral90: #131313;
@@ -46,13 +48,22 @@
 
     --red: #FF0420;
 
+    --label-color-1: #F59762;
+    --label-color-2: #69DC6E;
+    --label-color-3: #E47AFF;
+    --label-color-4: #7A8FFF;
+    --label-color-5: #DF1FA9;
+    --label-color-6: #DDA411;
+    --label-color-7: #00AB82;
+
     /* Your default theme */
     --background: var(--neutral100);
     --text-color: var(--neutral);
-    --border-color: var(--neutral);
+    --border-color: var(--neutral50);
     --opposite-background-color: var(--neutral);
     --opposite-text-color: var(--neutral100);
     --icon-color: var(--neutral);
+    --link-color: var(--neutral);
 }
 
 .light {
@@ -62,6 +73,7 @@
     --opposite-background-color: var(--neutral100);
     --opposite-text-color: var(--neutral);
     --icon-color: var(--neutral100);
+    --link-color: var(--neutral100);
 }
 
 * {
@@ -118,29 +130,169 @@ a {
 // Markdown styles
 // ========================
 
-.labels {
+// .markdown {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+//     color: var(--neutral30);
+//     font-family: var(--font-inter);
+//     font-size: 14px;
+//     font-weight: 400;
+
+//     #labels {
+//         display: flex;
+//         flex-direction: row;
+//         flex-wrap: wrap;
+//         column-gap: 4px;
+//         row-gap: 4px;
+//         span {
+//             padding: 2px 4px;
+//             border: 1px solid var(--border-color);
+//             color: var(--text-color);
+//             & p {
+//                 margin: 0 !important;
+//                 word-break: normal;
+//             }
+//             &:nth-child(1) {
+//                 border: 1px solid var(--label-color-1);
+//                 color: var(--label-color-1);
+//             }
+//             &:nth-child(2) {
+//                 border: 1px solid var(--label-color-2);
+//                 color: var(--label-color-2);
+//             }
+
+//             &:nth-child(3) {
+//                 border: 1px solid var(--label-color-3);
+//                 color: var(--label-color-3);
+//             }
+//         }
+//     }
+
+//     a {
+//         text-decoration: underline;
+//     }
+
+//     details {
+//         display: flex;
+//         flex-direction: column;
+//         flex: 1;
+//         background: var(--background);
+//         padding: 40px 0;
+//         border-bottom: 1px solid var(--border-color);
+//     }
+
+//     summary {
+//         display: flex;
+//         flex-direction: row;
+//         flex: 1;
+//         align-items: center;
+//         justify-content: space-between;
+//         cursor: pointer;
+//         font-size: 24px;
+//         font-family: var(--font-chakra-petch);
+//         font-weight: 700;
+//         margin: 0;
+//         color: var(--text-color);
+//     }
+
+//     ul {
+//         list-style-type: disc;
+//         padding-left: 20px;
+//         margin-bottom: 24px;
+//     }
+    
+//     ol {
+//         padding-left: 20px;
+//         margin-bottom: 24px;
+//     }
+    
+//     li {
+//         font-size: 14px;
+//         line-height: 146%;
+//         margin-bottom: 4px;
+//     }
+
+//     p {
+//         font-size: 14px;
+//         line-height: 146%;
+//         margin-bottom: 24px;
+//     }
+
+//     strong {
+//         color: var(--text-color);
+//     }
+
+//     h6 {
+//         line-height: 146%;
+//         font-weight: 700;
+//         margin-bottom: 8px;
+//         font-size: 14px;
+//         color: var(--text-color);
+//         img {
+//             margin-left: 4px;
+//             position: relative;
+//             top: 5px;
+//         }
+//     }
+
+
+// }
+
+.sidebar {
+    max-width: 100%;
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    margin: 12px 0;
+    flex-direction: column;
+    margin-top: 32px;
+    @include tablet {
+        max-width: 270px;
+    }
 }
 
-.color-1 {
-    color: white;
-    border: 1px solid white;
-    padding: 2px 4px;
-    margin: 0 0 4px 4px;
+.sidebarItem {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 52px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: var(--font-inter);
 }
 
-.color-2 {
-    color: green;
-    border: 1px solid green;
-    padding: 2px 4px;
-    margin: 0 0 4px 4px;
-}
+// .color-1 {
+//     color: white;
+//     border: 1px solid white;
+//     padding: 2px 4px;
+//     margin: 0 0 4px 4px;
+// }
 
-.color-3 {
-    color: red;
-    border: 1px solid red;
-    padding: 2px 4px;
-    margin: 0 0 4px 4px;
-}
+// .color-2 {
+//     color: green;
+//     border: 1px solid green;
+//     padding: 2px 4px;
+//     margin: 0 0 4px 4px;
+// }
+
+// .color-3 {
+//     color: red;
+//     border: 1px solid red;
+//     padding: 2px 4px;
+//     margin: 0 0 4px 4px;
+// }
+
+// .collapse {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+//     background: var(--background);
+//     padding: 40px 0;
+// }
+
+// .collapseButton {
+//     background: 'red';
+// }
+
+// .collapseBody {
+//     overflow: hidden;
+// }
