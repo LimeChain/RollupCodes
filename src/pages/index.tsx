@@ -21,7 +21,6 @@ export default function Home({ docs }: IHomeProps) {
                 variant={Headings.H2}
                 fontWeight="300"
                 textTransform="uppercase"
-                font={Font.ChakraPetch}
                 textAlign="center"
                 marginTop={64}
                 letterSpacing={'3px'}
@@ -33,7 +32,6 @@ export default function Home({ docs }: IHomeProps) {
                     variant={Headings.H2}
                     fontWeight="500"
                     textTransform="uppercase"
-                    font={Font.ChakraPetch}
                     textAlign="center"
                     color="var(--neutral100)"
                     letterSpacing={'2px'}

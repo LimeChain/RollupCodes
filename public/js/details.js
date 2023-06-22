@@ -1,7 +1,7 @@
-const collapses = document?.querySelectorAll('div[data-element-type="collapse"]')
+const sections = document?.querySelectorAll('div[data-element-type="section"]')
 let sidebarItems = []
-collapses.forEach((collapse) => {
-    sidebarItems.push(collapse.querySelectorAll('div[data-element-type="collapse-button"]')[0].getAttribute("data-element-value"))
+sections.forEach((section) => {
+    sidebarItems.push(section.querySelectorAll('div[data-element-type="section-button"]')[0].getAttribute("data-element-value"))
 })
 
 const sidebar = document.getElementById('sidebar')

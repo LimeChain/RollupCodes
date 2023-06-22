@@ -15,9 +15,20 @@
     margin-bottom: 4px;
 }
 
-.blockquote {
-    padding: 12px;
-    border: 1px solid #E1E1E1;
-    border-radius: 8px;
+.mark {
+    background: var(--neutral80);
+    padding: 0 4px;
+    line-height: 146%;
+    font-weight: 500;
     max-width: max-content;
+    display: inline-block;
+    color: var(--text-color);
+}
+
+.labels {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 4px;
+    row-gap: 4px;
 }

@@ -11,7 +11,6 @@ import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
-import { useEffect, useRef } from 'react'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -63,7 +62,7 @@ export default function Details({ content }: IContent) {
                     </div>
                     <div className={styles.pageGrid}>
                         <div id="sidebar" className={styles.sidebar} />
-                        <div className={styles.docContent}>
+                        <div id="markdown" className={styles.docContent}>
                             <MDXRemote {...content.mdxContent} />
                         </div>
                     </div>
