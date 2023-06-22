@@ -25,3 +25,13 @@
     }
 }
 
+.sidebar {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    @include tablet {
+        max-width: 270px;
+    }
+}

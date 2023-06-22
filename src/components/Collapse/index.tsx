@@ -4,7 +4,6 @@ import Typography from '@components/Typography'
 import { Headings, Text } from '@utils/types'
 import PlusIcon from 'public/images/plus-gradient-icon.svg'
 import MinusIcon from 'public/images/minus-gradient-icon.svg'
-import classNames from 'classnames'
 
 interface ICollapse {
     title: string
@@ -19,10 +18,16 @@ const Collapse = ({ title, children }: ICollapse) => {
 
     return (
         <div
+            data-element-type="collapse"
             className={styles.collapse}
             id={title.toLowerCase().replace(' ', '-')}
         >
-            <div onClick={toggle} className={styles.button}>
+            <div
+                onClick={toggle}
+                className={styles.button}
+                data-element-type="collapse-button"
+                data-element-value={title}
+            >
                 <Typography variant={Headings.H4} fontWeight={'700'}>
                     {title}
                 </Typography>
