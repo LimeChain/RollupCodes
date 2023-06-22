@@ -46,8 +46,6 @@
     --error20: #FFA6B1;
     --error10: #FFD8DD;
 
-    --red: #FF0420;
-
     --label-color-1: #F59762;
     --label-color-2: #69DC6E;
     --label-color-3: #E47AFF;
@@ -69,7 +67,7 @@
 .light {
     --background: var(--neutral);
     --text-color: var(--neutral100);
-    --border-color: var(--neutral100);
+    --border-color: var(--neutral50);
     --opposite-background-color: var(--neutral100);
     --opposite-text-color: var(--neutral);
     --icon-color: var(--neutral100);

@@ -7,15 +7,9 @@
 .circle {
     width: 32px;
     height: 32px;
-    background: var(--red);
+    background: var(--opposite-background-color);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color: var(--white);
-}
-
-.largeCircle {
-    width: 48px;
-    height: 48px;
 }
