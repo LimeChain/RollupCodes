@@ -43,7 +43,7 @@ const Section = ({ title, children }: ISection) => {
                           }
                         : {
                               height: 0,
-                              transition: 'height 03.s ease',
+                              transition: 'height 0.3s ease',
                           }
                 }
                 className={styles.body}

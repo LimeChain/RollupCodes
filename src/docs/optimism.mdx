@@ -21,18 +21,102 @@ labels:
 
 <Section title="General">
 
+    <Parameter name="Block time" value="32 secondss" tooltip="Block time" />
+
+    **Block time** <Tooltip tooltip="Block time" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;32 seconds
+    ___
+
+    <Parameter name="Gas Limit" value="TODO" tooltip="The gas limit that can be consumed by an L2 block." />
+
+    <Parameter name="Sequencing Frequency" value="2-5 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
+
+    <Parameter name="Finality"  value="7 seconds" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+
+    <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain." />
+
+    | Direction | Latency | Cost |
+    | :--- |:-------- | :--- |
+    | **L1 → L2** | 2-5 minutes <Tooltip tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." /> | TODO <Tooltip tooltip="The gas cost of sending a message from Ethereum to Optimism" /> |
+    | **L2 → L1** | 7 days <Tooltip tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1." /> | 600k L1 gas <Tooltip tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Optimism" /> |
+    ____
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="State Trie" />
+
+    <Parameter name="Node Implementations" tooltip="The different client implementations of the Rollup" />
+
+    - [op-geth](https://github.com/ethereum-optimism/op-geth) (Go)
+    - [op-erigon](https://github.com/testinprod-io/op-erigon) (Go)
+    - [magi](https://github.com/a16z/magi) (Rust)
+
+    ___
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+    - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions.
+    - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718).
+    - **Type 2** - User Transactions. [Represent EIP-1559 transactions](https://eips.ethereum.org/EIPS/eip-1559).
+    - **Type 126** - System Transaction. Transactions that were derived from L1 and included in an L2 block
+
 </Section>
 
-<Section title="OPCODEs"></Section>
+<Section title="OPCODEs">
 
-<Section title="Precompiled Contracts"></Section>
+    <Legend />
 
-<Section title="RPC-API"></Section>
+    | | Opcode | Name | Solidity equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :--- | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | ![link](../images/link-icon.png) | 41 | `COINBASE` | `block.coinbase` | Undefined | Get the L1 block’s beneficiary address <Unsupported /> |
+    | ![link icon](../images/link-icon.png) | 32 | `ORIGIN` | `tx.origin` | If the transaction is an L1 ⇒ L2 transaction, then `tx.origin` is set to the [aliased address](https://community.optimism.io/docs/developers/build/differences/#address-aliasing) of the address that triggered the L1 ⇒ L2 transaction. Otherwise, this opcode behaves normally. | Get the execution origination address <Modified /> |
+    | ![link icon](../images/link-icon.png) | 33 | `CALLER` | `msg.sender` | If the transaction is an L1 ⇒ L2 transaction, and this is the initial call (rather than an internal transaction from one contract to another), the same address aliasing behaviour applies. | Get caller address <Modified /> |
+    | ![link icon](../images/link-icon.png) | 42 | `TIMESTAMP` | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | ![link icon](../images/link-icon.png) | 43 | `NUMBER` | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
+    | ![link icon](../images/link-icon.png) | 44 | `DIFFICULTY` | `block.difficulty` | Random value. As this value is set by the sequencer, it is less reliably random than the L1 equivalent. You can use an oracle for randomness. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
 
-<Section title="Transaction Fees"></Section>
+</Section>
+
+<Section title="Precompiled Contracts">
+
+    All Precompiled Contracts defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.
+
+</Section>
+
+<Section title="System Contracts">
+
+    | | Address | Name | Description |
+    | ---| :--- | :--- | :--- |
+    | | 0x420...06 | WETH9 | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
+    | | 0x420...07 | L2CrossDomainMessenger |  |
+    | | 0x420...10 | L2StandardBridge |  |
+    | | 0x420...11 | SequencerFeeVault |  |
+    | | 0x420...12 | OptimismMintableERC20Factory |  |
+    | | 0x420...0F | GasPriceOracle |  |
+    | | 0x420...42 | GovernanceToken |  |
+    | | 0x420...15 | L1Block |  |
+    | | 0x420...16 | L2ToL1MessagePasser |  |
+
+</Section>
+
+<Section title="RPC-API">
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `optimism_outputAtBlock` | `blockNumber` - 64 bits L2 integer block number or `string` - one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A |
+    | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised l1 state, as well as unsafe, safe and finalized l2 state | N/A |
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    Optimism charges an additional L1 data fee. You can use [@eth-optimism/sdk](https://sdk.optimism.io/modules.html#asL2Provider)
+    for wrapping the RPC ethers provider and get access to the L1 and L2 gas
+    costs information.
+
+</Section>
 
 <Section title="Tools">
 
-    <Mark>@eth-optimism/sdk</Mark> is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees
+    &nbsp;&nbsp;&nbsp;Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+
+    @eth-optimism/sdk is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
 
 </Section>

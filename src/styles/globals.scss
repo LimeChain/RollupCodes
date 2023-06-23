@@ -52,6 +52,10 @@
     --label-color-6: #DDA411;
     --label-color-7: #00AB82;
 
+    --unsupported-color: var(--error90);
+    --modified-color: var(--warning90);
+    --added-color: var(--success90);
+
     /* Your default theme */
     --background: var(--neutral100);
     --text-color: var(--neutral);
@@ -130,6 +134,7 @@ a {
 // ========================
 
 #markdown {
+    color: var(--neutral30);
     h1 {
         font-size: 64px;
         letter-spacing: -0.03em;
@@ -137,6 +142,7 @@ a {
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 24px;
+        color: var(--text-color);
     }
 
     h2 {
@@ -146,6 +152,7 @@ a {
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 24px;
+        color: var(--text-color);
     }
     
     h3 {
@@ -154,6 +161,7 @@ a {
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 16px;
+        color: var(--text-color);
     }
     
     h4 {
@@ -162,6 +170,7 @@ a {
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 16px;
+        color: var(--text-color);
     }
     
     h5 {
@@ -170,6 +179,7 @@ a {
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 8px;
+        color: var(--text-color);
     }
     
     h6 {
@@ -178,6 +188,7 @@ a {
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 8px;
+        color: var(--text-color);
     }
 
     p {
@@ -185,7 +196,7 @@ a {
         line-height: 146%;
         font-family: var(--font-inter);
         font-weight: 400;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
     }
 
     ul {
@@ -205,6 +216,40 @@ a {
         margin-bottom: 4px;
     }
 
+    a {
+        text-decoration: underline;
+    }
+
+    hr {
+        border-color: var(--border-color);
+        margin-bottom: 12px;
+    }
+
+    code {
+        background: var(--neutral70);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        padding: 3px 5px;
+        color: var(--text-color);
+        font-family: var(--font-inter);
+    }
+
+    strong {
+        color: var(--text-color);
+    }
+
+    .unsupported {
+        border-color: var(--unsupported-color);
+    }
+
+    .modified {
+        border-color: var(--modified-color);
+    }
+
+    .added {
+        border-color: var(--added-color);
+    }
 }
 
 .sidebarItem {
@@ -215,4 +260,37 @@ a {
     font-weight: 700;
     font-size: 14px;
     font-family: var(--font-inter);
+}
+
+table {
+    margin: 24px 0;
+    padding: 0 12px 12px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+
+    th {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        padding: 12px 0;
+        min-width: max-content;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 20px;
+        color: var(--text-color);
+    }
+
+    td {
+        padding: 12px 0;
+        min-width: max-content;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 20px;
+        position: relative;
+    }
+
+    tbody > tr {
+        &:hover {
+            background: var(--neutral90);
+        }
+    }
+
 }

@@ -24,15 +24,15 @@
         height: 100%;
         position: absolute;
         background: linear-gradient(45deg, #FFEB36 0%, #6AFF36 100%);
-        top: 8px;
-        left: 8px;
+        top: 4px;
+        left: 4px;
         z-index: -1;
-        transition: opacity .5s ease;
+        transition: opacity .25s ease;
     }
     &:hover {
         &::after {
             opacity: 1;
-            transition: opacity .5s ease;
+            transition: opacity .25s ease;
         }
     } 
 }
