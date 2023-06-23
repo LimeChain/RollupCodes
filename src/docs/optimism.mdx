@@ -21,9 +21,11 @@ labels:
 
 <Section title="General">
 
-    <Parameter name="Block time" value="32 secondss" tooltip="Block time" />
+    <Parameter name="Block time" value="32 secondss" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future." />
 
     <Parameter name="Gas Limit" value="TODO" tooltip="The gas limit that can be consumed by an L2 block." />
+
+    <Parameter name="Gas Target" value="5m gas" tooltip="The EIP-1559 gas target for an L2 block" />
 
     <Parameter name="Sequencing Frequency" value="2-5 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
@@ -67,7 +69,7 @@ labels:
     | ![link icon](../images/link-icon.png) | 33 | `CALLER` | `msg.sender` | If the transaction is an L1 ⇒ L2 transaction, and this is the initial call (rather than an internal transaction from one contract to another), the same address aliasing behaviour applies. | Get caller address <Modified /> |
     | ![link icon](../images/link-icon.png) | 42 | `TIMESTAMP` | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | ![link icon](../images/link-icon.png) | 43 | `NUMBER` | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
-    | ![link icon](../images/link-icon.png) | 44 | `DIFFICULTY` | `block.difficulty` | Random value. As this value is set by the sequencer, it is less reliably random than the L1 equivalent. You can use an oracle for randomness. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
+    | ![link icon](../images/link-icon.png) | 44 | `DIFFICULTY` | `block.difficulty` | Random value. As this value is set by the sequencer, it is less reliably random than the L1 equivalent. [You can use an oracle for randomness](https://community.optimism.io/docs/useful-tools/oracles/#verifiable-randomness-function-vrf). | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
 
 </Section>
 
