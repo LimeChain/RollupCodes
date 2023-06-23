@@ -14,7 +14,7 @@ const RollupSummaryCard = ({
     labels,
 }: IDocMeta): React.ReactElement => {
     return (
-        <div className={styles.card}>
+        <Link href={`details/${slug}`} className={styles.card}>
             <div className={styles.cardHeader}>
                 <Avatar src={logo} name={title} />
             </div>
@@ -32,7 +32,7 @@ const RollupSummaryCard = ({
                     />
                 ))}
             </div>
-            <Link href={`details/${slug}`} className={styles.link}>
+            <div className={styles.link}>
                 <Typography
                     variant={Text.BODY2}
                     fontWeight="700"
@@ -41,8 +41,8 @@ const RollupSummaryCard = ({
                     Details
                 </Typography>
                 <ArrowIcon fill="var(--icon-color)" />
-            </Link>
-        </div>
+            </div>
+        </Link>
     )
 }
 
