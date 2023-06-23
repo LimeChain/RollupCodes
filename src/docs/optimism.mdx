@@ -64,6 +64,8 @@ labels:
 
     <Legend />
 
+    The following table encapsulates EVM OPCODE differences compared to the canonical Ethereum L1 implementation.
+
     | | Opcode | Name | Solidity equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :----- | :--- | :-------------------| :--------------- | :-------------------- |
     | ![link icon](../images/link-icon.png) | 41 | `COINBASE` | `block.coinbase` | Undefined | Get the L1 block’s beneficiary address <Unsupported /> |
@@ -83,17 +85,19 @@ labels:
 
 <Section title="System Contracts">
 
+    The following system contracts have been introduced on the Rollup.
+
     | | Address | Name | Description |
     | :--- | :--- | :--- | :--- |
-    | ![link icon](../images/link-icon.png) | `0x420...06` <Copy value="0x4200000000000000000000000000000000000006" /> | `WETH9` | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
-    | ![link icon](../images/link-icon.png) | `0x420...07` <Copy value="0x4200000000000000000000000000000000000007" /> | `L2CrossDomainMessenger` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...10` <Copy value="0x4200000000000000000000000000000000000010" /> | `L2StandardBridge` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...11` <Copy value="0x4200000000000000000000000000000000000011" /> | `SequencerFeeVault` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...12` <Copy value="0x4200000000000000000000000000000000000012" /> | `OptimismMintableERC20Factory` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...0F` <Copy value="0x420000000000000000000000000000000000000F" /> | `GasPriceOracle` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...42` <Copy value="0x4200000000000000000000000000000000000042" /> | `GovernanceToken` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...15` <Copy value="0x4200000000000000000000000000000000000015" /> | `L1Block` |  |
-    | ![link icon](../images/link-icon.png) | `0x420...16` <Copy value="0x4200000000000000000000000000000000000016" /> | `L2ToL1MessagePasser` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...06 <Copy value="0x4200000000000000000000000000000000000006" /> | `WETH9` | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...07 <Copy value="0x4200000000000000000000000000000000000007" /> | `L2CrossDomainMessenger` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...10 <Copy value="0x4200000000000000000000000000000000000010" /> | `L2StandardBridge` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...11 <Copy value="0x4200000000000000000000000000000000000011" /> | `SequencerFeeVault` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...12 <Copy value="0x4200000000000000000000000000000000000012" /> | `OptimismMintableERC20Factory` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...0F <Copy value="0x420000000000000000000000000000000000000F" /> | `GasPriceOracle` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...42 <Copy value="0x4200000000000000000000000000000000000042" /> | `GovernanceToken` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...15 <Copy value="0x4200000000000000000000000000000000000015" /> | `L1Block` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...16 <Copy value="0x4200000000000000000000000000000000000016" /> | `L2ToL1MessagePasser` |  |
 
 </Section>
 
