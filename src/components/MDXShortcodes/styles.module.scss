@@ -64,8 +64,19 @@
     top: 3px;
 }
 
-.icon {
+.stateIcon {
     position: absolute;
     bottom: -3px;
     right: 0;
+}
+
+.copy {
+    cursor: pointer;
+    position: relative;
+}
+
+.copyIcon {
+    position: relative;
+    top: 3px;
+    left: 3px;
 }

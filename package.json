@@ -22,6 +22,7 @@
         "next-mdx-remote": "^4.4.1",
         "next-themes": "^0.2.1",
         "react": "18.2.0",
+        "react-copy-to-clipboard": "^5.1.0",
         "react-dom": "18.2.0",
         "react-tooltip": "^5.14.0",
         "remark-gfm": "^3.0.1",
@@ -29,6 +30,7 @@
     },
     "devDependencies": {
         "@svgr/webpack": "^8.0.1",
+        "@types/react-copy-to-clipboard": "^5.0.4",
         "path": "^0.12.7",
         "prettier": "^2.8.8",
         "sass": "^1.63.3"

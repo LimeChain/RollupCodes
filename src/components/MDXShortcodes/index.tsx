@@ -10,73 +10,13 @@ import UnsupportedIcon from 'public/images/unsupported-triangle-icon.svg'
 import ModifiedIcon from 'public/images/modified-triangle-icon.svg'
 import AddedIcon from 'public/images/added-triangle-icon.svg'
 import ReferenceIcon from 'public/images/reference-icon.svg'
+import CopyIcon from 'public/images/copy-icon.svg'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { useState } from 'react'
 
 type Props = {
     children: string | JSX.Element
 }
-
-// const Paragraph = ({ children }: Props) => (
-//     <Typography
-//         variant={Text.BODY2}
-//         fontWeight="400"
-//         marginBottom={24}
-//         breakWord={'break-all'}
-//     >
-//         {children}
-//     </Typography>
-// )
-
-// const Heading1 = ({ children }: Props) => (
-//     <Typography variant={Headings.H1} fontWeight="700" marginBottom={24}>
-//         {children}
-//     </Typography>
-// )
-
-// const Heading2 = ({ children }: Props) => (
-//     <Typography variant={Headings.H2} fontWeight="700" marginBottom={24}>
-//         {children}
-//     </Typography>
-// )
-
-// const Heading3 = ({ children }: Props) => (
-//     <Typography variant={Headings.H2} fontWeight="700" marginBottom={24}>
-//         {children}
-//     </Typography>
-// )
-
-// const Heading4 = ({ children }: Props) => (
-//     <Typography variant={Headings.H4} fontWeight="700" marginBottom={24}>
-//         {children}
-//     </Typography>
-// )
-
-// const Heading5 = ({ children }: Props) => (
-//     <Typography variant={Headings.H5} fontWeight="700" marginBottom={8}>
-//         {children}
-//     </Typography>
-// )
-
-// const Heading6 = ({ children }: Props) => (
-//     <Typography variant={Headings.H6} fontWeight="700" marginBottom={8}>
-//         {children}
-//     </Typography>
-// )
-
-// const UnorderedList = ({ children }: Props) => (
-//     <ul className={styles.ul}>{children}</ul>
-// )
-
-// const OrderedList = ({ children }: Props) => (
-//     <ol className={styles.ol}>{children}</ol>
-// )
-
-// const ListItem = ({ children }: Props) => (
-//     <li className={styles.li}>{children}</li>
-// )
-
-// const Blockquote = ({ children }: Props) => (
-//     <blockquote className={styles.blockquote}>{children}</blockquote>
-// )
 
 const Labels = ({ labels }: { labels: string[] }) => (
     <div className={styles.labels}>
@@ -92,23 +32,16 @@ const Labels = ({ labels }: { labels: string[] }) => (
     </div>
 )
 
-// const Table = ({ children }: Props) => <table>{children}</table>
-
-// const Tr = ({ children }: Props) => <tr>{children}</tr>
-
-// const Td = ({ children }: Props) => <td>{children}</td>
-
 const Tooltip = ({ tooltip }: { tooltip: string }) => {
     const id = Math.random()
     return (
         <span
             data-tooltip-id={`${id}-tooltip`}
-            data-tooltip-content={`${tooltip}🔗`}
+            data-tooltip-content={tooltip}
             className={styles.tooltip}
         >
             <QuestionMarkIcon />
             <TooltipComponent
-                clickable
                 id={`${id}-tooltip`}
                 style={{
                     background: 'var(--opposite-background-color)',
@@ -119,21 +52,39 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
                     maxWidth: 200,
                     height: 'auto',
                 }}
-            >
-                <a href="">asd</a>
-            </TooltipComponent>
+            />
         </span>
-        // <>
-        //     <a id="clickable">click</a>
-        //     <TooltipComponent anchorSelect="#clickable" clickable>
-        //         The rate at which the rollup produces blocks. Keep in mind that
-        //         as per Optimism docs (reference icon), the value is subject to
-        //         change in the future.{' '}
-        //         <a href="https://www.google.com" target="_blank">
-        //             See reference
-        //         </a>
-        //     </TooltipComponent>
-        // </>
+    )
+}
+
+const Copy = ({ value }: { value: string }) => {
+    const [copied, setCopied] = useState<boolean>(false)
+
+    return (
+        <span
+            className={styles.copy}
+            data-tooltip-id="copy-tooltip"
+            data-tooltip-content={copied ? 'Copied' : 'Copy'}
+            onMouseLeave={() => setCopied(false)}
+        >
+            <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
+                <span className={styles.copyIcon}>
+                    <CopyIcon />
+                </span>
+            </CopyToClipboard>
+            <TooltipComponent
+                id="copy-tooltip"
+                style={{
+                    background: 'var(--opposite-background-color)',
+                    color: 'var(--opposite-text-color)',
+                    zIndex: 1,
+                    borderRadius: 0,
+                    opacity: 1,
+                    maxWidth: 200,
+                    height: 'auto',
+                }}
+            />
+        </span>
     )
 }
 
@@ -181,19 +132,19 @@ const Legend = () => (
 )
 
 const Unsupported = () => (
-    <div className={styles.icon}>
+    <div className={styles.stateIcon}>
         <UnsupportedIcon />
     </div>
 )
 
 const Modified = () => (
-    <div className={styles.icon}>
+    <div className={styles.stateIcon}>
         <ModifiedIcon />
     </div>
 )
 
 const Added = () => (
-    <div className={styles.icon}>
+    <div className={styles.stateIcon}>
         <AddedIcon />
     </div>
 )
@@ -210,6 +161,7 @@ const MDXShortcodes = {
     Modified,
     Added,
     Reference,
+    Copy,
 }
 
 export default MDXShortcodes

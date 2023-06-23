@@ -23,9 +23,6 @@ labels:
 
     <Parameter name="Block time" value="32 secondss" tooltip="Block time" />
 
-    **Block time** <Tooltip tooltip="Block time" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;32 seconds
-    ___
-
     <Parameter name="Gas Limit" value="TODO" tooltip="The gas limit that can be consumed by an L2 block." />
 
     <Parameter name="Sequencing Frequency" value="2-5 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
@@ -65,7 +62,7 @@ labels:
 
     | | Opcode | Name | Solidity equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | ![link](../images/link-icon.png) | 41 | `COINBASE` | `block.coinbase` | Undefined | Get the L1 block’s beneficiary address <Unsupported /> |
+    | ![link icon](../images/link-icon.png) | 41 | `COINBASE` | `block.coinbase` | Undefined | Get the L1 block’s beneficiary address <Unsupported /> |
     | ![link icon](../images/link-icon.png) | 32 | `ORIGIN` | `tx.origin` | If the transaction is an L1 ⇒ L2 transaction, then `tx.origin` is set to the [aliased address](https://community.optimism.io/docs/developers/build/differences/#address-aliasing) of the address that triggered the L1 ⇒ L2 transaction. Otherwise, this opcode behaves normally. | Get the execution origination address <Modified /> |
     | ![link icon](../images/link-icon.png) | 33 | `CALLER` | `msg.sender` | If the transaction is an L1 ⇒ L2 transaction, and this is the initial call (rather than an internal transaction from one contract to another), the same address aliasing behaviour applies. | Get caller address <Modified /> |
     | ![link icon](../images/link-icon.png) | 42 | `TIMESTAMP` | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
@@ -83,25 +80,25 @@ labels:
 <Section title="System Contracts">
 
     | | Address | Name | Description |
-    | ---| :--- | :--- | :--- |
-    | | 0x420...06 | WETH9 | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
-    | | 0x420...07 | L2CrossDomainMessenger |  |
-    | | 0x420...10 | L2StandardBridge |  |
-    | | 0x420...11 | SequencerFeeVault |  |
-    | | 0x420...12 | OptimismMintableERC20Factory |  |
-    | | 0x420...0F | GasPriceOracle |  |
-    | | 0x420...42 | GovernanceToken |  |
-    | | 0x420...15 | L1Block |  |
-    | | 0x420...16 | L2ToL1MessagePasser |  |
+    | :--- | :--- | :--- | :--- |
+    | ![link icon](../images/link-icon.png) | `0x420...06` <Copy value="0x4200000000000000000000000000000000000006" /> | WETH9 | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
+    | ![link icon](../images/link-icon.png) | `0x420...07` <Copy value="0x4200000000000000000000000000000000000007" /> | L2CrossDomainMessenger |  |
+    | ![link icon](../images/link-icon.png) | `0x420...10` <Copy value="0x4200000000000000000000000000000000000010" /> | L2StandardBridge |  |
+    | ![link icon](../images/link-icon.png) | `0x420...11` <Copy value="0x4200000000000000000000000000000000000011" /> | SequencerFeeVault |  |
+    | ![link icon](../images/link-icon.png) | `0x420...12` <Copy value="0x4200000000000000000000000000000000000012" /> | OptimismMintableERC20Factory |  |
+    | ![link icon](../images/link-icon.png) | `0x420...0F` <Copy value="0x420000000000000000000000000000000000000F" /> | GasPriceOracle |  |
+    | ![link icon](../images/link-icon.png) | `0x420...42` <Copy value="0x4200000000000000000000000000000000000042" /> | GovernanceToken |  |
+    | ![link icon](../images/link-icon.png) | `0x420...15` <Copy value="0x4200000000000000000000000000000000000015" /> | L1Block |  |
+    | ![link icon](../images/link-icon.png) | `0x420...16` <Copy value="0x4200000000000000000000000000000000000016" /> | L2ToL1MessagePasser |  |
 
 </Section>
 
 <Section title="RPC-API">
 
-    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :----- | :--------------- | :-------------------- |
-    | `optimism_outputAtBlock` | `blockNumber` - 64 bits L2 integer block number or `string` - one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A |
-    | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised l1 state, as well as unsafe, safe and finalized l2 state | N/A |
+    |      | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :--- | :----- | :----- | :--------------- | :-------------------- |
+    | ![link icon](../images/link-icon.png) | `optimism_outputAtBlock` | `blockNumber` - 64 bits L2 integer block number or `string` - one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A |
+    | ![link icon](../images/link-icon.png) | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised l1 state, as well as unsafe, safe and finalized l2 state | N/A |
 
 </Section>
 
@@ -115,7 +112,7 @@ labels:
 
 <Section title="Tools">
 
-    &nbsp;&nbsp;&nbsp;Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
 
     @eth-optimism/sdk is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
 
