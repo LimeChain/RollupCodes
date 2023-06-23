@@ -98,10 +98,15 @@ const Parameter = ({
     tooltip?: string
 }) => (
     <div className={classNames(styles.parameter, { [styles.bordered]: value })}>
-        <Typography variant={Text.BODY2} fontWeight="700" marginRight={4}>
+        <Typography
+            variant={Text.BODY2}
+            fontWeight="700"
+            marginRight={4}
+            width={'30%'}
+        >
             {name}
+            {tooltip ? <Tooltip tooltip={tooltip} /> : null}
         </Typography>
-        <span>{tooltip ? <Tooltip tooltip={tooltip} /> : null}</span>{' '}
         {typeof value === 'string' ? (
             <Typography
                 variant={Text.BODY2}
@@ -118,17 +123,17 @@ const Parameter = ({
 )
 
 const Legend = () => (
-    <div className={styles.legend}>
-        <div className={classNames(styles.marker, styles.unsupported)}>
-            <UnsupportedIcon /> Unsupported
-        </div>
-        <div className={classNames(styles.marker, styles.modified)}>
-            <ModifiedIcon /> Modified
-        </div>
-        <div className={classNames(styles.marker, styles.added)}>
-            <AddedIcon /> Added
-        </div>
-    </div>
+    <ul className={styles.legend}>
+        <li className={classNames(styles.marker, styles.unsupported)}>
+            &#8226; Unsupported
+        </li>
+        <li className={classNames(styles.marker, styles.modified)}>
+            &#8226; Modified
+        </li>
+        <li className={classNames(styles.marker, styles.added)}>
+            &#8226; Added
+        </li>
+    </ul>
 )
 
 const Unsupported = () => (

@@ -33,11 +33,13 @@ labels:
 
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain." />
 
-    | Direction | Latency | Cost |
-    | :--- |:-------- | :--- |
-    | **L1 → L2** | 2-5 minutes <Tooltip tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." /> | TODO <Tooltip tooltip="The gas cost of sending a message from Ethereum to Optimism" /> |
-    | **L2 → L1** | 7 days <Tooltip tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1." /> | 600k L1 gas <Tooltip tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Optimism" /> |
-    ____
+    1. ###### L1 → L2
+        <Parameter name="Latency" value="2-5 minutes" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." />
+        <Parameter name="Cost" value="TODO" tooltip="The gas cost of sending a message from Ethereum to Optimism" />
+    <br />
+    2. ###### L2 → L1
+        <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1." />
+        <Parameter name="Cost" value="600k L1 gas" tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Optimism" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="State Trie" />
 
@@ -83,24 +85,26 @@ labels:
 
     | | Address | Name | Description |
     | :--- | :--- | :--- | :--- |
-    | ![link icon](../images/link-icon.png) | `0x420...06` <Copy value="0x4200000000000000000000000000000000000006" /> | WETH9 | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
-    | ![link icon](../images/link-icon.png) | `0x420...07` <Copy value="0x4200000000000000000000000000000000000007" /> | L2CrossDomainMessenger |  |
-    | ![link icon](../images/link-icon.png) | `0x420...10` <Copy value="0x4200000000000000000000000000000000000010" /> | L2StandardBridge |  |
-    | ![link icon](../images/link-icon.png) | `0x420...11` <Copy value="0x4200000000000000000000000000000000000011" /> | SequencerFeeVault |  |
-    | ![link icon](../images/link-icon.png) | `0x420...12` <Copy value="0x4200000000000000000000000000000000000012" /> | OptimismMintableERC20Factory |  |
-    | ![link icon](../images/link-icon.png) | `0x420...0F` <Copy value="0x420000000000000000000000000000000000000F" /> | GasPriceOracle |  |
-    | ![link icon](../images/link-icon.png) | `0x420...42` <Copy value="0x4200000000000000000000000000000000000042" /> | GovernanceToken |  |
-    | ![link icon](../images/link-icon.png) | `0x420...15` <Copy value="0x4200000000000000000000000000000000000015" /> | L1Block |  |
-    | ![link icon](../images/link-icon.png) | `0x420...16` <Copy value="0x4200000000000000000000000000000000000016" /> | L2ToL1MessagePasser |  |
+    | ![link icon](../images/link-icon.png) | `0x420...06` <Copy value="0x4200000000000000000000000000000000000006" /> | `WETH9` | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
+    | ![link icon](../images/link-icon.png) | `0x420...07` <Copy value="0x4200000000000000000000000000000000000007" /> | `L2CrossDomainMessenger` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...10` <Copy value="0x4200000000000000000000000000000000000010" /> | `L2StandardBridge` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...11` <Copy value="0x4200000000000000000000000000000000000011" /> | `SequencerFeeVault` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...12` <Copy value="0x4200000000000000000000000000000000000012" /> | `OptimismMintableERC20Factory` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...0F` <Copy value="0x420000000000000000000000000000000000000F" /> | `GasPriceOracle` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...42` <Copy value="0x4200000000000000000000000000000000000042" /> | `GovernanceToken` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...15` <Copy value="0x4200000000000000000000000000000000000015" /> | `L1Block` |  |
+    | ![link icon](../images/link-icon.png) | `0x420...16` <Copy value="0x4200000000000000000000000000000000000016" /> | `L2ToL1MessagePasser` |  |
 
 </Section>
 
 <Section title="RPC-API">
 
+    <Legend />
+
     |      | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :----- | :----- | :--------------- | :-------------------- |
-    | ![link icon](../images/link-icon.png) | `optimism_outputAtBlock` | `blockNumber` - 64 bits L2 integer block number or `string` - one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A |
-    | ![link icon](../images/link-icon.png) | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised l1 state, as well as unsafe, safe and finalized l2 state | N/A |
+    | ![link icon](../images/link-icon.png) | `optimism_outputAtBlock` | `blockNumber` - 64 bits L2 integer block number or `string` - one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A <Added /> |
+    | ![link icon](../images/link-icon.png) | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised l1 state, as well as unsafe, safe and finalized l2 state | N/A <Added /> |
 
 </Section>
 
