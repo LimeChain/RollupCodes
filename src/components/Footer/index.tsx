@@ -50,12 +50,6 @@ const Footer = () => {
                 </Link>
             </div>
             <div className={styles.group}>
-                <Link href="/terms-of-service">
-                    <Typography variant={Text.BODY2} fontWeight={'400'}>
-                        Terms of Service
-                    </Typography>
-                </Link>
-                <div className={styles.pipe}>{'|'}</div>
                 <Link
                     href="https://github.com/LimeChain/rollup-codes"
                     target="_blank"

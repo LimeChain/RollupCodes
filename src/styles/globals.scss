@@ -231,7 +231,6 @@ a {
         font-size: 14px;
         font-weight: 500;
         line-height: 20px;
-        padding: 3px 5px;
         color: var(--text-color);
         font-family: var(--font-inter);
     }
@@ -250,6 +249,13 @@ a {
 
     .added {
         border-color: var(--added-color);
+    }
+
+    blockquote {
+        padding: 16px;
+        background-color: var(--neutral80);
+        margin-bottom: 24px;
+        p { margin: 0; }
     }
 }
 
@@ -286,6 +292,7 @@ table {
         border-bottom: 1px solid var(--border-color);
         padding-right: 20px;
         position: relative;
+        vertical-align: baseline;
     }
 
     tbody > tr {

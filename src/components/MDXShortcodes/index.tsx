@@ -51,6 +51,7 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
                     opacity: 1,
                     maxWidth: 200,
                     height: 'auto',
+                    fontWeight: '400',
                 }}
             />
         </span>
@@ -82,6 +83,7 @@ const Copy = ({ value }: { value: string }) => {
                     opacity: 1,
                     maxWidth: 200,
                     height: 'auto',
+                    fontWeight: '400',
                 }}
             />
         </span>

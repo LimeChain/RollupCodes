@@ -43,7 +43,6 @@ const Avatar = ({ name = '', size = AvatarSize.SMALL, src }: IAvatar) => {
                 fontWeight="700"
                 font={Font.ChakraPetch}
                 marginLeft={isLarge ? 12 : 8}
-                textTransform="uppercase"
             >
                 {name}
             </Typography>
