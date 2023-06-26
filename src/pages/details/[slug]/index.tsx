@@ -50,7 +50,7 @@ export default function Details({ content }: IContent) {
     return (
         <Layout loading={!content}>
             <Head>
-                <title>{`ROLLUPCODES | ${content?.meta?.title}`}</title>
+                <title>{`Rollup Codes | ${content?.meta?.title}`}</title>
                 <meta name="description" content={content?.meta?.subtitle} />
             </Head>
             {content && (
