@@ -54,7 +54,13 @@ const Layout = ({ children, loading }: ILayout) => {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="images/favicon.ico" />
+
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:image" content="images/thumbnail.png" />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
             </Head>
             {topLeftShadow}
             <Container>
