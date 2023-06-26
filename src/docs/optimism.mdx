@@ -35,13 +35,14 @@ labels:
 
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain." />
 
-    1. ###### L1 → L2
+    - ###### L1 → L2
         <Parameter name="Latency" value="~1 minute" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." />
         <Parameter name="Cost" value="Free" tooltip="The gas cost of sending a message from Ethereum to the L2. Optimism executes the message with a system address on behalf of the L1 sender. The initial 1.92m gas is free of charge. All gas in excess of 1.92m is paid by the sender of the message on L1." />
     <br />
-    2. ###### L2 → L1
+    - ###### L2 → L1
         <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1." />
         <Parameter name="Cost" value="600 000 L1 gas" tooltip="The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message." />
+    ___
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
@@ -130,6 +131,6 @@ labels:
 
     Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
 
-    @eth-optimism/sdk is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
+    `@eth-optimism/sdk` is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
 
 </Section>

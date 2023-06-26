@@ -34,15 +34,16 @@ labels:
 
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain." />
 
-    1. ###### L1 → L2
+    - ###### L1 → L2
         [Reference](https://developer.arbitrum.io/arbos/l1-to-l2-messaging)
         <Parameter name="Latency" value="~6-9 minutes" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." />
         <Parameter name="Cost" value="No added cost" tooltip="The gas cost of purely sending a message from Ethereum to Arbitrum, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction." />
     <br />
-    2. ###### L2 → L1
+    - ###### L2 → L1
         [Reference](https://developer.arbitrum.io/arbos/l2-to-l1-messaging)
         <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1." />
         <Parameter name="Cost" value="60 000 L1 gas" tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum" />
+    ___
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" /> [Reference](https://developer.arbitrum.io/arbitrum-ethereum-differences#transactions)
 
