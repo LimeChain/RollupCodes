@@ -42,7 +42,7 @@ const Footer = () => {
                     <GithubIcon fill="var(--icon-color)" />
                 </Link>
                 <Link
-                    href={'mailto:contact@limelabs.tech'}
+                    href={'mailto:rollup.codes@limechain.tech'}
                     target="_target"
                     className={styles.link}
                 >
