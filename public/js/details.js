@@ -1,7 +1,7 @@
 const sections = document?.querySelectorAll('div[data-element-type="section"]')
 let sidebarItems = []
 sections.forEach((section) => {
-    sidebarItems.push(section.querySelectorAll('div[data-element-type="section-button"]')[0].getAttribute("data-element-value"))
+    sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
 })
 
 const sidebar = document.getElementById('sidebar')

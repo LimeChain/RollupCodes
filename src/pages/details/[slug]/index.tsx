@@ -134,9 +134,9 @@ export async function getStaticPaths(): Promise<StaticPathsResult> {
     return { paths, fallback: false }
 }
 
-export const getStaticProps = async ({
+export async function getStaticProps({
     params,
-}: Params): Promise<StaticPropsResult> => {
+}: Params): Promise<StaticPropsResult> {
     const { slug } = params
 
     const contents = await getDocsContent()

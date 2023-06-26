@@ -25,7 +25,7 @@ const Section = ({ title, children }: ISection) => {
             <div
                 onClick={toggle}
                 className={styles.button}
-                data-element-type="section-button"
+                data-element-type="section-title"
                 data-element-value={title}
             >
                 <Typography variant={Headings.H4} fontWeight={'700'}>
