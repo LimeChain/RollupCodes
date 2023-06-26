@@ -23,7 +23,7 @@ labels:
 
     <Parameter name="Block time" value="32 secondss" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future." />
 
-    <Parameter name="Gas Limit" value="TODO" tooltip="The gas limit that can be consumed by an L2 block." />
+    <Parameter name="Gas Limit" value="30m gas" tooltip="The gas limit that can be consumed by an L2 block." />
 
     <Parameter name="Gas Target" value="5m gas" tooltip="The EIP-1559 gas target for an L2 block" />
 
@@ -31,17 +31,19 @@ labels:
 
     <Parameter name="Finality"  value="7 seconds" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
 
+    <Parameter name="Rollup’s State Contract on L1" value="0xdfe97868233d1aa22e815a266982f2cf17685a27" tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain." />
 
     1. ###### L1 → L2
-        <Parameter name="Latency" value="2-5 minutes" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." />
-        <Parameter name="Cost" value="TODO" tooltip="The gas cost of sending a message from Ethereum to Optimism" />
+        <Parameter name="Latency" value="~1 minute" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block." />
+        <Parameter name="Cost" value="Free" tooltip="The gas cost of sending a message from Ethereum to the L2. Optimism executes the message with a system address on behalf of the L1 sender. The initial 1.92m gas is free of charge. All gas in excess of 1.92m is paid by the sender of the message on L1." />
     <br />
     2. ###### L2 → L1
         <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1." />
-        <Parameter name="Cost" value="600k L1 gas" tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Optimism" />
+        <Parameter name="Cost" value="600 000 L1 gas" tooltip="The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message." />
 
-    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="State Trie" />
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
     <Parameter name="Node Implementations" tooltip="The different client implementations of the Rollup" />
 
@@ -56,7 +58,7 @@ labels:
     - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions.
     - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718).
     - **Type 2** - User Transactions. [Represent EIP-1559 transactions](https://eips.ethereum.org/EIPS/eip-1559).
-    - **Type 126** - System Transaction. Transactions that were derived from L1 and included in an L2 block
+    - **Type 126** -System Transactions. They can be transactions [importing L1 data into Optimism](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#l1-attributes-deposited-transaction) (reference link) or [User-deposited transactions](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#user-deposited-transactions) (reference link).
 
 </Section>
 
@@ -89,15 +91,19 @@ labels:
 
     | | Address | Name | Description |
     | :--- | :--- | :--- | :--- |
-    | ![link icon](../images/link-icon.png) | 0x420...06 <Copy value="0x4200000000000000000000000000000000000006" /> | `WETH9` | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Implementation](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
-    | ![link icon](../images/link-icon.png) | 0x420...07 <Copy value="0x4200000000000000000000000000000000000007" /> | `L2CrossDomainMessenger` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...10 <Copy value="0x4200000000000000000000000000000000000010" /> | `L2StandardBridge` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...11 <Copy value="0x4200000000000000000000000000000000000011" /> | `SequencerFeeVault` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...12 <Copy value="0x4200000000000000000000000000000000000012" /> | `OptimismMintableERC20Factory` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...0F <Copy value="0x420000000000000000000000000000000000000F" /> | `GasPriceOracle` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...42 <Copy value="0x4200000000000000000000000000000000000042" /> | `GovernanceToken` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...15 <Copy value="0x4200000000000000000000000000000000000015" /> | `L1Block` |  |
-    | ![link icon](../images/link-icon.png) | 0x420...16 <Copy value="0x4200000000000000000000000000000000000016" /> | `L2ToL1MessagePasser` |  |
+    | ![link icon](../images/link-icon.png) | 0x420...06 <Copy value="0x4200000000000000000000000000000000000006" /> | `WETH9` | The standard implementation of Wrapped Ether on Optimism.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/vendor/WETH9.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...07 <Copy value="0x4200000000000000000000000000000000000007" /> | `L2CrossDomainMessenger` | Provides a higher level API for sending cross-domain messages compared to directly calling the `L2ToL1MessagePasser`. Allows for replayability if the L1 to L2 transaction reverts on L2. <br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/L2CrossDomainMessenger.sol)  |
+    | ![link icon](../images/link-icon.png) | 0x420...10 <Copy value="0x4200000000000000000000000000000000000010" /> | `L2StandardBridge` | Provides a higher level API built on top of the `L2CrossDomainMessenger` that gives standard interface for sending ETH or ERC20 across domains.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/L2StandardBridge.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...11 <Copy value="0x4200000000000000000000000000000000000011" /> | `SequencerFeeVault` | Accumulates any transaction priority fee and is the value of `block.coinbase`. When enough fees accumulate in this account, they can be withdrawn to an immutable L1 address.<br /><br /> [Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/SequencerFeeVault.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...12 <Copy value="0x4200000000000000000000000000000000000012" /> | `OptimismMintableERC20Factory` | Responsible for creating ERC20 contracts on L2 that can be used for depositing native L1 tokens into. These ERC20 contracts can be created permisionlessly and implement the interface required by the `StandardBridge` to just work with deposits and withdrawals.<br /><br /> [Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/OptimismMintableERC20Factory.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...0F <Copy value="0x420000000000000000000000000000000000000F" /> | `GasPriceOracle` | Provides information of L1 base fee data and calculates the L1 fee  for a given transaction.<br /><br /> [Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/GasPriceOracle.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...42 <Copy value="0x4200000000000000000000000000000000000042" /> | `GovernanceToken` | The Optimism OP governance token. |
+    | ![link icon](../images/link-icon.png) | 0x420...15 <Copy value="0x4200000000000000000000000000000000000015" /> | `L1Block` | Responsible for maintaining L1 context in L2. This allows for L1 state to be accessed in L2.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/L1Block.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...16 <Copy value="0x4200000000000000000000000000000000000016" /> | `L2ToL1MessagePasser` | Stores commitments to withdrawal transactions. When a user is submitting the withdrawing transaction on L1, they provide a proof that the transaction that they withdrew on L2 is in the `sentMessages` mapping of this contract.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/L2ToL1MessagePasser.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...017 <Copy value="0x4200000000000000000000000000000000000017" /> | `OptimismMintableERC721Factory` | Responsible for creating ERC721 contracts on L2 that can be used for depositing native L1 NFTs into.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/OptimismMintableERC721Factory.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...018 <Copy value="0x4200000000000000000000000000000000000018" /> | `ProxyAdmin` | Owner of all of the proxy contracts set at the predeploys. It is itself behind a proxy. The owner of the ProxyAdmin will have the ability to upgrade any of the other predeploy contracts.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...019 <Copy value="0x4200000000000000000000000000000000000019" /> | `BaseFeeVault` | Receives the basefees on L2. The basefee is not burnt on L2 like it is on L1. Once the contract has received a certain amount of fees, the ETH can be withdrawn to an immutable address on L1.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/BaseFeeVault.sol) |
+    | ![link icon](../images/link-icon.png) | 0x420...01a <Copy value="0x420000000000000000000000000000000000001a" /> | `L1FeeVault` | Receives the L1 portion of the transaction fees. Once the contract has received a certain amount of fees, the ETH can be withdrawn to an immutable address on L1.<br /><br />[Reference](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/contracts/L2/L1FeeVault.sol) |
 
 </Section>
 
