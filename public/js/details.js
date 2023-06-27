@@ -1,35 +1,34 @@
-let sidebarItems = []
-const sidebar = document.getElementById('sidebar')
-const sidebar_placeholder = document.getElementById('sidebar_placeholder')
-const nav = document.getElementById('nav')
-const hero = document.getElementById('hero')
-const tables = document?.querySelectorAll('table')
+function buildSidebar(){
+    let sidebarItems = []
+    const sidebar = document.getElementById('sidebar')
 
-const sections = document?.querySelectorAll('div[data-element-type="section"]')
-sections.forEach((section) => {
-    sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
-})
+    const sections = document?.querySelectorAll('div[data-element-type="section"]')
+    sections.forEach((section) => {
+        sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
+    })
 
+    sidebarItems?.map((item) => {
+        let link = document.createElement('a');
+        link.className = 'sidebarItem'
+        link.href = `#${item.toLowerCase().replace(' ', '-')}`
+        link.innerText = item
+        link.scroll = false
+        sidebar.appendChild(link)
+    })
 
-sidebarItems?.map((item) => {
-    let link = document.createElement('a');
-    link.className = 'sidebarItem'
-    link.href = `#${item.toLowerCase().replace(' ', '-')}`
-    link.innerText = item
-    link.scroll = false
-    sidebar.appendChild(link)
-})
-
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function(e){
-        e.preventDefault()
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function(e){
+            e.preventDefault()
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            })
         })
     })
-})
+}
 
-tables?.forEach((table) => {
+buildSidebar ()
+
+document?.querySelectorAll('table')?.forEach((table) => {
     table.setAttribute('cellspacing','0')
     table.setAttribute('borderCollapse','separate')
 
@@ -72,6 +71,9 @@ tables?.forEach((table) => {
 })
 
 window.addEventListener('scroll', function() {
+    const nav = document.getElementById('nav')
+    const hero = document.getElementById('hero')
+    const sidebar_placeholder = document.getElementById('sidebar_placeholder')
     if (this.window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
         sidebar?.classList.add('sticky')
         sidebar_placeholder?.classList.add('sidebar_placeholder_visible')
