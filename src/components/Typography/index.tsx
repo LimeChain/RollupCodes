@@ -124,7 +124,7 @@ const Typography = ({
             )
         default:
             return (
-                <p
+                <span
                     className={classNames(
                         styles.defaultStyles,
                         styles[variant],
@@ -134,7 +134,7 @@ const Typography = ({
                     style={style}
                 >
                     {children}
-                </p>
+                </span>
             )
     }
 }

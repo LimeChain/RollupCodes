@@ -98,7 +98,9 @@ const Parameter = ({
     value?: string | React.ReactElement | string
     tooltip?: string
 }) => (
-    <div className={classNames(styles.parameter, { [styles.bordered]: value })}>
+    <span
+        className={classNames(styles.parameter, { [styles.bordered]: value })}
+    >
         <Typography
             variant={Text.BODY2}
             fontWeight="700"
@@ -120,7 +122,7 @@ const Parameter = ({
         ) : (
             <span style={{ marginLeft: 24 }}>{value}</span>
         )}
-    </div>
+    </span>
 )
 
 const Legend = () => (
