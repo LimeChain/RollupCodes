@@ -9,7 +9,6 @@ import classNames from 'classnames'
 import UnsupportedIcon from 'public/images/unsupported-triangle-icon.svg'
 import ModifiedIcon from 'public/images/modified-triangle-icon.svg'
 import AddedIcon from 'public/images/added-triangle-icon.svg'
-import ReferenceIcon from 'public/images/reference-icon.svg'
 import CopyIcon from 'public/images/copy-icon.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useState } from 'react'
@@ -156,8 +155,6 @@ const Added = () => (
     </div>
 )
 
-const Reference = ({ url }: { url: string }) => <ReferenceIcon />
-
 const MDXShortcodes = {
     Labels,
     Section,
@@ -167,7 +164,6 @@ const MDXShortcodes = {
     Unsupported,
     Modified,
     Added,
-    Reference,
     Copy,
 }
 
