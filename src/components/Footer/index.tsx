@@ -51,7 +51,7 @@ const Footer = () => {
             </div>
             <div className={styles.group}>
                 <Typography variant={Text.BODY2} fontWeight="400">
-                    Open-source with MIT license
+                    Open-sourced under [MIT license](https://github.com/LimeChain/rollup-codes/blob/main/LICENSE)
                 </Typography>
                 <div className={styles.pipe}>{'|'}</div>
                 <Link
