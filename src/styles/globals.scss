@@ -66,6 +66,10 @@
     --opposite-text-color: var(--neutral100);
     --icon-color: var(--neutral);
     --link-color: var(--neutral);
+
+    // Sibebar
+    --sidebar-item-color: var(--neutral60);
+    --sidebar-item-active-color: var(--neutral);
 }
 
 .light {
@@ -76,6 +80,10 @@
     --opposite-text-color: var(--neutral);
     --icon-color: var(--neutral100);
     --link-color: var(--neutral100);
+
+    // Sibebar
+    --sidebar-item-color: var(--neutral40);
+    --sidebar-item-active-color: var(--neutral100);
 }
 
 * {
@@ -267,16 +275,6 @@ a {
     }
 }
 
-.sidebarItem {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    height: 52px;
-    font-weight: 700;
-    font-size: 14px;
-    font-family: var(--font-inter);
-}
-
 table {
     margin: 24px 0;
     padding: 0 12px 12px;
@@ -311,6 +309,18 @@ table {
 
 }
 
+
+.sidebarItem {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 52px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: var(--font-inter);
+    color: var(--sidebar-item-color);
+}
+
 #sidebar_placeholder {
     display: none;
     max-width: 100%;
@@ -329,4 +339,8 @@ table {
     position: fixed;
     top: 0;
     transition: top .5s ease;
+}
+
+.sidebar-item-active {
+    color: var(--sidebar-item-active-color) !important;
 }

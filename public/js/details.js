@@ -15,18 +15,28 @@ function buildSidebar(){
         link.scroll = false
         sidebar.appendChild(link)
     })
-
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function(e){
-            e.preventDefault()
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            })
-        })
-    })
 }
 
 buildSidebar ()
+
+function removeActiveClassFromsidebarItem() {
+    var elems = document.querySelectorAll(".sidebar-item-active");
+    [].forEach.call(elems, function(el) {
+        el.classList.remove("sidebar-item-active");
+    });
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        
+    anchor.addEventListener("click", function(e){
+        e.preventDefault()
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        })
+        removeActiveClassFromsidebarItem()
+        anchor.classList.add('sidebar-item-active')
+    })
+})
 
 document?.querySelectorAll('table')?.forEach((table) => {
     table.setAttribute('cellspacing','0')
