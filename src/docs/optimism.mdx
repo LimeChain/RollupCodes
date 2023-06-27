@@ -41,6 +41,13 @@ labels:
     - [op-erigon](https://github.com/testinprod-io/op-erigon) (Go)
     - [magi](https://github.com/a16z/magi) (Rust)
 
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+    - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+    - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718)
+    - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
+    - **Type 126** - System Transactions. They can be transactions [importing L1 data into Optimism](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#l1-attributes-deposited-transaction) or [User-deposited transactions](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#user-deposited-transactions)
+
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain" />
 
         - ###### L1 → L2
@@ -50,14 +57,6 @@ labels:
         - ###### L2 → L1
             <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1" />
             <Parameter name="Cost" value="600 000 L1 gas" tooltip="The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message" />
-    ___
-
-    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
-
-    - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
-    - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718)
-    - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
-    - **Type 126** - System Transactions. They can be transactions [importing L1 data into Optimism](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#l1-attributes-deposited-transaction) or [User-deposited transactions](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#user-deposited-transactions)
 
 </Section>
 
@@ -67,7 +66,7 @@ labels:
 
     The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
 
-    | | Opcode | Name | Solidity equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :----- | :--- | :-------------------| :--------------- | :-------------------- |
     | ![link icon](../images/link-icon.png) | 41 | COINBASE | `block.coinbase` | Undefined | Get the L1 block’s beneficiary address <Unsupported /> |
     | ![link icon](../images/link-icon.png) | 32 | ORIGIN | `tx.origin` | The opcodes has the same behaviour as in Ethereum L1 except for situations in which the transaction is an L1 to L2 transaction. <br /><br /> In that case `tx.origin` is set to the [aliased address](https://community.optimism.io/docs/developers/build/differences/#address-aliasing) of the address that triggered the transaction. | Get the execution origination address <Modified /> |

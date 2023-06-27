@@ -37,6 +37,18 @@ labels:
     <Parameter name="Node Implementations" tooltip="The different client implementations of the Rollup" />
     - [go-ethereum](https://github.com/OffchainLabs/go-ethereum/tree/master) (Go)
 
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" /> [Reference](https://developer.arbitrum.io/arbitrum-ethereum-differences#transactions)
+
+        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 1** - User Transaction. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 2** - User Transaction. [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
+        - **Type 100** - System (Bridge) Transaction. A deposit of ETH from L1 to L2 via the Arbitrum bridge
+        - **Type 101** - System (Bridge) Transaction. An L1 user can use to call an L2 contract via the bridge
+        - **Type 102** - System (Bridge) Transaction. An L1 contract can use to call an L2 contract via the bridge
+        - **Type 104** - User Transaction. Used to redeem a retryable ticket on L2, which finalizes a retryable that failed to execute automatically (usually due to low gas)
+        - **Type 105** - System (Bridge) Transaction. Retryable tickets are submitted via the L1 bridge and allow arbitrary L1 to L2 messages to be created and executed on L2
+        - **Type 106** - System (Internal) Transaction. Transactions created by the ArbOS itself for certain state updates, like L1 base fee and block number
+
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain" />
 
     - ###### L1 → L2
@@ -48,19 +60,6 @@ labels:
         [Reference](https://developer.arbitrum.io/arbos/l2-to-l1-messaging)
         <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1" />
         <Parameter name="Cost" value="60 000 L1 gas" tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum" />
-    ___
-
-    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" /> [Reference](https://developer.arbitrum.io/arbitrum-ethereum-differences#transactions)
-
-    - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
-    - **Type 1** - User Transaction. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
-    - **Type 2** - User Transaction. [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
-    - **Type 100** - System (Bridge) Transaction. A deposit of ETH from L1 to L2 via the Arbitrum bridge
-    - **Type 101** - System (Bridge) Transaction. An L1 user can use to call an L2 contract via the bridge
-    - **Type 102** - System (Bridge) Transaction. An L1 contract can use to call an L2 contract via the bridge
-    - **Type 104** - User Transaction. Used to redeem a retryable ticket on L2, which finalizes a retryable that failed to execute automatically (usually due to low gas)
-    - **Type 105** - System (Bridge) Transaction. Retryable tickets are submitted via the L1 bridge and allow arbitrary L1 to L2 messages to be created and executed on L2
-    - **Type 106** - System (Internal) Transaction. Transactions created by the ArbOS itself for certain state updates, like L1 base fee and block number
 
 </Section>
 
