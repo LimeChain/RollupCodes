@@ -1,4 +1,3 @@
-import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import React from 'react'
 
 export interface IMetadata {
@@ -84,11 +83,6 @@ export interface IDocMeta {
 export enum AvatarSize {
     SMALL,
     LARGE,
-}
-
-export interface IRollup {
-    meta?: IDocMeta
-    mdxSource?: any
 }
 
 export enum ThemeMode {

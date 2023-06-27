@@ -61,7 +61,7 @@ const Copy = ({ value }: { value: string }) => {
     const [copied, setCopied] = useState<boolean>(false)
 
     return (
-        <span
+        <div
             className={styles.copy}
             data-tooltip-id="copy-tooltip"
             data-tooltip-content={copied ? 'Copied' : 'Copy'}
@@ -85,7 +85,7 @@ const Copy = ({ value }: { value: string }) => {
                     fontWeight: '400',
                 }}
             />
-        </span>
+        </div>
     )
 }
 
@@ -115,7 +115,7 @@ const Parameter = ({
                 variant={Text.BODY2}
                 fontWeight="400"
                 marginLeft={24}
-                color={'var(--neutral30)'}
+                color={'var(--markdown-text-color)'}
             >
                 {value}
             </Typography>
@@ -127,13 +127,13 @@ const Parameter = ({
 
 const Legend = () => (
     <ul className={styles.legend}>
-        <li className={classNames(styles.marker, styles.unsupported)}>
+        <li className={classNames(styles.marker, styles.marker_unsupported)}>
             &#8226; Unsupported
         </li>
-        <li className={classNames(styles.marker, styles.modified)}>
+        <li className={classNames(styles.marker, styles.marker_modified)}>
             &#8226; Modified
         </li>
-        <li className={classNames(styles.marker, styles.added)}>
+        <li className={classNames(styles.marker, styles.marker_added)}>
             &#8226; Added
         </li>
     </ul>

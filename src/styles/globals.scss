@@ -70,12 +70,21 @@
     // Sibebar
     --sidebar-item-color: var(--neutral60);
     --sidebar-item-active-color: var(--neutral);
+
+    // Markdown
+    --markdown-text-color: var(--neutral30);
+    --code-background-color: var(--neutral70);
+    --row-background-color-hover: var(--neutral90)
+    --added-color: var(--success70);
+    --modified-color: var(--warning70);
+    --unsupported-color: var(--error70);
+    --blockquote-background-color: var(--neutral80);
 }
 
 .light {
     --background: var(--neutral);
     --text-color: var(--neutral100);
-    --border-color: var(--neutral100);
+    --border-color: var(--neutral40);
     --opposite-background-color: var(--neutral100);
     --opposite-text-color: var(--neutral);
     --icon-color: var(--neutral100);
@@ -84,6 +93,15 @@
     // Sibebar
     --sidebar-item-color: var(--neutral40);
     --sidebar-item-active-color: var(--neutral100);
+
+    // Markdown
+    --markdown-text-color: var(--neutral70);
+    --code-background-color: var(--neutral20);
+    --row-background-color-hover: #F1F1F1;
+    --added-color: var(--success30);
+    --modified-color: var(--warning30);
+    --unsupported-color: var(--error30);
+    --blockquote-background-color: var(--neutral20);
 }
 
 * {
@@ -146,7 +164,7 @@ a {
 // ========================
 
 #markdown {
-    color: var(--neutral30);
+    color: var(--markdown-text-color);
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -202,7 +220,7 @@ a {
     h6 {
         font-size: 14px;
         line-height: 146%;
-        font-family: var(--font-chakra-petch);
+        font-family: var(--font-inter);
         font-weight: 700;
         margin-bottom: 8px;
         color: var(--text-color);
@@ -238,11 +256,13 @@ a {
     }
 
     hr {
-        border-color: var(--border-color);
+        background: var(--border-color);
+        height: 1px;
+        border: none;
     }
 
     code {
-        background: var(--neutral70);
+        background: var(--code-background-color);
         font-size: 14px;
         font-weight: 500;
         line-height: 20px;
@@ -269,7 +289,8 @@ a {
 
     blockquote {
         padding: 16px;
-        background-color: var(--neutral80);
+        color: var(--text-color);
+        background-color: var(--blockquote-background-color);
         margin-bottom: 24px;
         p { margin: 0; }
     }
@@ -303,7 +324,7 @@ table {
 
     tbody > tr {
         &:hover {
-            background: var(--neutral90);
+            background: var(--row-background-color-hover);
         }
     }
 

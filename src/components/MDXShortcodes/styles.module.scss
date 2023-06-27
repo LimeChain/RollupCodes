@@ -50,15 +50,27 @@
 }
 
 .unsupported {
+    color: var(--unsupported-color);
+}
+
+.marker_unsupported {
     color: var(--error70);
 }
 
-.modified {
+.marker_modified {
     color: var(--warning70);
 }
 
-.added {
+.marker_added {
     color: var(--success70);
+}
+
+.modified {
+    color: var(--modified-color);
+}
+
+.added {
+    color: var(--added-color);
 }
 
 .tooltip {

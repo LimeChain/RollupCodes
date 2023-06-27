@@ -9,7 +9,12 @@ const ThemeSwitch = () => {
     const handleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
 
     return (
-        <button type="button" onClick={handleTheme} className={styles.button}>
+        <button
+            type="button"
+            onClick={handleTheme}
+            className={styles.button}
+            id="theme-toggler"
+        >
             {theme === 'dark' ? (
                 <SunIcon fill="var(--icon-color)" />
             ) : (

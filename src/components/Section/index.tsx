@@ -1,9 +1,12 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import Typography from '@components/Typography'
-import { Headings, Text } from '@utils/types'
-import PlusIcon from 'public/images/plus-gradient-icon.svg'
-import MinusIcon from 'public/images/minus-gradient-icon.svg'
+import { Headings, ThemeMode } from '@utils/types'
+import PlusGradientIcon from 'public/images/plus-gradient-icon.svg'
+import MinusGradientIcon from 'public/images/minus-gradient-icon.svg'
+import PlusGrayIcon from 'public/images/plus-gray-icon.svg'
+import MinusGrayIcon from 'public/images/minus-gray-icon.svg'
+import { useTheme } from 'next-themes'
 
 interface ISection {
     title: string
@@ -12,7 +15,27 @@ interface ISection {
 
 const Section = ({ title, children }: ISection) => {
     const [isExpanded, setExpanded] = useState<boolean>(true)
+    const { theme } = useTheme()
     const ref = useRef<any>(0)
+
+    const plusIcon = useMemo(
+        () =>
+            theme === ThemeMode[ThemeMode.DARK].toLowerCase() ? (
+                <PlusGradientIcon />
+            ) : (
+                <PlusGrayIcon />
+            ),
+        [theme]
+    )
+    const minusIcon = useMemo(
+        () =>
+            theme === ThemeMode[ThemeMode.DARK].toLowerCase() ? (
+                <MinusGradientIcon />
+            ) : (
+                <MinusGrayIcon />
+            ),
+        [theme]
+    )
 
     const toggle = () => setExpanded((prev) => !prev)
 
@@ -31,7 +54,7 @@ const Section = ({ title, children }: ISection) => {
                 <Typography variant={Headings.H4} fontWeight={'700'}>
                     {title}
                 </Typography>
-                {isExpanded ? <MinusIcon /> : <PlusIcon />}
+                {isExpanded ? minusIcon : plusIcon}
             </div>
             <div
                 ref={ref}

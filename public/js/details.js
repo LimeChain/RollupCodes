@@ -41,6 +41,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 document?.querySelectorAll('table')?.forEach((table) => {
     table.setAttribute('cellspacing','0')
     table.setAttribute('borderCollapse','separate')
+    const theme = localStorage.getItem('theme')
 
     const rows = table.querySelectorAll('tr')
     rows.forEach((row) => {
@@ -70,7 +71,7 @@ document?.querySelectorAll('table')?.forEach((table) => {
         }
 
         row.addEventListener('mouseover', function() {
-            hoverOnRow('../images/link-icon-active.png')
+            hoverOnRow(`../images/link-icon-${theme}-active.png`)
         })
 
         row.addEventListener('mouseout', function() {
