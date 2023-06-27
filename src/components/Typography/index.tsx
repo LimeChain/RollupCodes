@@ -15,7 +15,7 @@ const Typography = ({
     className,
     font = Font.Inter,
     textTransform = 'none',
-    color,
+    color = `var(--text-color)`,
     letterSpacing,
     fontSize,
     breakWord = 'normal',
