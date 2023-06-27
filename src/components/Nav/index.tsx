@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const Nav = () => {
     return (
-        <div className={styles.nav}>
+        <div className={styles.nav} id="nav">
             <Link href="/">
                 <Typography
                     variant={Headings.H5}

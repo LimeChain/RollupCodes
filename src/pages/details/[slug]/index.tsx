@@ -12,6 +12,7 @@ import Head from 'next/head'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
+import Script from 'next/script'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -51,9 +52,8 @@ export default function Details({ content }: IContent) {
             <Head>
                 <title>{`Rollup Codes | ${content?.meta?.title}`}</title>
                 <meta name="description" content={content?.meta?.subtitle} />
-                <script src="../js/details.js" />
             </Head>
-            <div className={styles.hero}>
+            <div className={styles.hero} id="hero">
                 <Avatar
                     size={AvatarSize.LARGE}
                     src={content?.meta?.logo}
@@ -62,6 +62,7 @@ export default function Details({ content }: IContent) {
             </div>
             <div className={styles.pageGrid}>
                 <div id="sidebar" className={styles.sidebar} />
+                <div id="sidebar_placeholder" />
                 <div id="markdown" className={styles.docContent}>
                     <MDXRemote
                         {...content?.mdxContent}
@@ -69,6 +70,7 @@ export default function Details({ content }: IContent) {
                     />
                 </div>
             </div>
+            <Script src="../js/details.js" />
         </Layout>
     )
 }

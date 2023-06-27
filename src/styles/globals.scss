@@ -1,3 +1,5 @@
+@import '@styles/mixins.scss';
+
 :root {
     --neutral100: #000000;
     --neutral90: #131313;
@@ -307,4 +309,24 @@ table {
         }
     }
 
+}
+
+#sidebar_placeholder {
+    display: none;
+    max-width: 100%;
+    width: 100%;
+    margin-top: 32px;
+    @include tablet {
+        width: 270px;
+    }
+}
+
+.sidebar_placeholder_visible {
+    display: block !important;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    transition: top .5s ease;
 }

@@ -1,23 +1,24 @@
-function buildSidebar() {
-    let sidebarItems = []
+let sidebarItems = []
+const sidebar = document.getElementById('sidebar')
+const sidebar_placeholder = document.getElementById('sidebar_placeholder')
+const nav = document.getElementById('nav')
+const hero = document.getElementById('hero')
+const tables = document?.querySelectorAll('table')
 
-    const sections = document?.querySelectorAll('div[data-element-type="section"]')
-    sections.forEach((section) => {
-        sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
-    })
+const sections = document?.querySelectorAll('div[data-element-type="section"]')
+sections.forEach((section) => {
+    sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
+})
 
-    const sidebar = document.getElementById('sidebar')
-    sidebarItems?.map((item) => {
-        let link = document.createElement('a');
-        link.className = 'sidebarItem'
-        link.href = `#${item.toLowerCase().replace(' ', '-')}`
-        link.innerText = item
-        link.scroll = false
-        sidebar.appendChild(link)
-    })
-}
 
-buildSidebar()
+sidebarItems?.map((item) => {
+    let link = document.createElement('a');
+    link.className = 'sidebarItem'
+    link.href = `#${item.toLowerCase().replace(' ', '-')}`
+    link.innerText = item
+    link.scroll = false
+    sidebar.appendChild(link)
+})
 
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function(e){
@@ -28,7 +29,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     })
 })
 
-document?.querySelectorAll('table')?.forEach((table) => {
+tables?.forEach((table) => {
     table.setAttribute('cellspacing','0')
     table.setAttribute('borderCollapse','separate')
 
@@ -69,3 +70,13 @@ document?.querySelectorAll('table')?.forEach((table) => {
        
     })
 })
+
+window.addEventListener('scroll', function() {
+    if (this.window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
+        sidebar?.classList.add('sticky')
+        sidebar_placeholder?.classList.add('sidebar_placeholder_visible')
+    } else {
+        sidebar?.classList.remove('sticky')
+        sidebar_placeholder?.classList.remove('sidebar_placeholder_visible')
+    }
+});
