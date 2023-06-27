@@ -1,18 +1,23 @@
-const sections = document?.querySelectorAll('div[data-element-type="section"]')
-let sidebarItems = []
-sections.forEach((section) => {
-    sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
-})
+function buildSidebar() {
+    let sidebarItems = []
 
-const sidebar = document.getElementById('sidebar')
-sidebarItems?.map((item) => {
-    let link = document.createElement('a');
-    link.className = 'sidebarItem'
-    link.href = `#${item.toLowerCase().replace(' ', '-')}`
-    link.innerText = item
-    link.scroll = false
-    sidebar.appendChild(link)
-})
+    const sections = document?.querySelectorAll('div[data-element-type="section"]')
+    sections.forEach((section) => {
+        sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
+    })
+
+    const sidebar = document.getElementById('sidebar')
+    sidebarItems?.map((item) => {
+        let link = document.createElement('a');
+        link.className = 'sidebarItem'
+        link.href = `#${item.toLowerCase().replace(' ', '-')}`
+        link.innerText = item
+        link.scroll = false
+        sidebar.appendChild(link)
+    })
+}
+
+buildSidebar()
 
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function(e){
@@ -23,8 +28,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     })
 })
 
-const tables = document?.querySelectorAll('table')
-tables?.forEach((table) => {
+document?.querySelectorAll('table')?.forEach((table) => {
     table.setAttribute('cellspacing','0')
     table.setAttribute('borderCollapse','separate')
 

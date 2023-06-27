@@ -9,7 +9,6 @@ import { serialize } from 'next-mdx-remote/serialize'
 import styles from './styles.module.scss'
 import { MDXRemote } from 'next-mdx-remote'
 import Head from 'next/head'
-import Script from 'next/script'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
@@ -52,6 +51,7 @@ export default function Details({ content }: IContent) {
             <Head>
                 <title>{`Rollup Codes | ${content?.meta?.title}`}</title>
                 <meta name="description" content={content?.meta?.subtitle} />
+                <script src="../js/details.js" />
             </Head>
             <div className={styles.hero}>
                 <Avatar
@@ -69,7 +69,6 @@ export default function Details({ content }: IContent) {
                     />
                 </div>
             </div>
-            <Script src="../js/details.js" />
         </Layout>
     )
 }
