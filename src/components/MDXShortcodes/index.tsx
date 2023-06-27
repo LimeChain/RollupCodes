@@ -120,7 +120,9 @@ const Parameter = ({
                 {value}
             </Typography>
         ) : (
-            <span style={{ marginLeft: 24 }}>{value}</span>
+            <span style={{ marginLeft: 24, wordBreak: 'break-all' }}>
+                {value}
+            </span>
         )}
     </span>
 )

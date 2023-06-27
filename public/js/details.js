@@ -82,12 +82,14 @@ document?.querySelectorAll('table')?.forEach((table) => {
 })
 
 window.addEventListener('scroll', function() {
-    if (window.location.pathname === '/') {
-        return
-    }
     const nav = document.getElementById('nav')
     const hero = document.getElementById('hero')
     const sidebar_placeholder = document.getElementById('sidebar_placeholder')
+
+    if (window.location.pathname === '/') {
+        return
+    }
+    
     if (window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
         sidebar?.classList.add('sticky')
         sidebar_placeholder?.classList.add('sidebar_placeholder_visible')
@@ -96,3 +98,11 @@ window.addEventListener('scroll', function() {
         sidebar_placeholder?.classList.remove('sidebar_placeholder_visible')
     }
 });
+
+window.addEventListener('resize', function() {
+    const sidebar_placeholder = document.getElementById('sidebar_placeholder')
+
+    if (window.innerWidth < 1024) {
+        sidebar_placeholder.style.display = 'none !important'
+    }
+})
