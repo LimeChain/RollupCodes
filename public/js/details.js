@@ -71,10 +71,13 @@ document?.querySelectorAll('table')?.forEach((table) => {
 })
 
 window.addEventListener('scroll', function() {
+    if (window.location.pathname === '/') {
+        return
+    }
     const nav = document.getElementById('nav')
     const hero = document.getElementById('hero')
     const sidebar_placeholder = document.getElementById('sidebar_placeholder')
-    if (this.window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
+    if (window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
         sidebar?.classList.add('sticky')
         sidebar_placeholder?.classList.add('sidebar_placeholder_visible')
     } else {
