@@ -53,26 +53,22 @@ export default function Details({ content }: IContent) {
                 <title>{`Rollup Codes | ${content?.meta?.title}`}</title>
                 <meta name="description" content={content?.meta?.subtitle} />
             </Head>
-            {content && (
-                <div className={styles.pageContent}>
-                    <div className={styles.hero}>
-                        <Avatar
-                            size={AvatarSize.LARGE}
-                            src={content?.meta?.logo}
-                            name={content?.meta?.title}
-                        />
-                    </div>
-                    <div className={styles.pageGrid}>
-                        <div id="sidebar" className={styles.sidebar} />
-                        <div id="markdown" className={styles.docContent}>
-                            <MDXRemote
-                                {...content.mdxContent}
-                                components={MDXShortcodes}
-                            />
-                        </div>
-                    </div>
+            <div className={styles.hero}>
+                <Avatar
+                    size={AvatarSize.LARGE}
+                    src={content?.meta?.logo}
+                    name={content?.meta?.title}
+                />
+            </div>
+            <div className={styles.pageGrid}>
+                <div id="sidebar" className={styles.sidebar} />
+                <div id="markdown" className={styles.docContent}>
+                    <MDXRemote
+                        {...content?.mdxContent}
+                        components={MDXShortcodes}
+                    />
                 </div>
-            )}
+            </div>
             <Script src="../js/details.js" />
         </Layout>
     )

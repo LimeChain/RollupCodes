@@ -12,7 +12,7 @@
     padding-bottom: 40px;
     display: flex;
     flex-direction: column;
-    @include tablet {
+    @include desktop {
         margin-left: 64px;
     }
 }
@@ -20,7 +20,7 @@
 .pageGrid {
     display: flex;
     flex-direction: column;
-    @include tablet {
+    @include desktop {
         flex-direction: row;
     }
 }
@@ -32,6 +32,6 @@
     flex-direction: column;
     margin-top: 32px;
     @include tablet {
-        max-width: 270px;
+        width: 270px;
     }
 }
