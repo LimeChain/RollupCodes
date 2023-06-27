@@ -263,12 +263,12 @@ a {
 
     code {
         background: var(--code-background-color);
-        font-size: 14px;
-        font-weight: 500;
+        font-size: 13px;
+        font-weight: 400;
         line-height: 20px;
-        padding: 0px 4px;
+        padding: 0px 2px;
         color: var(--text-color);
-        font-family: var(--font-inter);
+        font-family: var(--font-roboto-mono);
     }
 
     strong {
