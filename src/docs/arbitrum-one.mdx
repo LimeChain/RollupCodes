@@ -24,13 +24,18 @@ labels:
 
     <Parameter name="Block Time" value="250ms" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
 
-    <Parameter name="Gas Limit" value="32m" tooltip="The gas limit that can be consumed by an L2 block"/>
+    <Parameter name="Gas Limit" value="32 million" tooltip="The gas limit that can be consumed by an L2 block"/>
 
     <Parameter name="Sequencing Frequency" value="30 - 120 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
     <Parameter name="Finality" value="7 days" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<a href="https://etherscan.io/address/0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6" target="_blank">0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6</a>} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" tooltip="The different client implementations of the Rollup" />
+    - [go-ethereum](https://github.com/OffchainLabs/go-ethereum/tree/master) (Go)
 
     <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain" />
 
@@ -57,10 +62,6 @@ labels:
     - **Type 105** - System (Bridge) Transaction. Retryable tickets are submitted via the L1 bridge and allow arbitrary L1 to L2 messages to be created and executed on L2
     - **Type 106** - System (Internal) Transaction. Transactions created by the ArbOS itself for certain state updates, like L1 base fee and block number
 
-    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
-
-    <Parameter name="Node Implementations" tooltip="The different client implementations of the Rollup" />
-    - [go-ethereum](https://github.com/OffchainLabs/go-ethereum/tree/master) (Go)
 </Section>
 
 <Section title="OPCODEs">
