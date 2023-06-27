@@ -118,7 +118,7 @@ const Parameter = ({
                 {value}
             </Typography>
         ) : (
-            value
+            <span style={{ marginLeft: 24 }}>{value}</span>
         )}
     </div>
 )

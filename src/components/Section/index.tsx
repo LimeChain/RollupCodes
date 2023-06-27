@@ -40,7 +40,8 @@ const Section = ({ title, children }: ISection) => {
                         ? {
                               height: `${ref.current.scrollHeight}px`,
                               transition: 'height 0.3s ease',
-                              overflowX: 'scroll',
+                              overflowX: 'auto',
+                              overflowY: 'hidden',
                           }
                         : {
                               height: 0,
@@ -48,7 +49,6 @@ const Section = ({ title, children }: ISection) => {
                               overflow: 'hidden',
                           }
                 }
-                // className={styles.body}
             >
                 <div className={styles.children}>{children}</div>
             </div>
