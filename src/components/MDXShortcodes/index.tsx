@@ -98,7 +98,7 @@ const Parameter = ({
     tooltip,
 }: {
     name: string
-    value?: string | React.ReactElement | string
+    value?: string | React.ReactNode | React.ReactNode[]
     tooltip?: string
 }) => (
     <span
@@ -163,7 +163,7 @@ const Added = () => (
 )
 
 const Reference = ({ url, label }: { url: string; label: string }) => (
-    <Link href={url} target="_blank" className={styles.reference}>
+    <Link key={label} href={url} target="_blank" className={styles.reference}>
         {label && label}
         <ReferenceIcon />
     </Link>
