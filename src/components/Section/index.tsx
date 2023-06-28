@@ -41,12 +41,18 @@ const Section = ({ title, children }: ISection) => {
 
     const toggle = () => setExpanded((prev) => !prev)
 
-    const id = title.toLowerCase().replace(' ', '-')
-
     return (
-        <div data-element-type="section" className={styles.section} id={id}>
+        <div
+            data-element-type="section"
+            className={styles.section}
+            id={title.toLowerCase().replace(' ', '-')}
+        >
             <div className={styles.sectionHeader}>
-                <Link href={`#${id}`} scroll={true}>
+                <Link
+                    href={`#${title.toLowerCase().replace(' ', '-')}`}
+                    id={`${title.toLowerCase().replace(' ', '-')}`}
+                    scroll={true}
+                >
                     <LinkIocn fill={`var(--)`} />
                 </Link>
                 <div
