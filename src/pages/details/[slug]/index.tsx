@@ -1,6 +1,6 @@
 import Avatar from '@components/Avatar'
 import Layout from '@components/Layout'
-import { AvatarSize, IDocMeta } from '@utils/types'
+import { AvatarSize, IDocMeta, Text } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
 import getConfig from 'next/config'
@@ -12,6 +12,7 @@ import Head from 'next/head'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
+import DropdownLinks from '@components/DropdownLinks'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -59,6 +60,7 @@ export default function Details({ content }: IContent) {
                     src={content?.meta?.logo}
                     name={content?.meta?.title}
                 />
+                <DropdownLinks links={content?.meta?.links} />
             </div>
             <div className={styles.pageGrid}>
                 <div id="sidebar" className={styles.sidebar} />
@@ -97,6 +99,7 @@ const getDocsContent = async (): Promise<DocsContent> => {
                 subtitle: data?.subtitle,
                 slug: fileName.replace('.mdx', ''),
                 labels: data?.labels,
+                links: data?.links,
             }
 
             docs[`${fileName.replace('.mdx', '')}`] = {

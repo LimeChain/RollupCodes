@@ -10,7 +10,8 @@
     --neutral40: #949494;
     --neutral30: #C3C3C3;
     --neutral20: #E1E1E1;
-    --neutral10: #F6F6F6;
+    --neutral10: #F1F1F1; 
+    --neutral5: #F6F6F6;
     --neutral: #ffffff;
 
     --success100: #003A14;
@@ -66,6 +67,8 @@
     --opposite-text-color: var(--neutral100);
     --icon-color: var(--neutral);
     --link-color: var(--neutral);
+    --dropdown-body-background-color: var(--neutral80);
+    --dropdown-item-hover-color: var(--neutral70);
 
     // Sibebar
     --sidebar-item-color: var(--neutral60);
@@ -89,6 +92,8 @@
     --opposite-text-color: var(--neutral);
     --icon-color: var(--neutral100);
     --link-color: var(--neutral100);
+    --dropdown-body-background-color: var(--neutral10);
+    --dropdown-item-hover-color: var(--neutral20);
 
     // Sibebar
     --sidebar-item-color: var(--neutral40);
@@ -97,7 +102,7 @@
     // Markdown
     --markdown-text-color: var(--neutral70);
     --code-background-color: var(--neutral20);
-    --row-background-color-hover: #F1F1F1;
+    --row-background-color-hover: var(--neutral10);
     --added-color: var(--success30);
     --modified-color: var(--warning30);
     --unsupported-color: var(--error30);
@@ -192,7 +197,6 @@ a {
     
     h3 {
         font-size: 32px;
-        line-height: auto;
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 16px;
@@ -201,7 +205,6 @@ a {
     
     h4 {
         font-size: 24px;
-        line-height: auto;
         font-family: var(--font-chakra-petch);
         font-weight: 700;
         margin-bottom: 16px;

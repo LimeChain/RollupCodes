@@ -82,6 +82,7 @@ const getDocsMetadata = async () => {
                 subtitle: matterResult?.data?.subtitle,
                 slug: fileName.replace('.mdx', ''),
                 labels: matterResult?.data?.labels,
+                links: matterResult?.data?.links,
             })
         })
     )

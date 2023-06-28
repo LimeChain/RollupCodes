@@ -78,6 +78,7 @@ export interface IDocMeta {
     logo: string
     slug: string
     labels: string[]
+    links: Record<string, Record<string, string>>
 }
 
 export enum AvatarSize {
