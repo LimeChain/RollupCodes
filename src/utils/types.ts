@@ -78,7 +78,7 @@ export interface IDocMeta {
     logo: string
     slug: string
     labels: string[]
-    links: Record<string, Record<string, string>>
+    links: Links
 }
 
 export enum AvatarSize {
@@ -90,3 +90,10 @@ export enum ThemeMode {
     LIGHT,
     DARK
 }
+
+export interface ILink {
+    name: string
+    url: string
+}
+
+export type Links = Record<string, ILink>

@@ -1,17 +1,11 @@
 import Link from 'next/link'
 import styles from './styles.module.scss'
 import Typography from '@components/Typography'
-import { Text } from '@utils/types'
+import { Links, Text } from '@utils/types'
 import Icon from '@components/Icon'
 import ReferenceIcon from 'public/images/reference-icon.svg'
 import ChevronDownIcon from 'public/images/chevron-down-icon.svg'
 import { useEffect, useMemo, useState } from 'react'
-
-type Link = {
-    name: string
-    url: string
-}
-type Links = Record<string, Link>
 
 const DropdownLinks = ({ links }: { links: Links }) => {
     const [width, setWidth] = useState<number>(0)
