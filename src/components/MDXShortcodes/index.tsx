@@ -57,16 +57,17 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
     )
 }
 
-const Copy = ({ value }: { value: string }) => {
+const Copy = ({ value, label }: { value: string; label: string }) => {
     const [copied, setCopied] = useState<boolean>(false)
 
     return (
         <div
             className={styles.copy}
             data-tooltip-id="copy-tooltip"
-            data-tooltip-content={copied ? 'Copied' : 'Copy'}
+            data-tooltip-content={copied ? 'Copied' : ''}
             onMouseLeave={() => setCopied(false)}
         >
+            {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                 <span className={styles.copyIcon}>
                     <CopyIcon />
