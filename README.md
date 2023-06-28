@@ -25,5 +25,6 @@ The project is built using [Next.js](https://nextjs.org/) and [TypeScript](https
 ## Contributing
 
 If you want to contribute or have feature requests feel free to create GitHub issues!
+
 More information on the contribution process, project architecture, and guide on how to add information for other
 Rollups will be added soon.
