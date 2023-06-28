@@ -13,6 +13,8 @@ import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -47,12 +49,26 @@ interface IContent {
 }
 
 export default function Details({ content }: IContent) {
+    const router = useRouter()
+
+    useEffect(() => {
+        const script = document.createElement('script')
+
+        script.src = '../js/details.js'
+        script.async = true
+
+        document.body.appendChild(script)
+
+        return () => {
+            document.body.removeChild(script)
+        }
+    }, [router.pathname])
+
     return (
         <Layout loading={!content}>
             <Head>
                 <title>{`Rollup Codes | ${content?.meta?.title}`}</title>
                 <meta name="description" content={content?.meta?.subtitle} />
-                <script src="../js/details.js" />
             </Head>
             <div className={styles.hero} id="hero">
                 <Avatar
