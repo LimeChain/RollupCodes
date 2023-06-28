@@ -3,6 +3,7 @@ import { AvatarSize, Headings, Text, Font } from '@utils/types'
 import styles from './styles.module.scss'
 import classNames from 'classnames'
 import Image from 'next/image'
+import useScreenModes from '@hooks/useScreenModes'
 
 interface IAvatar {
     name: string
@@ -12,6 +13,8 @@ interface IAvatar {
 
 const Avatar = ({ name = '', size = AvatarSize.SMALL, src }: IAvatar) => {
     const isLarge = Boolean(AvatarSize.LARGE === size)
+
+    const { isMobile } = useScreenModes()
 
     return (
         <div className={styles.avatar}>
@@ -39,7 +42,7 @@ const Avatar = ({ name = '', size = AvatarSize.SMALL, src }: IAvatar) => {
                 </div>
             )}
             <Typography
-                variant={Headings[isLarge ? 'H3' : 'H4']}
+                variant={Headings[isLarge ? (isMobile ? 'H4' : 'H3') : 'H4']}
                 fontWeight="700"
                 font={Font.ChakraPetch}
                 marginLeft={isLarge ? 12 : 8}

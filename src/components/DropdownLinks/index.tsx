@@ -6,9 +6,24 @@ import Icon from '@components/Icon'
 import ReferenceIcon from 'public/images/reference-icon.svg'
 import ChevronDownIcon from 'public/images/chevron-down-icon.svg'
 import { useEffect, useMemo, useState } from 'react'
+import useScreenModes from '@hooks/useScreenModes'
 
 const DropdownLinks = ({ links }: { links: Links }) => {
     const [width, setWidth] = useState<number>(0)
+
+    const { isMobile, isTablet } = useScreenModes()
+
+    const dropdownButtonLabel = useMemo(() => {
+        if (isMobile) {
+            return 'Links'
+        }
+
+        if (isTablet) {
+            return 'More'
+        }
+
+        return 'Social'
+    }, [isMobile, isTablet])
 
     const handleResize = (event: any) => {
         const width = event?.target.innerWidth
@@ -85,7 +100,7 @@ const DropdownLinks = ({ links }: { links: Links }) => {
             <div className={styles.dropdown}>
                 <div className={styles.dropdownButton}>
                     <Typography variant={Text.BODY2} fontWeight="700">
-                        Links
+                        {dropdownButtonLabel}
                     </Typography>{' '}
                     <ChevronDownIcon />
                 </div>
