@@ -138,7 +138,7 @@ const getDocsPaths = (): Paths => {
     const paths: Paths = []
 
     markdownDocs?.map((fileName) => {
-        return { params: { slug: `details/${fileName.replace('.mdx', '')}` } }
+        return { params: { details: { slug: fileName.replace('.mdx', '') } } }
     })
 
     return paths
