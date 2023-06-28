@@ -96,37 +96,44 @@ const Parameter = ({
     name,
     value,
     tooltip,
+    bordered = true,
+    reference,
 }: {
     name: string
     value?: string | React.ReactNode | React.ReactNode[]
     tooltip?: string
+    bordered?: boolean
+    reference?: string
 }) => (
     <span
-        className={classNames(styles.parameter, { [styles.bordered]: value })}
+        className={classNames(styles.parameter, {
+            [styles.bordered]: bordered && value,
+        })}
     >
         <Typography
             variant={Text.BODY2}
             fontWeight="700"
             marginRight={4}
-            width={'30%'}
+            width={'35%'}
+            className={styles.additionalParameterClass}
         >
             {name}
+            {reference && <Reference url={reference} />}
             {tooltip ? <Tooltip tooltip={tooltip} /> : null}
         </Typography>
-        {typeof value === 'string' ? (
-            <Typography
-                variant={Text.BODY2}
-                fontWeight="400"
-                marginLeft={24}
-                color={'var(--markdown-text-color)'}
-            >
-                {value}
-            </Typography>
-        ) : (
-            <span style={{ marginLeft: 24, wordBreak: 'break-all' }}>
-                {value}
-            </span>
-        )}
+        <span className={styles.parameterValue}>
+            {typeof value === 'string' ? (
+                <Typography
+                    variant={Text.BODY2}
+                    fontWeight="400"
+                    color={'var(--markdown-text-color)'}
+                >
+                    {value}
+                </Typography>
+            ) : (
+                value
+            )}
+        </span>
     </span>
 )
 
@@ -162,7 +169,7 @@ const Added = () => (
     </div>
 )
 
-const Reference = ({ url, label }: { url: string; label: string }) => (
+const Reference = ({ url, label }: { url: string; label?: string }) => (
     <Link key={label} href={url} target="_blank" className={styles.reference}>
         {label && label}
         <ReferenceIcon />
