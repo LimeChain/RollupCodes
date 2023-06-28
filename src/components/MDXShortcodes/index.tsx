@@ -12,6 +12,8 @@ import AddedIcon from 'public/images/added-triangle-icon.svg'
 import CopyIcon from 'public/images/copy-icon.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useState } from 'react'
+import Link from 'next/link'
+import ReferenceIcon from 'public/images/reference-icon.svg'
 
 type Props = {
     children: string | JSX.Element
@@ -160,6 +162,13 @@ const Added = () => (
     </div>
 )
 
+const Reference = ({ url, label }: { url: string; label: string }) => (
+    <Link href={url} target="_blank" className={styles.reference}>
+        {label && label}
+        <ReferenceIcon />
+    </Link>
+)
+
 const MDXShortcodes = {
     Labels,
     Section,
@@ -170,6 +179,7 @@ const MDXShortcodes = {
     Modified,
     Added,
     Copy,
+    Reference,
 }
 
 export default MDXShortcodes
