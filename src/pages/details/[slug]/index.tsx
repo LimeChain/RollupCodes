@@ -138,7 +138,7 @@ const getDocsPaths = (): Paths => {
     const paths: Paths = []
 
     markdownDocs?.map((fileName) => {
-        return { params: { slug: `details/${fileName.replace('.mdx', '')}` } }
+        paths.push({ params: { slug: fileName.replace('.mdx', '') } })
     })
 
     return paths
@@ -146,7 +146,8 @@ const getDocsPaths = (): Paths => {
 
 export async function getStaticPaths(): Promise<StaticPathsResult> {
     const paths = getDocsPaths()
-    return { paths, fallback: false }
+
+    return { paths, fallback: true }
 }
 
 export async function getStaticProps({
