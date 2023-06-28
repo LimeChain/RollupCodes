@@ -13,12 +13,15 @@ function buildSidebar(){
         link.id = `${item.toLowerCase().replace(' ', '-')}`
         link.href = `#${item.toLowerCase().replace(' ', '-')}`
         link.innerText = item
-        link.scroll = false
         sidebar.appendChild(link)
     })
 }
 
 buildSidebar ()
+
+var selectedSectionId = ''
+var isScrolling = false
+
 
 function removeActiveClassFromSidebarItem() {
     var elems = document.querySelectorAll(".sidebar-item-active");
@@ -36,37 +39,34 @@ function addActiveClassFromSidebarItem(id) {
     });
 }
 
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+function scrollToSection(id) {
+    const sections = document?.querySelectorAll('div[data-element-type="section"]')
+    sections.forEach((section) => {
+        if (section.id === id) {
+            window.location.hash = `#${section.id}`
+
+            section.scrollIntoView({
+                behavior: 'smooth'
+            })
+        }
+    })
+}
+
+// Links from sidebar
+document.querySelectorAll('#sidebar a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function(e){
+        selectedSectionId = anchor.id
         e.preventDefault()
-        const sections = document?.querySelectorAll('div[data-element-type="section"]')
-        sections.forEach((section) => {
-            if (section.id === anchor.id) {
-                section.scrollIntoView({
-                    behavior: 'smooth'
-                })
-            }
-        })
-        removeActiveClassFromSidebarItem()
-        anchor.classList.add('sidebar-item-active')
+        scrollToSection(anchor.id)
     })
 })
 
+// Links from sections headers
 document.querySelectorAll('#markdown a[href*="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function(e){
+        selectedSectionId = anchor.id
         e.preventDefault()
-        const sections = document?.querySelectorAll('div[data-element-type="section"]')
-        sections.forEach((section) => {
-            if (section.id === anchor.id) {
-                section.scrollIntoView({
-                    behavior: 'smooth'
-                })
-                removeActiveClassFromSidebarItem()
-                addActiveClassFromSidebarItem(section.id)
-            }
-        })
-        
-        // anchor.classList.add('sidebar-item-active')
+        scrollToSection(anchor.id)
     })
 })
 
@@ -109,7 +109,6 @@ document?.querySelectorAll('table')?.forEach((table) => {
         row.addEventListener('mouseout', function() {
             hoverOnRow('../images/link-icon.png')
         })
-       
     })
 })
 
@@ -121,7 +120,6 @@ function controlSidebarBehaviour() {
     if (window.location.pathname === '/') {
         return
     }
-    
     if (window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
         sidebar?.classList.add('sticky')
         sidebar_placeholder?.classList.add('sidebar_placeholder_visible')
@@ -131,22 +129,37 @@ function controlSidebarBehaviour() {
     }
 }
 
-function highlightSidebatItemOnScroll() {
+function highlightSidebarItemOnScroll() {
     const sctollPosition = window.scrollY
     const sections = document?.querySelectorAll('div[data-element-type="section"]')
 
     sections.forEach((section) => {
-        if (section.offsetHeight + section.offsetTop - 5 >= sctollPosition && sctollPosition >= section.offsetTop) {
+        if (window.scrollY - window.innerHeight < section.offsetTop && section.id === selectedSectionId) {
+            removeActiveClassFromSidebarItem()
+            addActiveClassFromSidebarItem(section.id)
+            return
+        }
+
+        if (sctollPosition >= section.offsetTop) {
             removeActiveClassFromSidebarItem()
             addActiveClassFromSidebarItem(section.id)
         }
     })
 }
 
+function detectWhenScrollStopped() {
+    window.clearTimeout( isScrolling );
+	isScrolling = setTimeout(function() {
+		selectedSectionId = ''
+	}, 150);
+}
+
 window.addEventListener('scroll', function() {
     controlSidebarBehaviour()
 
-    highlightSidebatItemOnScroll()
+    highlightSidebarItemOnScroll()
+
+    detectWhenScrollStopped()
 });
 
 window.addEventListener('resize', function() {

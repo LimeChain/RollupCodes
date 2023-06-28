@@ -51,7 +51,6 @@ const Section = ({ title, children }: ISection) => {
                 <Link
                     href={`#${title.toLowerCase().replace(' ', '-')}`}
                     id={`${title.toLowerCase().replace(' ', '-')}`}
-                    scroll={true}
                 >
                     <LinkIocn fill={`var(--)`} />
                 </Link>
