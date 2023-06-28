@@ -14,13 +14,21 @@
 
 .group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     padding: 6px 0;
+    row-gap: 24px;
+    @include tablet {
+        flex-direction: row;
+    }
 }
 
 .pipe {
-    margin: 0 16px;
+    display: none;
+    @include tablet {
+        display: flex;
+        margin: 0 16px;
+    }
 }
 
 .link {
@@ -28,6 +36,12 @@
 }
 
 .defaultButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.socials {
     display: flex;
     flex-direction: row;
     align-items: center;
