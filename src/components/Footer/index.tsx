@@ -52,7 +52,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className={styles.group}>
-                <Link href="/privacy-policy" target="_blank">
+                <Link href="/privacy-policy">
                     <Typography variant={Text.BODY2} fontWeight="400">
                         Privacy Policy
                     </Typography>

@@ -133,10 +133,10 @@ export default function PrivacyPolicy() {
                 If you have questions or concerns about this privacy policy,
                 please contact us at{' '}
                 <Link
-                    href="mailto:mailto:rollup.codes@limechain.tech"
+                    href="mailto:rollup.codes@limechain.tech"
                     className={styles.link}
                 >
-                    mailto:rollup.codes@limechain.tech
+                    rollup.codes@limechain.tech
                 </Link>
             </Typography>
         </Layout>
