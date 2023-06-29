@@ -46,7 +46,7 @@ links:
 
     <Parameter name="Finality" value="24 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around an hour, but its submission is delayed by ~21 hours as a security measure during the alpha phase" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<a href="https://etherscan.io/address/0x32400084C286CF3E17e7B677ea9583e60a000324" target="_blank">0x32400084C286CF3E17e7B677ea9583e60a000324</a>} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x32400084C286CF3E17e7B677ea9583e60a000324" url="https://etherscan.io/address/0x32400084C286CF3E17e7B677ea9583e60a000324" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Sparse Merkle Tree + Blake2 Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
