@@ -7,7 +7,7 @@
     align-items: center;
     row-gap: 16px;
     padding: 10px 0;
-    @include tablet {
+    @include desktop {
         flex-direction: row;
     }
 }
@@ -18,14 +18,14 @@
     align-items: center;
     padding: 6px 0;
     row-gap: 24px;
-    @include tablet {
+    @include desktop {
         flex-direction: row;
     }
 }
 
 .pipe {
     display: none;
-    @include tablet {
+    @include desktop {
         display: flex;
         margin: 0 16px;
     }

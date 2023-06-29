@@ -52,6 +52,12 @@ const Footer = () => {
                 </div>
             </div>
             <div className={styles.group}>
+                <Link href="/privacy-policy" target="_blank">
+                    <Typography variant={Text.BODY2} fontWeight="400">
+                        Privacy Policy
+                    </Typography>
+                </Link>
+                <div className={styles.pipe}>{'|'}</div>
                 <Link
                     href="https://github.com/LimeChain/rollup-codes/blob/main/LICENSE"
                     target="_blank"
