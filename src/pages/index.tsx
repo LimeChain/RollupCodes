@@ -46,7 +46,7 @@ export default function Home({ docs }: IHomeProps) {
                 marginBottom={96}
                 marginTop={16}
             >
-                A comprehensive tool for <b>developers</b> to compare and and do
+                A comprehensive tool for <b>developers</b> to compare and do
                 in-depth analyses of the expanding Ethereum ecosystem
             </Typography>
             <Grid>
