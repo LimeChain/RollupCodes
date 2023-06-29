@@ -5,10 +5,10 @@ import styles from './styles.module.scss'
 import Container from '@components/Container'
 import { useEffect, useState } from 'react'
 import Loading from '@components/Loading'
-import TopLeftCornerLight from 'public/images/top-left-corner-light.svg'
-import BottomRightCornerLight from 'public/images/bottom-right-corner-light.svg'
-import TopLeftCornerDark from 'public/images/top-left-corner-dark.svg'
-import BottomRightCornerDark from 'public/images/bottom-right-corner-dark.svg'
+import TopLeftCornerLight from '/public/images/top-left-corner-light.svg'
+import BottomRightCornerLight from '/public/images/bottom-right-corner-light.svg'
+import TopLeftCornerDark from '/public/images/top-left-corner-dark.svg'
+import BottomRightCornerDark from '/public/images/bottom-right-corner-dark.svg'
 import { useTheme } from 'next-themes'
 import { ThemeMode } from '@utils/types'
 
@@ -50,10 +50,10 @@ const Layout = ({ children, loading }: ILayout) => {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <link rel="icon" href="public/images/favicon.ico" />
+                <link rel="icon" href="/images/favicon.ico" />
                 <meta
                     property="twitter:image"
-                    content="public/images/thumbnail.png"
+                    content="/images/thumbnail.png"
                 />
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta
@@ -62,16 +62,16 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     property="twitter:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
                 <title>Rollup Codes</title>
                 <meta
                     property="description"
-                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
                 <meta
                     property="og:image"
-                    content="public/images/thumbnail.png"
+                    content="/images/thumbnail.png"
                 />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
@@ -81,7 +81,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     property="og:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
                 {/* <meta property="og:url" content="" /> */}
             </Head>

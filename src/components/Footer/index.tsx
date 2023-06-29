@@ -2,11 +2,11 @@ import Typography from '@components/Typography'
 import styles from './styles.module.scss'
 import { Text } from '@utils/types'
 import Link from 'next/link'
-import PlusIcon from 'public/images/plus-icon.svg'
-import TwitterIcon from 'public/images/twitter-icon.svg'
-import EmailIcon from 'public/images/email-icon.svg'
-import LimechainLogo from 'public/images/limechain-logo.svg'
-import GithubIcon from 'public/images/github-icon.svg'
+import PlusIcon from '/public/images/plus-icon.svg'
+import TwitterIcon from '/public/images/twitter-icon.svg'
+import EmailIcon from '/public/images/email-icon.svg'
+import LimeChainLogo from '/public/images/limechain-logo.svg'
+import GithubIcon from '/public/images/github-icon.svg'
 
 const Footer = () => {
     return (
@@ -24,7 +24,7 @@ const Footer = () => {
                     >
                         Made by
                     </Typography>
-                    <LimechainLogo fill="var(--icon-color)" />
+                    <LimeChainLogo fill="var(--icon-color)" />
                 </Link>
                 <div className={styles.pipe}>{'|'}</div>
                 <div className={styles.socials}>

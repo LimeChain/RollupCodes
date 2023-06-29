@@ -47,7 +47,7 @@ export default function Home({ docs }: IHomeProps) {
                 marginTop={16}
             >
                 A comprehensive tool for <b>developers</b> to compare and do
-                in-depth analyses of the expanding Ethereum ecosystem
+                in-depth analysis of the expanding Ethereum ecosystem
             </Typography>
             <Grid>
                 {docs?.map((docMeta: IDocMeta, index: number) => (

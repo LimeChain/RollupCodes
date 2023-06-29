@@ -4,7 +4,7 @@ import { IDocMeta, Text } from '@utils/types'
 import Link from 'next/link'
 import Avatar from '@components/Avatar'
 import Label from '@components/Label'
-import ArrowIcon from 'public/images/arrow-icon.svg'
+import ArrowIcon from '/public/images/arrow-icon.svg'
 
 const RollupSummaryCard = ({
     title,
