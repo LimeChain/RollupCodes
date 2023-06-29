@@ -56,7 +56,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 <meta property="og:type" content="website"/>
                 <meta property="og:title" content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
                 <meta property="og:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
-                <meta property="og:image" content="/public/images/thumbnail.png"/>
+                <meta property="og:image" content="https://raw.githubusercontent.com/LimeChain/RollupCodes/main/public/images/thumbnail.png"/>
                 <meta property="og:image:width" content="1200"/>
                 <meta property="og:image:height" content="630"/>
 
@@ -66,7 +66,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 <meta property="twitter:url" content="https://rollup.codes"/>
                 <meta name="twitter:title" content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
                 <meta name="twitter:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
-                <meta name="twitter:image" content="/public/images/thumbnail.png"/>
+                <meta name="twitter:image" content="https://raw.githubusercontent.com/LimeChain/RollupCodes/main/public/images/thumbnail.png"/>
 
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <script src="/js/googleAnalytics.js" async />
