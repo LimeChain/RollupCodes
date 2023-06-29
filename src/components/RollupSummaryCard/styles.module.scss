@@ -66,4 +66,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    svg {
+        transition: transform .3s ease;
+    }
+    &:hover {
+        svg {
+            transform: translateX(5px);
+            transition: transform .3s ease;
+        }
+    }
 }
