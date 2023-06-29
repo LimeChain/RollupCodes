@@ -48,17 +48,15 @@ const Layout = ({ children, loading }: ILayout) => {
             <Head>
 
                 <link rel="icon" href="/images/favicon.ico" />
-                <title>Rollup Codes</title>
 
-
-                <title>Rollup Codes</title>
+                <title>RollupCodes</title>
                 <meta name="description" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
 
                 <meta property="og:url" content="https://rollup.codes"/>
                 <meta property="og:type" content="website"/>
-                <meta property="og:title" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
+                <meta property="og:title" content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
                 <meta property="og:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
-                <meta property="og:image" content="/images/thumbnail.png"/>
+                <meta property="og:image" content="/public/images/thumbnail.png"/>
                 <meta property="og:image:width" content="1200"/>
                 <meta property="og:image:height" content="630"/>
 
@@ -66,9 +64,9 @@ const Layout = ({ children, loading }: ILayout) => {
                 <meta name="twitter:card" content="summary_large_image"/>
                 <meta property="twitter:domain" content="rollup.codes"/>
                 <meta property="twitter:url" content="https://rollup.codes"/>
-                <meta name="twitter:title" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
+                <meta name="twitter:title" content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
                 <meta name="twitter:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
-                <meta name="twitter:image" content="/images/thumbnail.png"/>
+                <meta name="twitter:image" content="/public/images/thumbnail.png"/>
 
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <script src="/js/googleAnalytics.js" async />
