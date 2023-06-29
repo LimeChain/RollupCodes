@@ -55,7 +55,7 @@ links:
 
     <Parameter name="Node Implementations" value={<Reference label="go-ethereum (Go)" url="https://github.com/OffchainLabs/go-ethereum/tree/master" />} tooltip="The different client implementations of the Rollup" />
 
-    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" reference="https://developer.arbitrum.io/arbitrum-ethereum-differences#transactions" />
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
         - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
         - **Type 1** - User Transaction. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
@@ -68,10 +68,9 @@ links:
         - **Type 106** - System (Internal) Transaction. Transactions created by the ArbOS itself for certain state updates, like L1 base fee and block number
     ___
 
-    <MultiRowParameters data={[
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain." data={[
         {
             title: 'L1 → L2',
-            reference: 'https://developer.arbitrum.io/arbos/l1-to-l2-messaging',
             rows: [
                 {
                     label: 'Latency',
@@ -87,7 +86,6 @@ links:
         },
         {
             title: 'L2 → L1',
-            reference: 'https://developer.arbitrum.io/arbos/l2-to-l1-messaging',
             rows: [
                 {
                     label: 'Latency',

@@ -182,14 +182,27 @@ type MultiRowParametersData = Record<
 >[]
 
 const MultiRowParameters = ({
+    title,
+    tooltip,
     data,
     bordered = true,
 }: {
+    title: string
+    tooltip: string
     data: MultiRowParametersData
     bordered: boolean
 }) => {
     return (
-        <>
+        <div className={styles.multiRowContainer}>
+            <Typography
+                variant={Text.BODY2}
+                fontWeight="700"
+                className={styles.additionalParameterClass}
+                marginBottom={12}
+            >
+                {title}
+                {tooltip ? <Tooltip tooltip={tooltip} /> : null}
+            </Typography>
             {data?.map((row: any, index: number) => (
                 <div
                     key={`row-${index}`}
@@ -236,7 +249,7 @@ const MultiRowParameters = ({
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     )
 }
 

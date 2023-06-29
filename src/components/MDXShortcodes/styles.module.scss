@@ -120,12 +120,18 @@
     flex-direction: row;
 }
 
-.multiRow {
+.multiRowContainer {
+    display: flex;
+    flex-direction: column;
     padding: 12px 0 0;
+}
+
+.multiRow {
     display: flex;
     flex-direction: row;
     align-items: baseline;
     width: 100%;
+    padding: 12px 0 0;
 }
 
 .multiRowValues {
