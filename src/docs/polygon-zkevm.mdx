@@ -48,28 +48,50 @@ links:
 
     <Parameter name="Finality" value="~1 hour" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<a href="https://etherscan.io/address/0x5132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2" target="_blank">0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2</a>} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2" url="https://etherscan.io/address/0x5132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Sparse Merkle Trie + Poseidon Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" tooltip="The different client implementations of the Rollup" />
-
-    - [zkevm-node](https://github.com/0xPolygonHermez/zkevm-node) (Go)
+    <Parameter name="Node Implementations" value={<Reference label="zkevm-node (Go)" url="https://github.com/0xPolygonHermez/zkevm-node" />} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
     - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
     - No support for  [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) and [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) type transactions.
+    ___
 
-    <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and Polygon zkEVM will provide proof of the data transfer on the destination chain" />
-
-    - ###### L1 → L2
-        <Parameter name="Latency" value="~6-8 minutes" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block" />
-        <Parameter name="Cost" value="95 000 L2 gas" tooltip="The L2 gas cost for proving and executing a message from Ethereum on Polygon zkEVM" />
-    <br />
-    - ###### L1 → L2
-        <Parameter name="Latency" value="~1 hour" tooltip="The time it takes for a message to be made available on Ethereum after being included in a Polygon zkEVM block and sequenced to L1" />
-        <Parameter name="Cost" value="95 000 L1 gas" tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Polygon zkEVM" />
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and Polygon zkEVM will provide proof of the data transfer on the destination chain."  data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~6-8 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The L2 gas cost for proving and executing a message from Ethereum on Polygon zkEVM',
+                    value: '95000 L2 gas',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a Polygon zkEVM block and sequenced to L1.',
+                    value: '~1 hour',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Polygon zkEVM)',
+                    value: ' 95000 L1 gas',
+                },
+            ],
+        },
+    ]} />
 
 </Section>
 
@@ -79,13 +101,13 @@ links:
 
     The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
 
-    | | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | ![link icon](../images/link-icon.png) | FF | SELFDESTRUCT | `selfdestruct(address)` | Removed and replaced by `SENDALL` as per [EIP-4758](https://eips.ethereum.org/EIPS/eip-4758) | Halts execution and registers an account for later deletion. Sends all Ether balance to the specified address. <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 3F | EXTCODEHASH | | Returns the Poseidon hash of the contract bytecode from the state tree. <br /><br /> Returns empty hash even if the account does not exist. | Returns the Keccak hash of the contract bytecode from the state tree.<br /><br />Returns empty hash if the account has no code and 0 if the account does not exist or has been destroyed.<Modified /> |
-    | ![link icon](../images/link-icon.png) | 40 | BLOCKHASH | `blockhash(x)` | Returns the hash of all previous L2 block hashes instead of just the last 256 blocks.<br /><br />It is the state root at the end of the processable transaction and is stored on the system smart contract. | Returns the hash of one of the 256 most recent complete blocks. <Modified /> |
-    | ![link icon](../images/link-icon.png) | 43 | NUMBER | `block.number` | Blocks on the rollup are created per transaction.<br /><br />The OPCODE returns the number of processed transactions. | Returns the L1 block number. <Modified /> |
-    | ![link icon](../images/link-icon.png) | 44 | DIFFICULTY | `block.difficulty` | Always returns `0` | Returns the output of the randomness beacon provided by the beacon chain. <Modified /> |
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | FF | SELFDESTRUCT | `selfdestruct(address)` | Removed and replaced by `SENDALL` as per [EIP-4758](https://eips.ethereum.org/EIPS/eip-4758) | Halts execution and registers an account for later deletion. Sends all Ether balance to the specified address. <Unsupported /> |
+    | 3F | EXTCODEHASH | | Returns the Poseidon hash of the contract bytecode from the state tree. <br /><br /> Returns empty hash even if the account does not exist. | Returns the Keccak hash of the contract bytecode from the state tree.<br /><br />Returns empty hash if the account has no code and 0 if the account does not exist or has been destroyed.<Modified /> |
+    | 40 | BLOCKHASH | `blockhash(x)` | Returns the hash of all previous L2 block hashes instead of just the last 256 blocks.<br /><br />It is the state root at the end of the processable transaction and is stored on the system smart contract. | Returns the hash of one of the 256 most recent complete blocks. <Modified /> |
+    | 43 | NUMBER | `block.number` | Blocks on the rollup are created per transaction.<br /><br />The OPCODE returns the number of processed transactions. | Returns the L1 block number. <Modified /> |
+    | 44 | DIFFICULTY | `block.difficulty` | Always returns `0` | Returns the output of the randomness beacon provided by the beacon chain. <Modified /> |
 
 </Section>
 
@@ -95,15 +117,15 @@ links:
 
     The following Precompiled Contracts behave differently compared to the canonical Ethereum L1
 
-    |      | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :----- | :----- | :--------------- | :-------------------- |
-    | ![link icon](../images/link-icon.png) | 0x02 <Copy value="0x02" /> | `SHA2-256` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Elliptic curve digital signature algorithm (ECDSA) public key recovery function. <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 0x03 <Copy value="0x03" /> | `RIPEMD-160` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Hash function <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 0x05 <Copy value="0x05" /> | `modexp` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Arbitrary-precision exponentiation under modulo <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 0x06 <Copy value="0x06" /> | `ecAdd` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Point addition (ADD) on the elliptic curve `alt_bn128` <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 0x07 <Copy value="0x07" /> | `ecMul` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Scalar multiplication (MUL) on the elliptic curve `alt_bn128` <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 0x08 <Copy value="0x08" /> | `ecPairing` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Bilinear function on groups on the elliptic curve `alt_bn128` <Unsupported /> |
-    | ![link icon](../images/link-icon.png) | 0x09 <Copy value="0x09" /> | `blake2f` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
+    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | <Copy label="0x02" value="0x02" /> | `SHA2-256` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Elliptic curve digital signature algorithm (ECDSA) public key recovery function. <Unsupported /> |
+    | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Hash function <Unsupported /> |
+    | <Copy label="0x05" value="0x05" /> | `modexp` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Arbitrary-precision exponentiation under modulo <Unsupported /> |
+    | <Copy label="0x06" value="0x06" /> | `ecAdd` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Point addition (ADD) on the elliptic curve `alt_bn128` <Unsupported /> |
+    | <Copy label="0x07" value="0x07" /> | `ecMul` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Scalar multiplication (MUL) on the elliptic curve `alt_bn128` <Unsupported /> |
+    | <Copy label="0x08" value="0x08" /> | `ecPairing` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Bilinear function on groups on the elliptic curve `alt_bn128` <Unsupported /> |
+    | <Copy label="0x09 " value="0x09" /> | `blake2f` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
 
 </Section>
 
@@ -111,9 +133,9 @@ links:
 
     The following system contracts have been introduced on the Rollup.
 
-    | | Address | Name | Description |
-    | :--- | :--- | :--- | :--- |
-    | ![link icon](../images/link-icon.png) | 0x2a3...De <Copy value="0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe" /> | [PolygonZkEVMBridge](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/contracts/PolygonZkEVMBridge.sol) | Provides functionality for sending and retrieving messages and assets between domains (Ethereum and Polygon zkEVM) |
+    | Address | Name | Description |
+    | :--- | :--- | :--- |
+    | <Copy label="0x2a3...De" value="0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe" /> | <Reference label="PolygonZkEVMBridge" url="https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/contracts/PolygonZkEVMBridge.sol" /> | Provides functionality for sending and retrieving messages and assets between domains (Ethereum and Polygon zkEVM) |
 
 </Section>
 
@@ -124,26 +146,26 @@ links:
     The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
 
 
-    |      | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :----- | :----- | :--------------- | :-------------------- |
-    | ![link icon](../images/link-icon.png) | `eth_call` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Executes a new message call immediately without creating a transaction on the blockchain.<br /><br />Does not support state override and pending block.<br /><br />Does not support `from` values that are smart contract addresses. | Executes a new message call immediately without creating a transaction on the blockchain <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns the balance of the account of the given address. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_getCode` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns code at a given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns code at a given address. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_getUncleByBlockHashAndIndex` | Block hash and integer index | Response is always empty | Returns information about a uncle of a block by hash and uncle index position. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_getUncleByBlockNumberAndIndex` | Block number (integer) and integer index | Response is always empty | Returns information about a uncle of a block by number and uncle index position. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_getUncleCountByBlockHash` | Block hash | Response is always zero. | Returns the number of uncles in a block from a block matching the given block hash. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_getUncleCountByBlockNumber` | Block number | Response is always zero. | Returns the number of uncles in a block from a block matching the given block number. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `eth_protocolVersion` | None | Response is always zero. | Returns the current Ethereum protocol version. <Modified /> |
-    | ![link icon](../images/link-icon.png) | `txpool_content` | None | Response is always empty | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_batchNumber` | None | Returns the latest batch number | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_batchNumberByBlockNumber` | Block number | Returns the batch number of the batch connected to the block. | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_consolidatedBlockNumber` | None | Returns the latest block number that is connected to the latest batch verified. | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_getBatchByNumber` | Hex batch number or a tag (`earliest` / `latest`) | Gets a batch for a given number | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_isBlockConsolidated` | Hex string block number | Returns `true` if the provided block number is already connected to a batch that was already verified, otherwise false. | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_isBlockVirtualized` | Hex string block number | Returns `true` if the provided block number is already connected to a batch that was already virtualized, otherwise false. | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_verifiedBatchNumber` | Hex batch number | Returns the latest verified batch number. | N/A <Added /> |
-    | ![link icon](../images/link-icon.png) | `zkevm_virtualBatchNumber` | Hex batch number | Returns the latest virtual batch number. | N/A <Added /> |
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_call` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Executes a new message call immediately without creating a transaction on the blockchain.<br /><br />Does not support state override and pending block.<br /><br />Does not support `from` values that are smart contract addresses. | Executes a new message call immediately without creating a transaction on the blockchain <Modified /> |
+    | `eth_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. <Modified /> |
+    | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns the balance of the account of the given address. <Modified /> |
+    | `eth_getCode` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns code at a given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns code at a given address. <Modified /> |
+    | `eth_getUncleByBlockHashAndIndex` | Block hash and integer index | Response is always empty | Returns information about a uncle of a block by hash and uncle index position. <Modified /> |
+    | `eth_getUncleByBlockNumberAndIndex` | Block number (integer) and integer index | Response is always empty | Returns information about a uncle of a block by number and uncle index position. <Modified /> |
+    | `eth_getUncleCountByBlockHash` | Block hash | Response is always zero. | Returns the number of uncles in a block from a block matching the given block hash. <Modified /> |
+    | `eth_getUncleCountByBlockNumber` | Block number | Response is always zero. | Returns the number of uncles in a block from a block matching the given block number. <Modified /> |
+    | `eth_protocolVersion` | None | Response is always zero. | Returns the current Ethereum protocol version. <Modified /> |
+    | `txpool_content` | None | Response is always empty | N/A <Added /> |
+    | `zkevm_batchNumber` | None | Returns the latest batch number | N/A <Added /> |
+    | `zkevm_batchNumberByBlockNumber` | Block number | Returns the batch number of the batch connected to the block. | N/A <Added /> |
+    | `zkevm_consolidatedBlockNumber` | None | Returns the latest block number that is connected to the latest batch verified. | N/A <Added /> |
+    | `zkevm_getBatchByNumber` | Hex batch number or a tag (`earliest` / `latest`) | Gets a batch for a given number | N/A <Added /> |
+    | `zkevm_isBlockConsolidated` | Hex string block number | Returns `true` if the provided block number is already connected to a batch that was already verified, otherwise false. | N/A <Added /> |
+    | `zkevm_isBlockVirtualized` | Hex string block number | Returns `true` if the provided block number is already connected to a batch that was already virtualized, otherwise false. | N/A <Added /> |
+    | `zkevm_verifiedBatchNumber` | Hex batch number | Returns the latest verified batch number. | N/A <Added /> |
+    | `zkevm_virtualBatchNumber` | Hex batch number | Returns the latest virtual batch number. | N/A <Added /> |
 
 </Section>
 

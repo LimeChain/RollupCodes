@@ -19,7 +19,7 @@ const RollupSummaryCard = ({
                 <Avatar src={logo} name={title} />
             </div>
             <div className={styles.cardBody}>
-                <Typography variant={Text.BODY1} fontWeight="400">
+                <Typography variant={Text.BODY2} fontWeight="400">
                     {subtitle}
                 </Typography>
             </div>

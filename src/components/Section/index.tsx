@@ -7,6 +7,8 @@ import MinusGradientIcon from 'public/images/minus-gradient-icon.svg'
 import PlusGrayIcon from 'public/images/plus-gray-icon.svg'
 import MinusGrayIcon from 'public/images/minus-gray-icon.svg'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
+import LinkIocn from 'public/images/link-icon.svg'
 
 interface ISection {
     title: string
@@ -46,16 +48,28 @@ const Section = ({ title, children }: ISection) => {
             id={title.toLowerCase().replace(' ', '-')}
         >
             <div
-                onClick={toggle}
-                className={styles.button}
-                data-element-type="section-title"
-                data-element-value={title}
+                className={styles.sectionHeader}
+                data-element-type="section-header"
             >
-                <Typography variant={Headings.H4} fontWeight={'700'}>
-                    {title}
-                </Typography>
-                {isExpanded ? minusIcon : plusIcon}
+                <Link
+                    href={`#${title.toLowerCase().replace(' ', '-')}`}
+                    id={`${title.toLowerCase().replace(' ', '-')}`}
+                >
+                    <LinkIocn fill={`var(--)`} />
+                </Link>
+                <div
+                    onClick={toggle}
+                    className={styles.button}
+                    data-element-type="section-title"
+                    data-element-value={title}
+                >
+                    <Typography variant={Headings.H4} fontWeight={'700'}>
+                        {title}
+                    </Typography>
+                    {isExpanded ? minusIcon : plusIcon}
+                </div>
             </div>
+
             <div
                 ref={ref}
                 style={

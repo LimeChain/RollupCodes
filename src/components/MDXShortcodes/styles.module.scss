@@ -28,6 +28,7 @@
     padding: 12px 0;
     display: flex;
     flex-direction: row;
+    align-items: baseline;
 }
 
 .bordered {
@@ -88,10 +89,61 @@
 .copy {
     cursor: pointer;
     position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .copyIcon {
-    position: relative;
-    top: 3px;
-    left: 3px;
+    margin-left: 4px;
+}
+
+.reference {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: max-content;
+    svg {
+        margin-left: 4px;
+    }
+}
+
+.parameterValue {
+    margin-left: 24;
+    word-break: break-all;
+    width: 100%;
+}
+
+.additionalParameterClass {
+    display: flex;
+    flex-direction: row;
+}
+
+.multiRowContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0 0;
+}
+
+.multiRow {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: 100%;
+    padding: 12px 0 0;
+}
+
+.multiRowValues {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    flex: 1;
+}
+
+.multiRowValue {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: 100%;
+    margin-bottom: 12px;
 }

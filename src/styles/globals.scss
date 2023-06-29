@@ -62,7 +62,7 @@
     /* Your default theme */
     --background: var(--neutral100);
     --text-color: var(--neutral);
-    --border-color: var(--neutral50);
+    --border-color: var(--neutral70);
     --opposite-background-color: var(--neutral);
     --opposite-text-color: var(--neutral100);
     --icon-color: var(--neutral);
@@ -77,7 +77,7 @@
     // Markdown
     --markdown-text-color: var(--neutral30);
     --code-background-color: var(--neutral70);
-    --row-background-color-hover: var(--neutral90)
+    --row-background-color-hover: var(--neutral90);
     --added-color: var(--success70);
     --modified-color: var(--warning70);
     --unsupported-color: var(--error70);
@@ -87,7 +87,7 @@
 .light {
     --background: var(--neutral);
     --text-color: var(--neutral100);
-    --border-color: var(--neutral40);
+    --border-color: var(--neutral30);
     --opposite-background-color: var(--neutral100);
     --opposite-text-color: var(--neutral);
     --icon-color: var(--neutral100);

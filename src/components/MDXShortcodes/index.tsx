@@ -12,6 +12,8 @@ import AddedIcon from 'public/images/added-triangle-icon.svg'
 import CopyIcon from 'public/images/copy-icon.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useState } from 'react'
+import Link from 'next/link'
+import ReferenceIcon from 'public/images/reference-icon.svg'
 
 type Props = {
     children: string | JSX.Element
@@ -57,16 +59,17 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
     )
 }
 
-const Copy = ({ value }: { value: string }) => {
+const Copy = ({ value, label }: { value: string; label: string }) => {
     const [copied, setCopied] = useState<boolean>(false)
 
     return (
         <div
             className={styles.copy}
             data-tooltip-id="copy-tooltip"
-            data-tooltip-content={copied ? 'Copied' : 'Copy'}
+            data-tooltip-content={copied ? 'Copied' : ''}
             onMouseLeave={() => setCopied(false)}
         >
+            {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                 <span className={styles.copyIcon}>
                     <CopyIcon />
@@ -93,37 +96,44 @@ const Parameter = ({
     name,
     value,
     tooltip,
+    bordered = true,
+    reference,
 }: {
     name: string
-    value?: string | React.ReactElement | string
+    value?: string | React.ReactNode | React.ReactNode[]
     tooltip?: string
+    bordered?: boolean
+    reference?: string
 }) => (
     <span
-        className={classNames(styles.parameter, { [styles.bordered]: value })}
+        className={classNames(styles.parameter, {
+            [styles.bordered]: bordered && value,
+        })}
     >
         <Typography
             variant={Text.BODY2}
             fontWeight="700"
             marginRight={4}
-            width={'30%'}
+            width={'35%'}
+            className={styles.additionalParameterClass}
         >
             {name}
+            {reference && <Reference url={reference} />}
             {tooltip ? <Tooltip tooltip={tooltip} /> : null}
         </Typography>
-        {typeof value === 'string' ? (
-            <Typography
-                variant={Text.BODY2}
-                fontWeight="400"
-                marginLeft={24}
-                color={'var(--markdown-text-color)'}
-            >
-                {value}
-            </Typography>
-        ) : (
-            <span style={{ marginLeft: 24, wordBreak: 'break-all' }}>
-                {value}
-            </span>
-        )}
+        <span className={styles.parameterValue}>
+            {typeof value === 'string' ? (
+                <Typography
+                    variant={Text.BODY2}
+                    fontWeight="400"
+                    color={'var(--markdown-text-color)'}
+                >
+                    {value}
+                </Typography>
+            ) : (
+                value
+            )}
+        </span>
     </span>
 )
 
@@ -159,6 +169,90 @@ const Added = () => (
     </div>
 )
 
+const Reference = ({ url, label }: { url: string; label?: string }) => (
+    <Link href={url} target="_blank" className={styles.reference}>
+        {label && label}
+        <ReferenceIcon />
+    </Link>
+)
+
+type MultiRowParametersData = Record<
+    string,
+    string | Record<string, string>[]
+>[]
+
+const MultiRowParameters = ({
+    title,
+    tooltip,
+    data,
+    bordered = true,
+}: {
+    title: string
+    tooltip: string
+    data: MultiRowParametersData
+    bordered: boolean
+}) => {
+    return (
+        <div className={styles.multiRowContainer}>
+            <Typography
+                variant={Text.BODY2}
+                fontWeight="700"
+                className={styles.additionalParameterClass}
+                marginBottom={12}
+            >
+                {title}
+                {tooltip ? <Tooltip tooltip={tooltip} /> : null}
+            </Typography>
+            {data?.map((row: any, index: number) => (
+                <div
+                    key={`row-${index}`}
+                    className={classNames(styles.multiRow, {
+                        [styles.bordered]: bordered,
+                    })}
+                >
+                    <Typography
+                        variant={Text.BODY2}
+                        fontWeight="700"
+                        marginRight={4}
+                        width={'26%'}
+                        className={styles.additionalParameterClass}
+                    >
+                        {row?.title}
+                        {row?.reference && <Reference url={row?.reference} />}
+                    </Typography>
+                    <div className={styles.multiRowValues}>
+                        {row?.rows?.map((row: any, index: number) => (
+                            <div
+                                key={`inner-row-${index}`}
+                                className={styles.multiRowValue}
+                            >
+                                <Typography
+                                    variant={Text.BODY2}
+                                    fontWeight="700"
+                                    marginRight={4}
+                                    width={'25%'}
+                                >
+                                    {row?.label}
+                                    {row?.tooltip && (
+                                        <Tooltip tooltip={row?.tooltip} />
+                                    )}
+                                </Typography>
+                                <Typography
+                                    variant={Text.BODY2}
+                                    fontWeight="400"
+                                    color={'var(--markdown-text-color)'}
+                                >
+                                    {row?.value}
+                                </Typography>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
 const MDXShortcodes = {
     Labels,
     Section,
@@ -169,6 +263,8 @@ const MDXShortcodes = {
     Modified,
     Added,
     Copy,
+    Reference,
+    MultiRowParameters,
 }
 
 export default MDXShortcodes
