@@ -69,10 +69,7 @@ const Layout = ({ children, loading }: ILayout) => {
                     property="description"
                     content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
-                <meta
-                    property="og:image"
-                    content="/images/thumbnail.png"
-                />
+                <meta property="og:image" content="/images/thumbnail.png" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta
@@ -83,7 +80,7 @@ const Layout = ({ children, loading }: ILayout) => {
                     property="og:description"
                     content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
-                {/* <meta property="og:url" content="" /> */}
+                <script src="/js/googleAnalytics.js" async />
             </Head>
             {topLeftShadow}
             <Container>
