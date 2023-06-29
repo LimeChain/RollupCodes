@@ -39,7 +39,7 @@ function buildSidebar(){
         sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
     })
 
-    sidebarItems?.map((item) => {
+    sidebarItems?.forEach((item) => {
         let link = document.createElement('a');
         link.className = 'sidebarItem'
         link.id = `${item.toLowerCase().replace(' ', '-')}`
