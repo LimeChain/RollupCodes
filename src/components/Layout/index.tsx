@@ -50,10 +50,10 @@ const Layout = ({ children, loading }: ILayout) => {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <link rel="icon" href="/public/images/favicon.ico" />
+                <link rel="icon" href="/images/favicon.ico" />
                 <meta
                     property="twitter:image"
-                    content="/public/images/thumbnail.png"
+                    content="/images/thumbnail.png"
                 />
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta
@@ -71,7 +71,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     property="og:image"
-                    content="/public/images/thumbnail.png"
+                    content="/images/thumbnail.png"
                 />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
