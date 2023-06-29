@@ -1,6 +1,5 @@
 import Footer from '@components/Footer'
 import Nav from '@components/Nav'
-import Head from 'next/head'
 import styles from './styles.module.scss'
 import Container from '@components/Container'
 import { useEffect, useState } from 'react'
@@ -45,7 +44,7 @@ const Layout = ({ children, loading }: ILayout) => {
 
     return (
         <>
-            <Head>
+            <head>
                 <link rel="icon" href="/images/favicon.ico" />
 
                 <title>RollupCodes</title>
@@ -93,7 +92,7 @@ const Layout = ({ children, loading }: ILayout) => {
                     content="width=device-width, initial-scale=1"
                 />
                 <script src="/js/googleAnalytics.js" async />
-            </Head>
+            </head>
             {topLeftShadow}
             <Container>
                 <Nav />
