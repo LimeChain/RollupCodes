@@ -1,6 +1,6 @@
 import Footer from '@components/Footer'
 import Nav from '@components/Nav'
-import Head from 'next/head'
+import Head from 'next/head';
 import styles from './styles.module.scss'
 import Container from '@components/Container'
 import { useEffect, useState } from 'react'
@@ -44,43 +44,24 @@ const Layout = ({ children, loading }: ILayout) => {
     )
 
     return (
-        <>
+      <div>
             <Head>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
+
                 <link rel="icon" href="/images/favicon.ico" />
-                <meta
-                    property="twitter:image"
-                    content="/images/thumbnail.png"
-                />
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta
-                    property="twitter:title"
-                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"
-                />
-                <meta
-                    property="twitter:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
-                />
                 <title>Rollup Codes</title>
-                <meta
-                    property="description"
-                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
-                />
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta property="twitter:image" content="/images/thumbnail.png"/>
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:title" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
+                <meta property="twitter:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem" />
+                <meta property="description" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
                 <meta property="og:image" content="/images/thumbnail.png" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
-                <meta
-                    property="og:title"
-                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"
-                />
-                <meta
-                    property="og:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
-                />
+                <meta property="og:title" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
+                <meta property="og:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
                 <script src="/js/googleAnalytics.js" async />
+
             </Head>
             {topLeftShadow}
             <Container>
@@ -91,7 +72,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 <Footer />
             </Container>
             {bottomRightShadow}
-        </>
+      </div>
     )
 }
 
