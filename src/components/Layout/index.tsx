@@ -66,7 +66,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     property="og:image"
-                    content={`${window.location.host}/images/thumbnail.png`}
+                    content={`${window.location.origin}/images/thumbnail.png`}
                 />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
@@ -84,7 +84,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     name="twitter:image"
-                    content={`${window.location.host}/images/thumbnail.png`}
+                    content={`${window.location.origin}/images/thumbnail.png`}
                 />
 
                 <meta name="robots" content="index, follow" />
