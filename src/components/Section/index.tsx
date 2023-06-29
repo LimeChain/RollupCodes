@@ -47,7 +47,10 @@ const Section = ({ title, children }: ISection) => {
             className={styles.section}
             id={title.toLowerCase().replace(' ', '-')}
         >
-            <div className={styles.sectionHeader}>
+            <div
+                className={styles.sectionHeader}
+                data-element-type="section-header"
+            >
                 <Link
                     href={`#${title.toLowerCase().replace(' ', '-')}`}
                     id={`${title.toLowerCase().replace(' ', '-')}`}

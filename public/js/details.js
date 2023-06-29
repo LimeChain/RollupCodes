@@ -32,6 +32,12 @@ function scrollToSection(id) {
     })
 }
 
+function applyPropsToExternalLinks() {
+    document.querySelectorAll('a[href^="http"]').forEach((anchor) => {
+        anchor.target = "_blank"
+    })
+}
+
 function buildSidebar(){
     let sidebarItems = []
 
@@ -56,7 +62,7 @@ function buildSidebar(){
 }
 
 // Links from sections headers
-document.querySelectorAll('#markdown a[href*="#"]').forEach((anchor) => {
+document.querySelectorAll('#markdown div[data-element-type="section-header"] a[href*="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function(e){
         selectedSectionId = anchor.id
         e.preventDefault()
@@ -160,6 +166,7 @@ window.addEventListener('scroll', function() {
     controlSidebarBehaviour()
     highlightSidebarItemOnScroll()
     detectWhenScrollStopped()
+    applyPropsToExternalLinks()
 });
 
 // ====================================================
