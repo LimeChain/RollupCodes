@@ -79,6 +79,7 @@ export interface IDocMeta {
     slug: string
     labels: string[]
     links: Links
+    lastModified?: string
 }
 
 export enum AvatarSize {
