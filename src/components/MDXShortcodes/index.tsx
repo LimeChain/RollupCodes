@@ -176,6 +176,70 @@ const Reference = ({ url, label }: { url: string; label?: string }) => (
     </Link>
 )
 
+type MultiRowParametersData = Record<
+    string,
+    string | Record<string, string>[]
+>[]
+
+const MultiRowParameters = ({
+    data,
+    bordered = true,
+}: {
+    data: MultiRowParametersData
+    bordered: boolean
+}) => {
+    return (
+        <>
+            {data?.map((row: any, index: number) => (
+                <div
+                    key={`row-${index}`}
+                    className={classNames(styles.multiRow, {
+                        [styles.bordered]: bordered,
+                    })}
+                >
+                    <Typography
+                        variant={Text.BODY2}
+                        fontWeight="700"
+                        marginRight={4}
+                        width={'26%'}
+                        className={styles.additionalParameterClass}
+                    >
+                        {row?.title}
+                        {row?.reference && <Reference url={row?.reference} />}
+                    </Typography>
+                    <div className={styles.multiRowValues}>
+                        {row?.rows?.map((row: any, index: number) => (
+                            <div
+                                key={`inner-row-${index}`}
+                                className={styles.multiRowValue}
+                            >
+                                <Typography
+                                    variant={Text.BODY2}
+                                    fontWeight="700"
+                                    marginRight={4}
+                                    width={'25%'}
+                                >
+                                    {row?.label}
+                                    {row?.tooltip && (
+                                        <Tooltip tooltip={row?.tooltip} />
+                                    )}
+                                </Typography>
+                                <Typography
+                                    variant={Text.BODY2}
+                                    fontWeight="400"
+                                    color={'var(--markdown-text-color)'}
+                                >
+                                    {row?.value}
+                                </Typography>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </>
+    )
+}
+
 const MDXShortcodes = {
     Labels,
     Section,
@@ -187,6 +251,7 @@ const MDXShortcodes = {
     Added,
     Copy,
     Reference,
+    MultiRowParameters,
 }
 
 export default MDXShortcodes

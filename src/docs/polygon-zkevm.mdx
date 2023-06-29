@@ -60,15 +60,38 @@ links:
     - No support for  [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) and [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) type transactions.
     ___
 
-    <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and Polygon zkEVM will provide proof of the data transfer on the destination chain" />
-
-    - ###### L1 → L2
-        <Parameter name="Latency" value="~6-8 minutes" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block" />
-        <Parameter name="Cost" value="95 000 L2 gas" tooltip="The L2 gas cost for proving and executing a message from Ethereum on Polygon zkEVM" />
-    <br />
-    - ###### L1 → L2
-        <Parameter name="Latency" value="~1 hour" tooltip="The time it takes for a message to be made available on Ethereum after being included in a Polygon zkEVM block and sequenced to L1" />
-        <Parameter name="Cost" value="95 000 L1 gas" tooltip="The gas cost of proving and executing a message on Ethereum after being sent from Polygon zkEVM" />
+    <MultiRowParameters data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~2 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to zkSync Era, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
+                    value: 'No added cost',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a zkSync Era block and sequenced to L1.',
+                    value: '[minutes]',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from zkSync Era',
+                    value: '[L1 gas cost]',
+                },
+            ],
+        },
+    ]} />
 
 </Section>
 

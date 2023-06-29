@@ -61,15 +61,38 @@ links:
     - **Type 126** - System Transactions. They can be transactions [importing L1 data into Optimism](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#l1-attributes-deposited-transaction) or [User-deposited transactions](https://github.com/ethereum-optimism/optimism/blob/develop/specs/deposits.md#user-deposited-transactions)
     ___
 
-    <Parameter name="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain" />
-
-        - ###### L1 → L2
-            <Parameter name="Latency" value="~1 minute" tooltip="The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block" />
-            <Parameter name="Cost" value="Free" tooltip="The gas cost of sending a message from Ethereum to the L2. Optimism executes the message with a system address on behalf of the L1 sender. The initial 1.92m gas is free of charge. All gas in excess of 1.92m is paid by the sender of the message on L1" />
-        <br />
-        - ###### L2 → L1
-            <Parameter name="Latency" value="7 days" tooltip="The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1" />
-            <Parameter name="Cost" value="600 000 L1 gas" tooltip="The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message" />
+    <MultiRowParameters data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~1 minute',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of sending a message from Ethereum to the L2. Optimism executes the message with a system address on behalf of the L1 sender. The initial 1.92m gas is free of charge. All gas in excess of 1.92m is paid by the sender of the message on L1.',
+                    value: 'Free*',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1.',
+                    value: '7 days',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
+                    value: '600 000 L1 gas',
+                },
+            ],
+        },
+    ]} />
 
 </Section>
 
