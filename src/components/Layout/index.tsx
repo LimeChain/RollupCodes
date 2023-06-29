@@ -1,6 +1,6 @@
 import Footer from '@components/Footer'
 import Nav from '@components/Nav'
-import Head from 'next/head';
+import Head from 'next/head'
 import styles from './styles.module.scss'
 import Container from '@components/Container'
 import { useEffect, useState } from 'react'
@@ -44,33 +44,55 @@ const Layout = ({ children, loading }: ILayout) => {
     )
 
     return (
-      <>
+        <>
             <Head>
-
                 <link rel="icon" href="/images/favicon.ico" />
 
                 <title>RollupCodes</title>
-                <meta name="description" content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
+                <meta
+                    name="description"
+                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                />
 
-                <meta property="og:url" content="https://rollup.codes"/>
-                <meta property="og:type" content="website"/>
-                <meta property="og:title" content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
-                <meta property="og:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
-                <meta property="og:image" content="https://raw.githubusercontent.com/LimeChain/RollupCodes/main/public/images/thumbnail.png"/>
-                <meta property="og:image:width" content="1200"/>
-                <meta property="og:image:height" content="630"/>
+                <meta property="og:url" content="https://rollup.codes" />
+                <meta property="og:type" content="website" />
+                <meta
+                    property="og:title"
+                    content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                />
+                <meta
+                    property="og:description"
+                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                />
+                <meta
+                    property="og:image"
+                    content="https://raw.githubusercontent.com/LimeChain/RollupCodes/main/public/images/thumbnail.png"
+                />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
 
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta property="twitter:domain" content="rollup.codes" />
+                <meta property="twitter:url" content="https://rollup.codes" />
+                <meta
+                    name="twitter:title"
+                    content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                />
+                <meta
+                    name="twitter:description"
+                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                />
+                <meta
+                    name="twitter:image"
+                    content="https://raw.githubusercontent.com/LimeChain/RollupCodes/main/public/images/thumbnail.png"
+                />
 
-                <meta name="twitter:card" content="summary_large_image"/>
-                <meta property="twitter:domain" content="rollup.codes"/>
-                <meta property="twitter:url" content="https://rollup.codes"/>
-                <meta name="twitter:title" content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"/>
-                <meta name="twitter:description" content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"/>
-                <meta name="twitter:image" content="https://raw.githubusercontent.com/LimeChain/RollupCodes/main/public/images/thumbnail.png"/>
-
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta name="robots" content="index, follow" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
                 <script src="/js/googleAnalytics.js" async />
-
             </Head>
             {topLeftShadow}
             <Container>
@@ -81,7 +103,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 <Footer />
             </Container>
             {bottomRightShadow}
-      </>
+        </>
     )
 }
 
