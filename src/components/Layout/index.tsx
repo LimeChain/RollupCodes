@@ -1,6 +1,5 @@
 import Footer from '@components/Footer'
 import Nav from '@components/Nav'
-import useMetadata from '@hooks/useMetatdata'
 import Head from 'next/head'
 import styles from './styles.module.scss'
 import Container from '@components/Container'
@@ -19,7 +18,6 @@ interface ILayout {
 }
 
 const Layout = ({ children, loading }: ILayout) => {
-    const { title, description } = useMetadata()
     const { theme } = useTheme()
     const isDark = Boolean(theme === ThemeMode[ThemeMode.DARK])
 
@@ -48,19 +46,43 @@ const Layout = ({ children, loading }: ILayout) => {
     return (
         <>
             <Head>
-                <title>{title}</title>
-                <meta name="description" content={description} />
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <link rel="icon" href="images/favicon.ico" />
-
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={description} />
-                <meta property="og:image" content="images/thumbnail.png" />
+                <link rel="icon" href="public/images/favicon.ico" />
+                <meta
+                    property="twitter:image"
+                    content="public/images/thumbnail.png"
+                />
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta
+                    property="twitter:title"
+                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                />
+                <meta
+                    property="twitter:description"
+                    content="A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                />
+                <title>Rollup Codes</title>
+                <meta
+                    property="description"
+                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                />
+                <meta
+                    property="og:image"
+                    content="public/images/thumbnail.png"
+                />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
+                <meta
+                    property="og:title"
+                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                />
+                <meta
+                    property="og:description"
+                    content="A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                />
                 {/* <meta property="og:url" content="" /> */}
             </Head>
             {topLeftShadow}
