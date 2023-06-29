@@ -1,27 +1,8 @@
-function buildSidebar(){
-    let sidebarItems = []
-    const sidebar = document.getElementById('sidebar')
-
-    const sections = document?.querySelectorAll('div[data-element-type="section"]')
-    sections.forEach((section) => {
-        sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
-    })
-
-    sidebarItems?.map((item) => {
-        let link = document.createElement('a');
-        link.className = 'sidebarItem'
-        link.id = `${item.toLowerCase().replace(' ', '-')}`
-        link.href = `#${item.toLowerCase().replace(' ', '-')}`
-        link.innerText = item
-        sidebar.appendChild(link)
-    })
-}
-
-buildSidebar ()
-
 var selectedSectionId = ''
 var isScrolling = false
-
+var sidebar_placeholder = document.getElementById('sidebar_placeholder')
+var sections = document?.querySelectorAll('div[data-element-type="section"]')
+var sidebar = document.getElementById('sidebar')
 
 function removeActiveClassFromSidebarItem() {
     var elems = document.querySelectorAll(".sidebar-item-active");
@@ -40,7 +21,6 @@ function addActiveClassFromSidebarItem(id) {
 }
 
 function scrollToSection(id) {
-    const sections = document?.querySelectorAll('div[data-element-type="section"]')
     sections.forEach((section) => {
         if (section.id === id) {
             window.location.hash = `#${section.id}`
@@ -52,14 +32,28 @@ function scrollToSection(id) {
     })
 }
 
-// Links from sidebar
-document.querySelectorAll('#sidebar a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function(e){
-        selectedSectionId = anchor.id
-        e.preventDefault()
-        scrollToSection(anchor.id)
+function buildSidebar(){
+    let sidebarItems = []
+
+    sections.forEach((section) => {
+        sidebarItems.push(section.querySelectorAll('div[data-element-type="section-title"]')[0].getAttribute("data-element-value"))
     })
-})
+
+    sidebarItems?.map((item) => {
+        let link = document.createElement('a');
+        link.className = 'sidebarItem'
+        link.id = `${item.toLowerCase().replace(' ', '-')}`
+        link.href = `#${item.toLowerCase().replace(' ', '-')}`
+        link.innerText = item
+        sidebar.appendChild(link)
+
+        link.addEventListener("click", function(e){
+            selectedSectionId = link.id
+            e.preventDefault()
+            scrollToSection(link.id)
+        })
+    })
+}
 
 // Links from sections headers
 document.querySelectorAll('#markdown a[href*="#"]').forEach((anchor) => {
@@ -70,52 +64,53 @@ document.querySelectorAll('#markdown a[href*="#"]').forEach((anchor) => {
     })
 })
 
-document?.querySelectorAll('table')?.forEach((table) => {
-    table.setAttribute('cellspacing','0')
-    table.setAttribute('borderCollapse','separate')
-    const theme = localStorage.getItem('theme')
+function applyStylesAndActionsOnTable() {
+    document?.querySelectorAll('table')?.forEach((table) => {
+        table.setAttribute('cellspacing','0')
+        table.setAttribute('borderCollapse','separate')
+        const theme = localStorage.getItem('theme')
 
-    const rows = table.querySelectorAll('tr')
-    rows.forEach((row) => {
-        const cells = row.querySelectorAll('td')
+        const rows = table.querySelectorAll('tr')
+        rows.forEach((row) => {
+            const cells = row.querySelectorAll('td')
 
-        // Makes row bottom border in the same color as icon's color
-        if (cells.length > 0) {
-            let className = ''
-            cells.forEach((cell) => {
+            // Makes row bottom border in the same color as icon's color
+            if (cells.length > 0) {
+                let className = ''
                 cells.forEach((cell) => {
-                    if (cell.getElementsByTagName('div')[0]) {
-                        className = `${cell.getElementsByTagName('div')[0].getElementsByTagName('svg')[0].getAttribute('data-type')}`
+                    cells.forEach((cell) => {
+                        if (cell.getElementsByTagName('div')[0]) {
+                            className = `${cell.getElementsByTagName('div')[0].getElementsByTagName('svg')[0].getAttribute('data-type')}`
+                        }
+                    })
+                    if(className) {
+                        cell.className = className
                     }
                 })
-                if(className) {
-                    cell.className = className
-                }
-            })
-        }
-
-        function hoverOnRow (src) {
-            const cells = row.querySelectorAll('td')
-            if (cells.length > 0 && cells[0].getElementsByTagName('img').length > 0) {
-                const img = cells[0].getElementsByTagName('img')[0]
-                img.src = src
             }
-        }
 
-        row.addEventListener('mouseover', function() {
-            hoverOnRow(`../images/link-icon-${theme}-active.png`)
-        })
+            function hoverOnRow (src) {
+                const cells = row.querySelectorAll('td')
+                if (cells.length > 0 && cells[0].getElementsByTagName('img').length > 0) {
+                    const img = cells[0].getElementsByTagName('img')[0]
+                    img.src = src
+                }
+            }
 
-        row.addEventListener('mouseout', function() {
-            hoverOnRow('../images/link-icon.png')
+            row.addEventListener('mouseover', function() {
+                hoverOnRow(`../images/link-icon-${theme}-active.png`)
+            })
+
+            row.addEventListener('mouseout', function() {
+                hoverOnRow('../images/link-icon.png')
+            })
         })
     })
-})
+}
 
 function controlSidebarBehaviour() {
     const nav = document.getElementById('nav')
     const hero = document.getElementById('hero')
-    const sidebar_placeholder = document.getElementById('sidebar_placeholder')
 
     if (window.location.pathname === '/') {
         return
@@ -131,7 +126,6 @@ function controlSidebarBehaviour() {
 
 function highlightSidebarItemOnScroll() {
     const sctollPosition = window.scrollY
-    const sections = document?.querySelectorAll('div[data-element-type="section"]')
 
     sections.forEach((section) => {
         if (window.scrollY - window.innerHeight < section.offsetTop && section.id === selectedSectionId) {
@@ -154,17 +148,24 @@ function detectWhenScrollStopped() {
 	}, 150);
 }
 
+
+// Invoked functions
+applyStylesAndActionsOnTable ()
+buildSidebar ()
+
+// ====================================================
+// Event listener for SCROLL
+// ====================================================
 window.addEventListener('scroll', function() {
     controlSidebarBehaviour()
-
     highlightSidebarItemOnScroll()
-
     detectWhenScrollStopped()
 });
 
+// ====================================================
+// Event listener for RESIZE
+// ====================================================
 window.addEventListener('resize', function() {
-    const sidebar_placeholder = document.getElementById('sidebar_placeholder')
-
     if (window.innerWidth < 1024) {
         sidebar_placeholder.style.display = 'none !important'
     }
