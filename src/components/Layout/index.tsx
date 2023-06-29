@@ -62,12 +62,12 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     property="twitter:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
                 <title>Rollup Codes</title>
                 <meta
                     property="description"
-                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
                 <meta
                     property="og:image"
@@ -81,7 +81,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 />
                 <meta
                     property="og:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analyses of the expanding Ethereum ecosystem"
+                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
                 {/* <meta property="og:url" content="" /> */}
             </Head>
