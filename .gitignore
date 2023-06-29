@@ -1,3 +1,7 @@
 node_modules
 .next
 .vscode
+.idea
+yarn.lock
+package-lock.json
+next-env.d.ts
