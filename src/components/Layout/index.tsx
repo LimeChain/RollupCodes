@@ -64,7 +64,10 @@ const Layout = ({ children, loading }: ILayout) => {
                     property="og:description"
                     content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
-                <meta property="og:image" content="./images/thumbnail.png" />
+                <meta
+                    property="og:image"
+                    content={`${window.location.host}/images/thumbnail.png`}
+                />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
 
@@ -79,7 +82,10 @@ const Layout = ({ children, loading }: ILayout) => {
                     name="twitter:description"
                     content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
-                <meta name="twitter:image" content="./images/thumbnail.png" />
+                <meta
+                    name="twitter:image"
+                    content={`${window.location.host}/images/thumbnail.png`}
+                />
 
                 <meta name="robots" content="index, follow" />
                 <meta
