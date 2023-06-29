@@ -7,6 +7,7 @@ import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
 import getConfig from 'next/config'
+import Feedback from '@components/Feedback'
 
 interface IHomeProps {
     docs: IDocMeta[]
@@ -54,6 +55,7 @@ export default function Home({ docs }: IHomeProps) {
                     <RollupSummaryCard key={`rollup-${index}`} {...docMeta} />
                 ))}
             </Grid>
+            <Feedback />
         </Layout>
     )
 }

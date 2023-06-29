@@ -27,7 +27,11 @@ const inter = Inter({
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider attribute="class">
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            themes={['light', 'dark']}
+        >
             <style jsx global>{`
                 :root {
                     --font-chakra-petch: ${chakraPetch.style.fontFamily};
