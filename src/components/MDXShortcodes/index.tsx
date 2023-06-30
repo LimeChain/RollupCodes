@@ -167,7 +167,7 @@ const Added = () => (
 const Reference = ({ url, label }: { url: string; label?: string }) => (
     <Link href={url} target="_blank" className={styles.reference}>
         {label && label}
-        <ReferenceIcon />
+        <ReferenceIcon fill={'var(--neutral60)'} />
     </Link>
 )
 
