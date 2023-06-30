@@ -1,5 +1,5 @@
 import Section from '@components/Section'
-import Label from '@components/Label'
+import Labels from '@components/Labels'
 import styles from './styles.module.scss'
 import QuestionMarkIcon from '/public/images/question-mark-icon.svg'
 import { Tooltip as TooltipComponent } from 'react-tooltip'
@@ -19,20 +19,6 @@ import CheckmarkIcon from '/public/images/checkmark-icon.svg'
 type Props = {
     children: string | JSX.Element
 }
-
-const Labels = ({ labels }: { labels: string[] }) => (
-    <div className={styles.labels}>
-        {labels?.map((label: string, index: number) => (
-            <Label
-                key={`label-${index}`}
-                text={label}
-                color={`var(--label-color-${
-                    (index > 7 ? index % 7 : index) + 1
-                })`}
-            />
-        ))}
-    </div>
-)
 
 const Tooltip = ({ tooltip }: { tooltip: string }) => {
     const id = Math.random()

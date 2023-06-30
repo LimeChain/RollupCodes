@@ -47,18 +47,6 @@
     --error20: #FFA6B1;
     --error10: #FFD8DD;
 
-    --label-color-1: #F59762;
-    --label-color-2: #69DC6E;
-    --label-color-3: #E47AFF;
-    --label-color-4: #7A8FFF;
-    --label-color-5: #DF1FA9;
-    --label-color-6: #DDA411;
-    --label-color-7: #00AB82;
-
-    --unsupported-color: var(--error90);
-    --modified-color: var(--warning90);
-    --added-color: var(--success90);
-
     /* Your default theme */
     --background: var(--neutral100);
     --text-color: var(--neutral);
@@ -79,9 +67,9 @@
     --privacy-policy-text-color: var(--neutral30);
     --code-background-color: var(--neutral70);
     --row-background-color-hover: var(--neutral90);
-    --added-color: var(--success70);
-    --modified-color: var(--warning70);
-    --unsupported-color: var(--error70);
+    --unsupported-color: var(--error90);
+    --modified-color: var(--warning90);
+    --added-color: var(--success90);
     --blockquote-background-color: var(--neutral80);
 }
 

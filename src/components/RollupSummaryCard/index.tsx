@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Avatar from '@components/Avatar'
 import Label from '@components/Label'
 import ArrowIcon from '/public/images/arrow-icon.svg'
-
+import Labels from '@components/Labels'
 const RollupSummaryCard = ({
     title,
     logo,
@@ -24,13 +24,7 @@ const RollupSummaryCard = ({
                 </Typography>
             </div>
             <div className={styles.cardFooter}>
-                {labels?.map((label: string, index: number) => (
-                    <Label
-                        key={`label-${index}`}
-                        text={label}
-                        color={`var(--label-color-${index + 1})`}
-                    />
-                ))}
+                <Labels labels={labels} title={title} />
             </div>
             <div className={styles.link}>
                 <Typography
