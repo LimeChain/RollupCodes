@@ -35,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
             themes={['light', 'dark']}
         >
             <Script
+                id="ga"
                 dangerouslySetInnerHTML={{
                     __html: `
                     (function(w, d, s, l, i) {
@@ -55,13 +56,11 @@ export default function App({ Component, pageProps }: AppProps) {
             />
             <Head>
                 <link rel="icon" href="/images/favicon.ico" />
-
                 <title>RollupCodes</title>
                 <meta
                     name="description"
                     content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
-
                 <meta
                     property="og:url"
                     content="https://rollup.codes"
@@ -85,7 +84,6 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
-
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content="rollup.codes" />
                 <meta property="twitter:url" content="https://rollup.codes" />
@@ -101,12 +99,12 @@ export default function App({ Component, pageProps }: AppProps) {
                     name="twitter:image"
                     content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
                 />
-
                 <meta name="robots" content="index, follow" />
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
+                c
             </Head>
             <style jsx global>{`
                 :root {
