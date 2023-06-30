@@ -54,23 +54,30 @@ const Layout = ({ children, loading }: ILayout) => {
                     content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
 
-                {/* <meta property="og:url" content="https://rollup.codes" />
+                <meta
+                    property="og:url"
+                    content="https://rollup.codes"
+                    key="ogurl"
+                />
                 <meta property="og:type" content="website" />
                 <meta
                     property="og:title"
                     content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                    key="ogtitle"
                 />
                 <meta
                     property="og:description"
                     content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                    key="ogdesc"
                 />
                 <meta
                     property="og:image"
                     content={`${window.location.origin}/images/thumbnail.png`}
+                    key="ogimage"
                 />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
-
+                {/* 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content="rollup.codes" />
                 <meta property="twitter:url" content="https://rollup.codes" />
