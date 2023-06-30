@@ -1,6 +1,8 @@
 import Script from 'next/script'
 
 const Googleanalytics = () => {
+    console.log('mode', process.env.NODE_ENV)
+
     return (
         <>
             {process.env.NODE_ENV === 'production' && (
