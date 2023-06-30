@@ -67,7 +67,6 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta property="og:image:height" content="630" />
 
                 <meta name="twitter:card" content="summary" key="twcard" />
-                <neta name="test" conetnt={`${pageProps?.testMeta}`} />
                 {/*
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content="rollup.codes" />
