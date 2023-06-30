@@ -1,12 +1,9 @@
 import Script from 'next/script'
 
 const Googleanalytics = () => {
-    const isProductionMode = process.env.NODE_ENV === 'production'
-    const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID
-
     return (
         <>
-            {isProductionMode && (
+            {process.env.NODE_ENV === 'production' && (
                 <Script
                     id="ga"
                     dangerouslySetInnerHTML={{
@@ -24,7 +21,7 @@ const Googleanalytics = () => {
                         j.src =
                             'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
                         f.parentNode.insertBefore(j, f);
-                    })(window, document, 'script', 'dataLayer', '${GA_ID}');`,
+                    })(window, document, 'script', 'dataLayer', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID}');`,
                     }}
                 />
             )}
