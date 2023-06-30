@@ -78,11 +78,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
 
-                <meta
-                    name="twitter:card"
-                    content="summary_large_image"
-                    key="twcard"
-                />
+                <meta name="twitter:card" content="summary" key="twcard" />
                 {/*
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content="rollup.codes" />
