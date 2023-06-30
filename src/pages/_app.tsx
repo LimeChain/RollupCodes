@@ -87,7 +87,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <script src="/js/googleAnalytics.js" async />
+                <script src="/js/googleAnalytics.js" async={true} />
             </Head>
             <style jsx global>{`
                 :root {

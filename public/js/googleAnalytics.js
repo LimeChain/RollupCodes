@@ -11,4 +11,4 @@
     j.src =
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
     f.parentNode.insertBefore(j, f);
-})(window, document, 'script', 'dataLayer', 'GTM-KK64VH3');
+})(window, document, 'script', 'dataLayer', process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID);
