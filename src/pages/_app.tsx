@@ -34,10 +34,11 @@ export default function App({ Component, pageProps }: AppProps) {
             defaultTheme="dark"
             themes={['light', 'dark']}
         >
-            <Script
-                id="ga"
-                dangerouslySetInnerHTML={{
-                    __html: `
+            {process.env.NODE_ENV === 'production' && (
+                <Script
+                    id="ga"
+                    dangerouslySetInnerHTML={{
+                        __html: `
                     (function(w, d, s, l, i) {
                         w[l] = w[l] || [];
                         w[l].push({
@@ -52,8 +53,9 @@ export default function App({ Component, pageProps }: AppProps) {
                             'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
                         f.parentNode.insertBefore(j, f);
                     })(window, document, 'script', 'dataLayer', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID}');`,
-                }}
-            />
+                    }}
+                />
+            )}
             <Head>
                 <link rel="icon" href="/images/favicon.ico" />
                 <title>RollupCodes</title>
