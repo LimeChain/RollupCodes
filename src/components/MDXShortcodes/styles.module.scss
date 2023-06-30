@@ -96,6 +96,11 @@
 
 .copyIcon {
     margin-left: 4px;
+    &:hover {
+        svg {
+            fill: var(--neutral);
+        }
+    }
 }
 
 .reference {

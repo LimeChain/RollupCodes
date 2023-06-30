@@ -11,9 +11,10 @@ import ModifiedIcon from '/public/images/modified-triangle-icon.svg'
 import AddedIcon from '/public/images/added-triangle-icon.svg'
 import CopyIcon from '/public/images/copy-icon.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ReferenceIcon from '/public/images/reference-icon.svg'
+import CheckmarkIcon from '/public/images/checkmark-icon.svg'
 
 type Props = {
     children: string | JSX.Element
@@ -61,33 +62,27 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
 
 const Copy = ({ value, label }: { value: string; label: string }) => {
     const [copied, setCopied] = useState<boolean>(false)
+    const intervalRef: any = useRef(null)
+
+    useEffect(() => {
+        if (copied) {
+            intervalRef.current = setInterval(() => setCopied(false), 1500)
+        }
+        return () => clearInterval(intervalRef.current)
+    }, [copied])
 
     return (
-        <div
-            className={styles.copy}
-            data-tooltip-id="copy-tooltip"
-            data-tooltip-content={copied ? 'Copied' : ''}
-            onMouseLeave={() => setCopied(false)}
-        >
+        <div className={styles.copy}>
             {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                 <span className={styles.copyIcon}>
-                    <CopyIcon />
+                    {copied ? (
+                        <CheckmarkIcon />
+                    ) : (
+                        <CopyIcon fill={'var(--neutral60)'} />
+                    )}
                 </span>
             </CopyToClipboard>
-            <TooltipComponent
-                id="copy-tooltip"
-                style={{
-                    background: 'var(--opposite-background-color)',
-                    color: 'var(--opposite-text-color)',
-                    zIndex: 1,
-                    borderRadius: 0,
-                    opacity: 1,
-                    maxWidth: 200,
-                    height: 'auto',
-                    fontWeight: '400',
-                }}
-            />
         </div>
     )
 }
