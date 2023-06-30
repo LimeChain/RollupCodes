@@ -14,6 +14,7 @@ import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Feedback from '@components/Feedback'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -83,6 +84,7 @@ export default function Details({ content }: IContent) {
                     />
                 </div>
             </div>
+            <Feedback />
         </Layout>
     )
 }

@@ -70,7 +70,7 @@ const DropdownLinks = ({ links }: { links: Links }) => {
             >
                 {links[key]?.name}
             </Typography>
-            <ReferenceIcon fill={'var(--text-color)'} />
+            <ReferenceIcon fill={'var(--neutral60)'} />
         </Link>
     ))
 
@@ -90,7 +90,7 @@ const DropdownLinks = ({ links }: { links: Links }) => {
             >
                 {links[key]?.name}
             </Typography>
-            <ReferenceIcon fill={'var(--text-color)'} />
+            <ReferenceIcon fill={'var(--neutral60)'} />
         </Link>
     ))
 
