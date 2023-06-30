@@ -10,6 +10,7 @@ import TopLeftCornerDark from '/public/images/top-left-corner-dark.svg'
 import BottomRightCornerDark from '/public/images/bottom-right-corner-dark.svg'
 import { useTheme } from 'next-themes'
 import { ThemeMode } from '@utils/types'
+import Head from 'next/head'
 
 interface ILayout {
     children: React.ReactNode
@@ -44,7 +45,7 @@ const Layout = ({ children, loading }: ILayout) => {
 
     return (
         <>
-            <head>
+            <Head>
                 <link rel="icon" href="/images/favicon.ico" />
 
                 <title>RollupCodes</title>
@@ -92,7 +93,7 @@ const Layout = ({ children, loading }: ILayout) => {
                     content="width=device-width, initial-scale=1"
                 />
                 <script src="/js/googleAnalytics.js" async />
-            </head>
+            </Head>
             {topLeftShadow}
             <Container>
                 <Nav />
