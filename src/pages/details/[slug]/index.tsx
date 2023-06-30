@@ -51,8 +51,6 @@ export default function Details({ content }: IContent) {
     const router = useRouter()
 
     useEffect(() => {
-        console.log(window.location)
-
         const script = document.createElement('script')
 
         script.src = '../js/details.js'
