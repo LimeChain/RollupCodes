@@ -60,14 +60,12 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <meta
                     property="og:image"
-                    content="/images/thumbnail.png"
+                    content={`${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
                     key="ogimage"
                 />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
 
-                <meta name="twitter:card" content="summary" key="twcard" />
-                {/*
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content="rollup.codes" />
                 <meta property="twitter:url" content="https://rollup.codes" />
@@ -81,8 +79,8 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <meta
                     name="twitter:image"
-                    content='images/thumbnail.png'
-                /> */}
+                    content={`${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
+                />
 
                 <meta name="robots" content="index, follow" />
                 <meta
