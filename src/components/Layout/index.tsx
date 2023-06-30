@@ -53,7 +53,7 @@ const Layout = ({ children, loading }: ILayout) => {
                     content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
                 />
 
-                <meta property="og:url" content="https://rollup.codes" />
+                {/* <meta property="og:url" content="https://rollup.codes" />
                 <meta property="og:type" content="website" />
                 <meta
                     property="og:title"
@@ -84,7 +84,7 @@ const Layout = ({ children, loading }: ILayout) => {
                 <meta
                     name="twitter:image"
                     content={`${window.location.origin}/images/thumbnail.png`}
-                />
+                /> */}
 
                 <meta name="robots" content="index, follow" />
                 <meta
