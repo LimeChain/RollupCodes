@@ -1,11 +1,23 @@
 import Script from 'next/script'
+import { useEffect, useState } from 'react'
 
 const Googleanalytics = () => {
-    console.log('mode', process.env.NODE_ENV)
+    const [isProductionOrigin, setIsProductionOrigin] = useState<boolean>(false)
+    const isProduction = process.env.NODE_ENV === 'production'
+
+    useEffect(() => {
+        if (typeof window != 'undefined') {
+            console.log(window.location.origin)
+
+            setIsProductionOrigin(
+                window.location.origin === 'https://www.rollup.codes'
+            )
+        }
+    }, [])
 
     return (
         <>
-            {process.env.NODE_ENV === 'production' && (
+            {isProduction && isProductionOrigin && (
                 <Script
                     id="ga"
                     dangerouslySetInnerHTML={{
