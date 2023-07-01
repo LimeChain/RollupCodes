@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 const Googleanalytics = () => {
     const [isProductionOrigin, setIsProductionOrigin] = useState<boolean>(false)
     const isProduction = process.env.NODE_ENV === 'production'
+    console.log(window.location.origin)
 
     useEffect(() => {
         if (typeof window != 'undefined') {
