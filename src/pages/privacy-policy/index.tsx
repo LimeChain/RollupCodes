@@ -3,15 +3,16 @@ import Typography from '@components/Typography'
 import { Headings, Text } from '@utils/types'
 import styles from './styles.module.scss'
 import Link from 'next/link'
+import Hero from '@components/Hero'
 
 export default function PrivacyPolicy() {
     return (
         <Layout>
-            <div className={styles.hero}>
+            <Hero>
                 <Typography variant={Headings.H3} fontWeight="700">
                     Privacy Policy for RollupCodes
                 </Typography>
-            </div>
+            </Hero>
             <Typography
                 variant={Headings.H5}
                 fontWeight="400"

@@ -1,24 +1,5 @@
 @import '@styles/mixins.scss';
 
-.hero {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px 0;
-    border-bottom: 1px solid var(--border-color);
-    position: relative;
-    &::before {
-        content: '';
-        width: 96px;
-        height: 4px;
-        background: linear-gradient(270deg, #6AFF36 0%, #FFEB36 100%);
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
-}
-
 .docContent {
     padding-bottom: 40px;
     display: flex;
