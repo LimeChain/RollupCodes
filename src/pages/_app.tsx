@@ -29,76 +29,81 @@ const inter = Inter({
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            themes={['light', 'dark']}
-        >
+        <>
             <Googleanalytics />
-            <Head>
-                <link rel="icon" href="/images/favicon.ico" />
-                <title>RollupCodes</title>
-                <meta
-                    name="description"
-                    content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
-                />
-                <meta
-                    property="og:url"
-                    content="https://rollup.codes"
-                    key="ogurl"
-                />
-                <meta property="og:type" content="website" />
-                <meta
-                    property="og:title"
-                    content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
-                    key="ogtitle"
-                />
-                <meta
-                    property="og:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
-                    key="ogdesc"
-                />
-                <meta
-                    property="og:image"
-                    content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
-                    key="ogimage"
-                />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta property="twitter:domain" content="rollup.codes" />
-                <meta property="twitter:url" content="https://rollup.codes" />
-                <meta
-                    name="twitter:title"
-                    content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
-                />
-                <meta
-                    name="twitter:description"
-                    content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
-                />
-                <meta
-                    name="twitter:image"
-                    content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
-                />
-                <meta name="robots" content="index, follow" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                c
-            </Head>
-            <style jsx global>{`
-                :root {
-                    --font-chakra-petch: ${chakraPetch.style.fontFamily};
-                    --font-roboto-mono: ${robotoMono.style.fontFamily};
-                }
-                html {
-                    font-family: ${inter.style.fontFamily};
-                }
-            `}</style>
-            <main className={classNames('main')}>
-                <Component {...pageProps} />
-            </main>
-        </ThemeProvider>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                themes={['light', 'dark']}
+            >
+                <Head>
+                    <link rel="icon" href="/images/favicon.ico" />
+                    <title>RollupCodes</title>
+                    <meta
+                        name="description"
+                        content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                    />
+                    <meta
+                        property="og:url"
+                        content="https://rollup.codes"
+                        key="ogurl"
+                    />
+                    <meta property="og:type" content="website" />
+                    <meta
+                        property="og:title"
+                        content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                        key="ogtitle"
+                    />
+                    <meta
+                        property="og:description"
+                        content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                        key="ogdesc"
+                    />
+                    <meta
+                        property="og:image"
+                        content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
+                        key="ogimage"
+                    />
+                    <meta property="og:image:width" content="1200" />
+                    <meta property="og:image:height" content="630" />
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta property="twitter:domain" content="rollup.codes" />
+                    <meta
+                        property="twitter:url"
+                        content="https://rollup.codes"
+                    />
+                    <meta
+                        name="twitter:title"
+                        content="RollupCodes: Interactive Reference of the Ethereum Rollup Ecosystem"
+                    />
+                    <meta
+                        name="twitter:description"
+                        content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                    />
+                    <meta
+                        name="twitter:image"
+                        content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
+                    />
+                    <meta name="robots" content="index, follow" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1"
+                    />
+                    c
+                </Head>
+                <style jsx global>{`
+                    :root {
+                        --font-chakra-petch: ${chakraPetch.style.fontFamily};
+                        --font-roboto-mono: ${robotoMono.style.fontFamily};
+                    }
+                    html {
+                        font-family: ${inter.style.fontFamily};
+                    }
+                `}</style>
+                <main className={classNames('main')}>
+                    <Component {...pageProps} />
+                </main>
+            </ThemeProvider>
+        </>
     )
 }

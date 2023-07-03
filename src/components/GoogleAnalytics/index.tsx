@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 
 const Googleanalytics = () => {
     const [isProductionOrigin, setIsProductionOrigin] = useState<boolean>(false)
-    const isProduction = process.env.NODE_ENV === 'production'
+    const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+    const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
 
     useEffect(() => {
         if (typeof window != 'undefined') {
@@ -15,7 +16,7 @@ const Googleanalytics = () => {
         }
     }, [])
 
-    if (!isProduction || !isProductionOrigin) {
+    if (!GA_TRACKING_ID || !IS_PRODUCTION || !isProductionOrigin) {
         return null
     }
 
@@ -23,7 +24,7 @@ const Googleanalytics = () => {
         <>
             <noscript>
                 <iframe
-                    src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+                    src={`https://www.googletagmanager.com/ns.html?id=${GA_TRACKING_ID}`}
                     height="0"
                     width="0"
                     style={{ display: 'none', visibility: 'hidden' }}
@@ -46,7 +47,7 @@ const Googleanalytics = () => {
                             j.src =
                                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
                             f.parentNode.insertBefore(j, f);
-                        })(window, document, 'script', 'dataLayer', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`,
+                        })(window, document, 'script', 'dataLayer', '${GA_TRACKING_ID}');`,
                 }}
             />
         </>
