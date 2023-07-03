@@ -35,6 +35,14 @@ function scrollToSection(id) {
 function applyPropsToExternalLinks() {
     document.querySelectorAll('a[href^="http"]').forEach((anchor) => {
         anchor.target = "_blank"
+
+        // Adding an icon to the external links
+        if (anchor.getElementsByTagName('svg').length === 0 && anchor.getElementsByTagName('img').length === 0) {
+            let icon = document.createElement('img');
+            icon.src = '../images/reference-icon.svg'
+            icon.alt = 'reference icon'
+            anchor.appendChild(icon)
+        }
     })
 }
 
@@ -158,6 +166,7 @@ function detectWhenScrollStopped() {
 // Invoked functions
 applyStylesAndActionsOnTable ()
 buildSidebar ()
+applyPropsToExternalLinks()
 
 // ====================================================
 // Event listener for SCROLL
@@ -166,7 +175,6 @@ window.addEventListener('scroll', function() {
     controlSidebarBehaviour()
     highlightSidebarItemOnScroll()
     detectWhenScrollStopped()
-    applyPropsToExternalLinks()
 });
 
 // ====================================================
