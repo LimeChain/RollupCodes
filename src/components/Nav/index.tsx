@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import Typography from '@components/Typography'
 import { Font, Headings } from '@utils/types'
 import Link from 'next/link'
-import Breadcrumbs from '@components/BreadcrumbsNav'
+import Breadcrumbs from '@components/Breadcrumbs'
 
 const Nav = () => {
     return (
