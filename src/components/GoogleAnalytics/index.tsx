@@ -2,21 +2,20 @@ import Script from 'next/script'
 import { useEffect, useState } from 'react'
 
 const Googleanalytics = () => {
-    const [isProductionOrigin, setIsProductionOrigin] = useState<boolean>(false)
+    const [domain, setDomain] = useState<string>('')
     const IS_PRODUCTION = process.env.NODE_ENV === 'production'
     const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
+    const PRODUCTION_DOMAIN = 'www.rollup.codes'
 
     useEffect(() => {
         if (typeof window != 'undefined') {
             console.log(window.location)
 
-            setIsProductionOrigin(
-                window.location.origin === 'https://www.rollup.codes'
-            )
+            setDomain(window.location.hostname)
         }
     }, [])
 
-    if (!GA_TRACKING_ID || !IS_PRODUCTION || !isProductionOrigin) {
+    if (!GA_TRACKING_ID || !IS_PRODUCTION || PRODUCTION_DOMAIN !== domain) {
         return null
     }
 
