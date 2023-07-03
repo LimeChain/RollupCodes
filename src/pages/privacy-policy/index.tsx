@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
         <Layout>
             <Hero>
                 <Typography variant={Headings.H3} fontWeight="700">
-                    Privacy Policy for RollupCodes
+                    Privacy Policy
                 </Typography>
             </Hero>
             <Typography
