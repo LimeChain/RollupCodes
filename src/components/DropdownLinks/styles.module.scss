@@ -13,15 +13,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    svg {
-        transition: fill .2s ease;
-    }
-    &:hover {
-        svg {
-            fill: var(--text-color) !important;
-            transition: fill .2s ease;
-        }
-    }
 }
 
 .dropdown {

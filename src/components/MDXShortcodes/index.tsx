@@ -62,11 +62,7 @@ const Copy = ({ value, label }: { value: string; label: string }) => {
             {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                 <span className={styles.copyIcon}>
-                    {copied ? (
-                        <CheckmarkIcon />
-                    ) : (
-                        <CopyIcon fill={'var(--neutral60)'} />
-                    )}
+                    {copied ? <CheckmarkIcon /> : <CopyIcon />}
                 </span>
             </CopyToClipboard>
         </div>

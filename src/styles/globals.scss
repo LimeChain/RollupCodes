@@ -165,6 +165,13 @@ a {
     flex: 1;
     overflow: hidden;
 
+    a {
+        img {
+            position: relative;
+            top: 3px;
+        }
+    }
+
     h1 {
         font-size: 64px;
         letter-spacing: -0.03em;

@@ -88,15 +88,6 @@
 
 .copyIcon {
     margin-left: 4px;
-    svg {
-        transition: fill .2s ease;
-    }
-    &:hover {
-        svg {
-            fill: var(--neutral);
-            transition: fill .2s ease;
-        }
-    }
 }
 
 .reference {
@@ -106,13 +97,6 @@
     max-width: max-content;
     svg {
         margin-left: 4px;
-        transition: fill .2s ease;
-    }
-    &:hover {
-        svg {
-            fill: var(--neutral);
-            transition: fill .2s ease;
-        }
     }
 }
 
