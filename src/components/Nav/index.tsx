@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import Typography from '@components/Typography'
 import { Font, Headings } from '@utils/types'
 import Link from 'next/link'
+import Breadcrumbs from '@components/BreadcrumbsNav'
 
 const Nav = () => {
     return (
@@ -17,6 +18,7 @@ const Nav = () => {
                     RollupCodes
                 </Typography>
             </Link>
+            <Breadcrumbs />
             <ThemeSwitch />
         </div>
     )

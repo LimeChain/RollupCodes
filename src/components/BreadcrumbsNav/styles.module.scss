@@ -1,0 +1,16 @@
+@import '@styles/mixins.scss';
+
+.breadcrumbs {
+    display: none;
+    @include tablet {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: auto;
+        margin-left: 32px;
+    }
+}
+
+.icon {
+    margin: 0 12px;
+}

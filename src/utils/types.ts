@@ -97,3 +97,11 @@ export interface ILink {
 }
 
 export type Links = Record<string, ILink>
+
+export interface ICrumb {
+    href: string
+    title: string
+    last?: boolean
+}
+
+export type Breadcrumbs = ICrumb[]
