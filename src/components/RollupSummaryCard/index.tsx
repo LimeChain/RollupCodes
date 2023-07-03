@@ -14,7 +14,7 @@ const RollupSummaryCard = ({
     labels,
 }: IDocMeta): React.ReactElement => {
     return (
-        <Link href={`details/${slug}`} className={styles.card}>
+        <Link href={`${slug}`} className={styles.card}>
             <div className={styles.cardHeader}>
                 <Avatar src={logo} name={title} />
             </div>

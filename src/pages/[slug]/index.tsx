@@ -145,7 +145,7 @@ const getDocsPaths = (): Paths => {
 export async function getStaticPaths(): Promise<StaticPathsResult> {
     const paths = getDocsPaths()
 
-    return { paths, fallback: true }
+    return { paths, fallback: false }
 }
 
 export async function getStaticProps({
