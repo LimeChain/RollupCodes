@@ -1,6 +1,7 @@
 import capitalize from '@utils/capitalize'
 import { Breadcrumbs } from '@utils/types'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 const useBreadcrumbs = (): Breadcrumbs => {
     const router = useRouter()
@@ -30,7 +31,7 @@ const useBreadcrumbs = (): Breadcrumbs => {
     }
 
     // Call the function to generate the breadcrumbs list
-    return generateBreadcrumbs()
+    return useMemo(() => generateBreadcrumbs(), [router?.asPath])
 }
 
 export default useBreadcrumbs
