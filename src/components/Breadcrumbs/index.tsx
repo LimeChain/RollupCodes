@@ -1,12 +1,14 @@
 import useBreadcrumbs from '@hooks/useBreadcrumbs'
-import { ICrumb, Text } from '@utils/types'
+import { ICrumb, Text, ThemeMode } from '@utils/types'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 import ChevronRightIcon from 'public/images/chevron-right-icon.svg'
 import Typography from '@components/Typography'
-import isDarkTheme from '@utils/isDarkTheme'
+import { useTheme } from 'next-themes'
 
 const Crumb = ({ title, href, last = false }: ICrumb) => {
+    const { theme } = useTheme()
+    const isDarkTheme = ThemeMode[ThemeMode.DARK].toLowerCase() === theme
     // The last crumb is rendered as normal text since we are already on the page
     if (last) {
         return (
@@ -22,7 +24,7 @@ const Crumb = ({ title, href, last = false }: ICrumb) => {
             <Typography
                 fontWeight="400"
                 variant={Text.BODY2}
-                color={`var(--neutral${isDarkTheme() ? '30' : '70'}`}
+                color={`var(--neutral${isDarkTheme ? '30' : '70'}`}
             >
                 {title}
                 <span className={styles.icon}>
