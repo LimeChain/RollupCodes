@@ -9,8 +9,6 @@ const Googleanalytics = () => {
 
     useEffect(() => {
         if (typeof window != 'undefined') {
-            console.log(window.location)
-
             setDomain(window.location.hostname)
         }
     }, [])
