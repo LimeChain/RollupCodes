@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styles from './styles.module.scss'
 import ChevronRightIcon from 'public/images/chevron-right-icon.svg'
 import Typography from '@components/Typography'
+import isDarkTheme from '@utils/isDarkTheme'
 
 const Crumb = ({ title, href, last = false }: ICrumb) => {
     // The last crumb is rendered as normal text since we are already on the page
@@ -21,11 +22,11 @@ const Crumb = ({ title, href, last = false }: ICrumb) => {
             <Typography
                 fontWeight="400"
                 variant={Text.BODY2}
-                color={'var(--neutral30'}
+                color={`var(--neutral${isDarkTheme() ? '30' : '70'}`}
             >
                 {title}
                 <span className={styles.icon}>
-                    <ChevronRightIcon />
+                    <ChevronRightIcon fill={'var(--text-color)'} />
                 </span>
             </Typography>
         </Link>

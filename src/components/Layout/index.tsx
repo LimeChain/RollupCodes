@@ -8,8 +8,8 @@ import TopLeftCornerLight from '/public/images/top-left-corner-light.svg'
 import BottomRightCornerLight from '/public/images/bottom-right-corner-light.svg'
 import TopLeftCornerDark from '/public/images/top-left-corner-dark.svg'
 import BottomRightCornerDark from '/public/images/bottom-right-corner-dark.svg'
-import { useTheme } from 'next-themes'
-import { ThemeMode } from '@utils/types'
+
+import isDarkTheme from '@utils/isDarkTheme'
 
 interface ILayout {
     children: React.ReactNode
@@ -17,8 +17,7 @@ interface ILayout {
 }
 
 const Layout = ({ children, loading }: ILayout) => {
-    const { theme } = useTheme()
-    const isDark = Boolean(theme === ThemeMode[ThemeMode.DARK])
+    const isDark = isDarkTheme()
 
     const [mounted, setMounted] = useState(false)
     // useEffect only runs on the client, so now we can safely show the UI
