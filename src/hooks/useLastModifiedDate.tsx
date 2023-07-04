@@ -1,9 +1,9 @@
 import { add, format, getTime } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 const storageKeys = {
-    LAST_CHECKED: 'last_checked',
-    LAST_MODIFIED: 'last_modified',
+    LAST_TIME_CHECKED: 'last_time_checked',
+    LAST_TIME_MODIFIED: 'last_time_modified',
 }
 
 const source: Record<string, string> = {
@@ -12,11 +12,23 @@ const source: Record<string, string> = {
         'https://api.github.com/repos/limechain/RollupCodes/commits?path=./src/docs/',
 }
 
-const getLastTimeModified = (key: string): string =>
-    localStorage?.getItem(key) || ''
+const getLastTimeModified = (key: string): number | null => {
+    const value = localStorage?.getItem(key)
+    if (value) {
+        return parseInt(value)
+    }
 
-const getLastTimeChecked = (key: string): string =>
-    localStorage?.getItem(key) || ''
+    return null
+}
+
+const getLastTimeChecked = (key: string): number | null => {
+    const value = localStorage?.getItem(key)
+    if (value) {
+        return parseInt(value)
+    }
+
+    return null
+}
 
 const storeLastTimeModified = (key: string, value: number) =>
     localStorage?.setItem(key, JSON.stringify(value))
@@ -26,34 +38,18 @@ const storeLastTimeChecked = (key: string, value: number) =>
 
 const useLastModifiedDate = (slug?: string): string => {
     const NOW_IN_MS = +new Date()
-
-    const [storedLastModifiedTs, setStoredLastModifiedTs] = useState<number>(0)
-
-    const [storedLastCheckedTs, setStoredLastCheckedTs] = useState<number>(0)
-
     const [lastModifiedTs, setLastModifiedTs] = useState<number>(0)
 
     const storageModifiedKey = slug
-        ? `${storageKeys.LAST_MODIFIED}_${slug}`
-        : storageKeys.LAST_MODIFIED
+        ? `${storageKeys.LAST_TIME_MODIFIED}_${slug}`
+        : storageKeys.LAST_TIME_MODIFIED
     const storageCheckedKey = slug
-        ? `${storageKeys.LAST_CHECKED}_${slug}`
-        : storageKeys.LAST_CHECKED
-
-    useEffect(() => {
-        if (typeof window !== 'undefined' && window.localStorage) {
-            setStoredLastModifiedTs(
-                parseInt(getLastTimeModified(storageModifiedKey))
-            )
-            setStoredLastCheckedTs(
-                parseInt(getLastTimeChecked(storageCheckedKey))
-            )
-        }
-    }, [])
+        ? `${storageKeys.LAST_TIME_CHECKED}_${slug}`
+        : storageKeys.LAST_TIME_CHECKED
 
     const retreiveLastModifiedTs = async () => {
         const url = `${source[slug ? 'dedicated' : 'main']}${
-            slug ? `/${slug}.mdx` : ''
+            slug ? `${slug}.mdx` : ''
         }`
         try {
             const result = await fetch(url)
@@ -71,18 +67,28 @@ const useLastModifiedDate = (slug?: string): string => {
     }
 
     useEffect(() => {
+        const storedLastModifiedTsValue =
+            getLastTimeModified(storageModifiedKey)
+        const stroredLastCheckedTsValue = getLastTimeChecked(storageCheckedKey)
+
         if (
-            storedLastCheckedTs &&
-            getTime(add(new Date(storedLastCheckedTs), { hours: 24 })) <
+            !storedLastModifiedTsValue ||
+            !stroredLastCheckedTsValue ||
+            getTime(add(new Date(stroredLastCheckedTsValue), { hours: 24 })) <
                 NOW_IN_MS
         ) {
             retreiveLastModifiedTs()
+        } else {
+            setLastModifiedTs(+new Date(storedLastModifiedTsValue))
         }
-    }, [storedLastCheckedTs])
+    }, [])
 
-    return lastModifiedTs
-        ? format(new Date(lastModifiedTs), 'd LLL yyyy')
-        : format(new Date(storedLastModifiedTs), 'd LLL yyyy')
+    const formattedDate = useMemo(
+        () => format(new Date(lastModifiedTs), 'd LLL yyyy'),
+        [lastModifiedTs]
+    )
+
+    return formattedDate
 }
 
 export default useLastModifiedDate
