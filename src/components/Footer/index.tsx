@@ -7,46 +7,10 @@ import TwitterIcon from '/public/images/twitter-icon.svg'
 import EmailIcon from '/public/images/email-icon.svg'
 import LimeChainLogo from '/public/images/limechain-logo.svg'
 import GithubIcon from '/public/images/github-icon.svg'
-import { useEffect, useState } from 'react'
-import { format } from 'date-fns'
+import useLastModifiedDate from '@hooks/useLastModifiedDate'
 
 const Footer = () => {
-    const [lastModified, setLastModified] = useState<string>('')
-
-    useEffect(() => {
-        const getLastModifiedDate = async () => {
-            const timestamp = window.localStorage.getItem(
-                'last_deployment_check'
-            )
-            const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000
-            const NOW_IN_MS = +new Date()
-
-            if (
-                !timestamp ||
-                +new Date(timestamp) + ONE_DAY_IN_MS < NOW_IN_MS
-            ) {
-                try {
-                    const result = await fetch(
-                        'https://api.github.com/repos/limechain/RollupCodes/commits/main'
-                    )
-                    const data = await result.json()
-
-                    setLastModified(
-                        format(
-                            new Date(data?.commit?.author?.date),
-                            'd LLL yyyy'
-                        )
-                    )
-                    window.localStorage.setItem(
-                        'last_deployment_check',
-                        `${NOW_IN_MS}`
-                    )
-                } catch (_) {}
-            }
-        }
-
-        getLastModifiedDate()
-    }, [])
+    const lastModifiedDate = useLastModifiedDate()
 
     return (
         <div className={styles.footer}>
@@ -89,7 +53,7 @@ const Footer = () => {
                         <EmailIcon fill="var(--icon-color)" />
                     </Link>
                 </div>
-                {lastModified && (
+                {lastModifiedDate && (
                     <>
                         <div className={styles.pipe}>{'|'}</div>
                         <Typography
@@ -97,7 +61,7 @@ const Footer = () => {
                             fontWeight="400"
                             color={'var(--neutral50)'}
                         >
-                            Last Updated {lastModified}
+                            Last Updated {lastModifiedDate}
                         </Typography>
                     </>
                 )}

@@ -15,10 +15,9 @@ import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
 import Feedback from '@components/Feedback'
 import Hero from '@components/Hero'
-import { useEffect, useState } from 'react'
-import { format } from 'date-fns'
+import { useEffect } from 'react'
 import Typography from '@components/Typography'
-
+import useLastModifiedDate from '@hooks/useLastModifiedDate'
 const { serverRuntimeConfig } = getConfig()
 
 type Path = { params: { slug: string } }
@@ -54,7 +53,7 @@ interface IContent {
 export default function Details({ content }: IContent) {
     const router = useRouter()
 
-    const [lastModified, setLastModified] = useState<string>('')
+    const lastModifiedDate = useLastModifiedDate(content?.meta?.slug)
 
     useEffect(() => {
         const script = document.createElement('script')
@@ -68,41 +67,6 @@ export default function Details({ content }: IContent) {
             document.body.removeChild(script)
         }
     }, [router.pathname])
-
-    useEffect(() => {
-        const getLastModifiedDate = async () => {
-            const timestamp = window.localStorage.getItem(
-                `last_${content?.meta?.slug}_check`
-            )
-            const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000
-            const NOW_IN_MS = +new Date()
-
-            if (
-                !timestamp ||
-                +new Date(timestamp) + ONE_DAY_IN_MS < NOW_IN_MS
-            ) {
-                try {
-                    const result = await fetch(
-                        `https://api.github.com/repos/limechain/RollupCodes/commits?path=./src/docs/${content?.meta?.slug}.mdx`
-                    )
-                    const data = await result.json()
-
-                    setLastModified(
-                        format(
-                            new Date(data[0]?.commit?.author?.date),
-                            'd LLL yyyy'
-                        )
-                    )
-                    window.localStorage.setItem(
-                        `last_${content?.meta?.slug}_check`,
-                        `${NOW_IN_MS}`
-                    )
-                } catch (_) {}
-            }
-        }
-
-        getLastModifiedDate()
-    }, [])
 
     return (
         <Layout loading={!content}>
@@ -118,14 +82,14 @@ export default function Details({ content }: IContent) {
                 <div id="sidebar" className={styles.sidebar} />
                 <div id="sidebar_placeholder" />
                 <div id="markdown" className={styles.docContent}>
-                    {lastModified && (
+                    {lastModifiedDate && (
                         <Typography
                             variant={Text.BODY2}
                             fontWeight="400"
                             marginTop={46}
                             color={'var(--neutral50)'}
                         >
-                            Last Updated {lastModified}
+                            Last Updated {lastModifiedDate}
                         </Typography>
                     )}
                     <MDXRemote
