@@ -1,21 +1,10 @@
 import Script from 'next/script'
-import { useEffect, useState } from 'react'
 
 const Googleanalytics = () => {
-    const [domain, setDomain] = useState<string>('')
-    const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+    const IS_PRODUCTION = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
     const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
-    const PRODUCTION_DOMAIN = 'www.rollup.codes'
 
-    console.log('VERCEL_ENV', process.env.NEXT_PUBLIC_VERCEL_ENV)
-
-    useEffect(() => {
-        if (typeof window != 'undefined') {
-            setDomain(window.location.hostname)
-        }
-    }, [])
-
-    if (!GA_TRACKING_ID || !IS_PRODUCTION || PRODUCTION_DOMAIN !== domain) {
+    if (!GA_TRACKING_ID || !IS_PRODUCTION) {
         return null
     }
 
