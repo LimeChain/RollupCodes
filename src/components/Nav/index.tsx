@@ -5,6 +5,7 @@ import { Font, Headings } from '@utils/types'
 import Link from 'next/link'
 import useScrollTo from '@hooks/useScrollTo'
 import classNames from 'classnames'
+import Breadcrumbs from '@components/Breadcrumbs'
 
 const Nav = () => {
     const scrolled = useScrollTo()
@@ -26,6 +27,7 @@ const Nav = () => {
                         RollupCodes
                     </Typography>
                 </Link>
+                <Breadcrumbs />
                 <ThemeSwitch />
             </div>
         </div>
