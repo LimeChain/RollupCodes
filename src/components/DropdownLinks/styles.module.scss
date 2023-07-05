@@ -61,7 +61,14 @@
     align-items: center;
     justify-content: flex-start;
     padding: 16px 12px;
+    svg {
+        transition: fill .2s ease;
+    }
     &:hover {
+        svg {
+            fill: var(--text-color) !important;
+            transition: fill .2s ease;
+        }
         background: var(--dropdown-item-hover-color);
     }
 }

@@ -13,7 +13,6 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    margin-left: 6px;
 }
 
 .children {
@@ -25,3 +24,17 @@
     flex-direction: row;
     align-items: center;
 }
+
+.link {
+    margin-right: 6px;
+    svg {
+        transition: fill .2s ease;
+    }
+    &:hover {
+        svg {
+            fill: var(--neutral);
+            transition: fill .2s ease;
+        }
+    }
+}
+

@@ -1,5 +1,5 @@
 import Section from '@components/Section'
-import Label from '@components/Label'
+import Labels from '@components/Labels'
 import styles from './styles.module.scss'
 import QuestionMarkIcon from '/public/images/question-mark-icon.svg'
 import { Tooltip as TooltipComponent } from 'react-tooltip'
@@ -11,27 +11,14 @@ import ModifiedIcon from '/public/images/modified-triangle-icon.svg'
 import AddedIcon from '/public/images/added-triangle-icon.svg'
 import CopyIcon from '/public/images/copy-icon.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ReferenceIcon from '/public/images/reference-icon.svg'
+import CheckmarkIcon from '/public/images/checkmark-icon.svg'
 
 type Props = {
     children: string | JSX.Element
 }
-
-const Labels = ({ labels }: { labels: string[] }) => (
-    <div className={styles.labels}>
-        {labels?.map((label: string, index: number) => (
-            <Label
-                key={`label-${index}`}
-                text={label}
-                color={`var(--label-color-${
-                    (index > 7 ? index % 7 : index) + 1
-                })`}
-            />
-        ))}
-    </div>
-)
 
 const Tooltip = ({ tooltip }: { tooltip: string }) => {
     const id = Math.random()
@@ -61,33 +48,23 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
 
 const Copy = ({ value, label }: { value: string; label: string }) => {
     const [copied, setCopied] = useState<boolean>(false)
+    const intervalRef: any = useRef(null)
+
+    useEffect(() => {
+        if (copied) {
+            intervalRef.current = setInterval(() => setCopied(false), 1500)
+        }
+        return () => clearInterval(intervalRef.current)
+    }, [copied])
 
     return (
-        <div
-            className={styles.copy}
-            data-tooltip-id="copy-tooltip"
-            data-tooltip-content={copied ? 'Copied' : ''}
-            onMouseLeave={() => setCopied(false)}
-        >
+        <div className={styles.copy}>
             {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                 <span className={styles.copyIcon}>
-                    <CopyIcon />
+                    {copied ? <CheckmarkIcon /> : <CopyIcon />}
                 </span>
             </CopyToClipboard>
-            <TooltipComponent
-                id="copy-tooltip"
-                style={{
-                    background: 'var(--opposite-background-color)',
-                    color: 'var(--opposite-text-color)',
-                    zIndex: 1,
-                    borderRadius: 0,
-                    opacity: 1,
-                    maxWidth: 200,
-                    height: 'auto',
-                    fontWeight: '400',
-                }}
-            />
         </div>
     )
 }
@@ -171,8 +148,12 @@ const Added = () => (
 
 const Reference = ({ url, label }: { url: string; label?: string }) => (
     <Link href={url} target="_blank" className={styles.reference}>
-        {label && label}
-        <ReferenceIcon />
+        {label && (
+            <Typography variant={Text.BODY2} fontWeight="400" color="inherit">
+                {label}
+            </Typography>
+        )}
+        <ReferenceIcon fill={'var(--neutral60)'} />
     </Link>
 )
 

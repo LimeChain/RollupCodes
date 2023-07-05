@@ -1,9 +1,14 @@
+@import '@styles/mixins.scss';
+
 .container {
-    max-width: 1328px;
+    max-width: 1920px;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex: 1;
     flex-direction: column;
     padding: 0 16px;
+    @include tablet {
+        padding: 0 64px;
+    }
 }
