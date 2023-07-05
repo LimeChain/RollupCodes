@@ -7,6 +7,8 @@ const Googleanalytics = () => {
     const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
     const PRODUCTION_DOMAIN = 'www.rollup.codes'
 
+    console.log('VERCEL_ENV', process.env.NEXT_PUBLIC_VERCEL_ENV)
+
     useEffect(() => {
         if (typeof window != 'undefined') {
             setDomain(window.location.hostname)
