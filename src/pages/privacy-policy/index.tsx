@@ -4,23 +4,16 @@ import { Headings, Text } from '@utils/types'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import Hero from '@components/Hero'
-import { createRef, useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function PrivacyPolicy() {
-    const heroRef = createRef()
     const [additionalPaddingTop, setAdditionalPaddingTop] = useState<
         number | undefined
     >(0)
 
-    useEffect(() => {
-        if (heroRef) {
-            setAdditionalPaddingTop(heroRef?.current?.offsetHeight)
-        }
-    }, [heroRef])
-
     return (
         <Layout paddingTop={additionalPaddingTop}>
-            <Hero ref={heroRef}>
+            <Hero getHeight={(height) => setAdditionalPaddingTop(height)}>
                 <Typography variant={Headings.H3} fontWeight="700">
                     Privacy Policy
                 </Typography>

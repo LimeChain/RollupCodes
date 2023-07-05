@@ -13,7 +13,7 @@ import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
-import { useEffect, createRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Feedback from '@components/Feedback'
 import Hero from '@components/Hero'
 import Typography from '@components/Typography'
@@ -52,7 +52,6 @@ interface IContent {
 
 export default function Details({ content }: IContent) {
     const router = useRouter()
-    const heroRef = createRef()
     const [additionalPaddingTop, setAdditionalPaddingTop] = useState<
         number | undefined
     >(0)
@@ -72,15 +71,9 @@ export default function Details({ content }: IContent) {
         }
     }, [router.pathname])
 
-    useEffect(() => {
-        if (heroRef) {
-            setAdditionalPaddingTop(heroRef?.current?.offsetHeight)
-        }
-    }, [heroRef])
-
     return (
         <Layout loading={!content} paddingTop={additionalPaddingTop}>
-            <Hero ref={heroRef}>
+            <Hero getHeight={(height) => setAdditionalPaddingTop(height)}>
                 <Avatar
                     size={AvatarSize.LARGE}
                     src={content?.meta?.logo}
