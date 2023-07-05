@@ -1,7 +1,33 @@
+@import '@styles/mixins.scss';
+
 .nav {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     height: 64px;
+    padding: 0 16px;
+    max-width: 1920px;
+    width: 100%;
+    @include tablet {
+        padding: 0 64px;
+    }
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    transition: background .3s ease;
+}
+
+.bg {
+    transition: background .3s ease;
+    backdrop-filter: blur(2px);
+    background: var(--nav-bg);
 }

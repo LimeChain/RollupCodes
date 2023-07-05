@@ -1,3 +1,5 @@
+@import '@styles/mixins.scss';
+
 .hero {
     display: flex;
     flex-direction: row;
@@ -6,6 +8,8 @@
     padding: 40px 0;
     border-bottom: 1px solid var(--border-color);
     position: relative;
+    max-width: 1920px - 32px;
+    width: 100%;
     &::before {
         content: '';
         width: 96px;
@@ -15,4 +19,29 @@
         bottom: 0;
         left: 0;
     }
+    @include tablet {
+        max-width: 1920px - 128px;
+    }
+}
+
+.container {
+    position: fixed;
+    top: 64px;
+    z-index: 2;
+    width: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    transition: background .3s ease;
+    padding: 0 16px;
+    @include tablet {
+        padding: 0 64px;
+    }
+}
+
+.bg {
+    transition: background .3s ease;
+    backdrop-filter: blur(2px);
+    background: var(--nav-bg);
 }

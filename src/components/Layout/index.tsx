@@ -14,9 +14,10 @@ import { useTheme } from 'next-themes'
 interface ILayout {
     children: React.ReactNode
     loading?: boolean
+    paddingTop?: number | undefined
 }
 
-const Layout = ({ children, loading }: ILayout) => {
+const Layout = ({ children, loading, paddingTop }: ILayout) => {
     const { theme } = useTheme()
     const isDarkTheme = ThemeMode[ThemeMode.DARK].toLowerCase() === theme
 
@@ -47,7 +48,12 @@ const Layout = ({ children, loading }: ILayout) => {
             {topLeftShadow}
             <Container>
                 <Nav />
-                <div className={styles.content}>
+                <div
+                    className={styles.content}
+                    style={{
+                        paddingTop: `${64 + (paddingTop ? paddingTop : 0)}px`,
+                    }}
+                >
                     {loading ? <Loading /> : children}
                 </div>
                 <Footer />

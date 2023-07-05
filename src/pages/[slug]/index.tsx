@@ -1,6 +1,6 @@
 import Avatar from '@components/Avatar'
 import Layout from '@components/Layout'
-import { AvatarSize, IDocMeta, Text } from '@utils/types'
+import { AvatarSize, IDocMeta } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
 import getConfig from 'next/config'
@@ -13,9 +13,9 @@ import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
+import { useEffect, createRef, useState } from 'react'
 import Feedback from '@components/Feedback'
 import Hero from '@components/Hero'
-import { useEffect } from 'react'
 import Typography from '@components/Typography'
 import useLastModifiedDate from '@hooks/useLastModifiedDate'
 const { serverRuntimeConfig } = getConfig()
@@ -52,6 +52,10 @@ interface IContent {
 
 export default function Details({ content }: IContent) {
     const router = useRouter()
+    const heroRef = createRef()
+    const [additionalPaddingTop, setAdditionalPaddingTop] = useState<
+        number | undefined
+    >(0)
 
     const lastModifiedDate = useLastModifiedDate(content?.meta?.slug)
 
@@ -68,9 +72,15 @@ export default function Details({ content }: IContent) {
         }
     }, [router.pathname])
 
+    useEffect(() => {
+        if (heroRef) {
+            setAdditionalPaddingTop(heroRef?.current?.offsetHeight)
+        }
+    }, [heroRef])
+
     return (
-        <Layout loading={!content}>
-            <Hero>
+        <Layout loading={!content} paddingTop={additionalPaddingTop}>
+            <Hero ref={heroRef}>
                 <Avatar
                     size={AvatarSize.LARGE}
                     src={content?.meta?.logo}
@@ -80,7 +90,7 @@ export default function Details({ content }: IContent) {
             </Hero>
             <div className={styles.pageGrid}>
                 <div id="sidebar" className={styles.sidebar} />
-                <div id="sidebar_placeholder" />
+                <div className={styles.sidebar_placeholder} />
                 <div id="markdown" className={styles.docContent}>
                     {lastModifiedDate && (
                         <Typography

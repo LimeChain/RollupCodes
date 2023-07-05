@@ -57,6 +57,7 @@
     --link-color: var(--neutral);
     --dropdown-body-background-color: var(--neutral80);
     --dropdown-item-hover-color: var(--neutral70);
+    --nav-bg: rgba(0, 0, 0, .6);
 
     // Sibebar
     --sidebar-item-color: var(--neutral50);
@@ -83,6 +84,7 @@
     --link-color: var(--neutral100);
     --dropdown-body-background-color: var(--neutral10);
     --dropdown-item-hover-color: var(--neutral20);
+    --nav-bg: rgba(241, 241, 241, .6);
 
     // Sibebar
     --sidebar-item-color: var(--neutral40);
@@ -342,23 +344,6 @@ table {
     font-size: 14px;
     font-family: var(--font-inter);
     color: var(--sidebar-item-color);
-}
-
-#sidebar_placeholder {
-    display: none;
-    @include tablet {
-        width: 270px;
-    }
-}
-
-.sidebar_placeholder_visible {
-    display: block !important;
-}
-
-.sticky {
-    position: fixed;
-    top: 0;
-    transition: top .5s ease;
 }
 
 .sidebar-item-active {
