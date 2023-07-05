@@ -33,7 +33,7 @@ function scrollToSection(id) {
 }
 
 function applyPropsToExternalLinks() {
-    document.querySelectorAll('a[href^="http"]').forEach((anchor) => {
+    document.querySelectorAll('#markdown a[href^="http"]').forEach((anchor) => {
         anchor.target = "_blank"
 
         // Adding an icon to the external links
