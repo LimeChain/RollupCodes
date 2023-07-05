@@ -14,6 +14,8 @@ import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Feedback from '@components/Feedback'
+import Hero from '@components/Hero'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -65,14 +67,14 @@ export default function Details({ content }: IContent) {
 
     return (
         <Layout loading={!content}>
-            <div className={styles.hero} id="hero">
+            <Hero>
                 <Avatar
                     size={AvatarSize.LARGE}
                     src={content?.meta?.logo}
                     name={content?.meta?.title}
                 />
                 <DropdownLinks links={content?.meta?.links} />
-            </div>
+            </Hero>
             <div className={styles.pageGrid}>
                 <div id="sidebar" className={styles.sidebar} />
                 <div id="sidebar_placeholder" />
@@ -83,6 +85,7 @@ export default function Details({ content }: IContent) {
                     />
                 </div>
             </div>
+            <Feedback />
         </Layout>
     )
 }

@@ -1,14 +1,5 @@
 @import '@styles/mixins.scss';
 
-.hero {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
 .docContent {
     padding-bottom: 40px;
     display: flex;

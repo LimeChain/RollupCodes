@@ -54,8 +54,9 @@ const Section = ({ title, children }: ISection) => {
                 <Link
                     href={`#${title.toLowerCase().replace(' ', '-')}`}
                     id={`${title.toLowerCase().replace(' ', '-')}`}
+                    className={styles.link}
                 >
-                    <LinkIcon fill={`var(--)`} />
+                    <LinkIcon fill={`var(--neutral60)`} />
                 </Link>
                 <div
                     onClick={toggle}
