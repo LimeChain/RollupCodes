@@ -61,7 +61,10 @@ export default function App({ Component, pageProps }: AppProps) {
                     />
                     <meta
                         property="og:image"
-                        content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
+                        content={`https://${
+                            process.env.NEXT_PUBLIC_VERCEL_URL ||
+                            process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+                        }/images/thumbnail.png`}
                         key="ogimage"
                     />
                     <meta property="og:image:width" content="1200" />
@@ -82,7 +85,10 @@ export default function App({ Component, pageProps }: AppProps) {
                     />
                     <meta
                         name="twitter:image"
-                        content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/images/thumbnail.png`}
+                        content={`https://${
+                            process.env.NEXT_PUBLIC_VERCEL_URL ||
+                            process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+                        }/images/thumbnail.png`}
                     />
                     <meta name="robots" content="index, follow" />
                     <meta
