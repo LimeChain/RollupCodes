@@ -13,10 +13,11 @@ import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import Feedback from '@components/Feedback'
 import Hero from '@components/Hero'
-
+import { useEffect } from 'react'
+import Typography from '@components/Typography'
+import useLastModifiedDate from '@hooks/useLastModifiedDate'
 const { serverRuntimeConfig } = getConfig()
 
 type Path = { params: { slug: string } }
@@ -52,6 +53,8 @@ interface IContent {
 export default function Details({ content }: IContent) {
     const router = useRouter()
 
+    const lastModifiedDate = useLastModifiedDate(content?.meta?.slug)
+
     useEffect(() => {
         const script = document.createElement('script')
 
@@ -79,6 +82,16 @@ export default function Details({ content }: IContent) {
                 <div id="sidebar" className={styles.sidebar} />
                 <div id="sidebar_placeholder" />
                 <div id="markdown" className={styles.docContent}>
+                    {lastModifiedDate && (
+                        <Typography
+                            variant={Text.BODY2}
+                            fontWeight="400"
+                            marginTop={46}
+                            color={'var(--neutral50)'}
+                        >
+                            Last Updated {lastModifiedDate}
+                        </Typography>
+                    )}
                     <MDXRemote
                         {...content?.mdxContent}
                         components={MDXShortcodes}

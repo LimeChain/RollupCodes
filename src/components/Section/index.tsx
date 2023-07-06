@@ -56,7 +56,7 @@ const Section = ({ title, children }: ISection) => {
                     id={`${title.toLowerCase().replace(' ', '-')}`}
                     className={styles.link}
                 >
-                    <LinkIcon fill={`var(--neutral60)`} />
+                    <LinkIcon fill={`var(--markdown-text-color)`} />
                 </Link>
                 <div
                     onClick={toggle}
