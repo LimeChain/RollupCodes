@@ -1,5 +1,20 @@
 @import '@styles/mixins.scss';
 
+.hero {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 64px;
+    z-index: 3;
+    width: 100%;
+    max-width: 1328px;
+    backdrop-filter: blur(2px);
+}
+
 .docContent {
     padding-bottom: 40px;
     display: flex;
@@ -26,5 +41,16 @@
         flex-direction: column;
         margin-top: 32px;
         width: 270px;
+        position: fixed;
+        top: 192px;
     }
 }
+
+.sidebar_placeholder {
+    display: none;
+    @include tablet {
+        display: block;
+        width: 270px;
+    }
+}
+

@@ -1,8 +1,10 @@
 var selectedSectionId = ''
 var isScrolling = false
-var sidebar_placeholder = document.getElementById('sidebar_placeholder')
 var sections = document?.querySelectorAll('div[data-element-type="section"]')
 var sidebar = document.getElementById('sidebar')
+var nav = document.getElementById('nav')
+var hero = document.getElementById('hero')
+var scrollToPosition = nav.offsetHeight + hero.offsetHeight
 
 function removeActiveClassFromSidebarItem() {
     var elems = document.querySelectorAll(".sidebar-item-active");
@@ -25,7 +27,8 @@ function scrollToSection(id) {
         if (section.id === id) {
             window.location.hash = `#${section.id}`
 
-            section.scrollIntoView({
+            window.scrollTo({
+                top: section.offsetTop - scrollToPosition,
                 behavior: 'smooth'
             })
         }
@@ -82,7 +85,6 @@ function applyStylesAndActionsOnTable() {
     document?.querySelectorAll('table')?.forEach((table) => {
         table.setAttribute('cellspacing','0')
         table.setAttribute('borderCollapse','separate')
-        const theme = localStorage.getItem('theme')
 
         const rows = table.querySelectorAll('tr')
         rows.forEach((row) => {
@@ -102,40 +104,8 @@ function applyStylesAndActionsOnTable() {
                     }
                 })
             }
-
-            function hoverOnRow (src) {
-                const cells = row.querySelectorAll('td')
-                if (cells.length > 0 && cells[0].getElementsByTagName('img').length > 0) {
-                    const img = cells[0].getElementsByTagName('img')[0]
-                    img.src = src
-                }
-            }
-
-            row.addEventListener('mouseover', function() {
-                hoverOnRow(`../images/link-icon-${theme}-active.png`)
-            })
-
-            row.addEventListener('mouseout', function() {
-                hoverOnRow('../images/link-icon.png')
-            })
         })
     })
-}
-
-function controlSidebarBehaviour() {
-    const nav = document.getElementById('nav')
-    const hero = document.getElementById('hero')
-
-    if (window.location.pathname === '/') {
-        return
-    }
-    if (window.scrollY >= nav.offsetHeight + hero.offsetHeight) {
-        sidebar?.classList.add('sticky')
-        sidebar_placeholder?.classList.add('sidebar_placeholder_visible')
-    } else {
-        sidebar?.classList.remove('sticky')
-        sidebar_placeholder?.classList.remove('sidebar_placeholder_visible')
-    }
 }
 
 function highlightSidebarItemOnScroll() {
@@ -148,7 +118,7 @@ function highlightSidebarItemOnScroll() {
             return
         }
 
-        if (sctollPosition >= section.offsetTop) {
+        if (sctollPosition >= section.offsetTop - scrollToPosition) {
             removeActiveClassFromSidebarItem()
             addActiveClassFromSidebarItem(section.id)
         }
@@ -172,16 +142,6 @@ applyPropsToExternalLinks()
 // Event listener for SCROLL
 // ====================================================
 window.addEventListener('scroll', function() {
-    controlSidebarBehaviour()
     highlightSidebarItemOnScroll()
     detectWhenScrollStopped()
 });
-
-// ====================================================
-// Event listener for RESIZE
-// ====================================================
-window.addEventListener('resize', function() {
-    if (window.innerWidth < 1024) {
-        sidebar_placeholder.style.display = 'none !important'
-    }
-})

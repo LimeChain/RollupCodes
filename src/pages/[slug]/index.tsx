@@ -13,9 +13,9 @@ import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import Feedback from '@components/Feedback'
 import Hero from '@components/Hero'
-import { useEffect } from 'react'
 import Typography from '@components/Typography'
 import useLastModifiedDate from '@hooks/useLastModifiedDate'
 const { serverRuntimeConfig } = getConfig()
@@ -52,6 +52,9 @@ interface IContent {
 
 export default function Details({ content }: IContent) {
     const router = useRouter()
+    const [additionalPaddingTop, setAdditionalPaddingTop] = useState<
+        number | undefined
+    >(0)
 
     const lastModifiedDate = useLastModifiedDate(content?.meta?.slug)
 
@@ -69,8 +72,8 @@ export default function Details({ content }: IContent) {
     }, [router.pathname])
 
     return (
-        <Layout loading={!content}>
-            <Hero>
+        <Layout loading={!content} paddingTop={additionalPaddingTop}>
+            <Hero getHeight={(height) => setAdditionalPaddingTop(height)}>
                 <Avatar
                     size={AvatarSize.LARGE}
                     src={content?.meta?.logo}
@@ -80,7 +83,7 @@ export default function Details({ content }: IContent) {
             </Hero>
             <div className={styles.pageGrid}>
                 <div id="sidebar" className={styles.sidebar} />
-                <div id="sidebar_placeholder" />
+                <div className={styles.sidebar_placeholder} />
                 <div id="markdown" className={styles.docContent}>
                     {lastModifiedDate && (
                         <Typography
