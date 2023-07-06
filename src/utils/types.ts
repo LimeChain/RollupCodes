@@ -70,6 +70,7 @@ export interface ITypography {
     fontSize?: string
     breakWord?: BreakWord
     width?: string
+    lineHeight?: string
 }
 
 export interface IDocMeta {

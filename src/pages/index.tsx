@@ -8,6 +8,7 @@ import { join } from 'path'
 import matter from 'gray-matter'
 import getConfig from 'next/config'
 import Feedback from '@components/Feedback'
+import useScreenModes from '@hooks/useScreenModes'
 
 interface IHomeProps {
     docs: IDocMeta[]
@@ -16,10 +17,11 @@ interface IHomeProps {
 const { serverRuntimeConfig } = getConfig()
 
 export default function Home({ docs }: IHomeProps) {
+    const { isMobile } = useScreenModes()
     return (
         <Layout loading={docs?.length === 0}>
             <Typography
-                variant={Headings.H2}
+                variant={Headings[isMobile ? 'H3' : 'H2']}
                 fontWeight="300"
                 textTransform="uppercase"
                 textAlign="center"
@@ -30,12 +32,13 @@ export default function Home({ docs }: IHomeProps) {
             </Typography>
             <div className="gradientBg">
                 <Typography
-                    variant={Headings.H2}
+                    variant={Headings[isMobile ? 'H3' : 'H2']}
                     fontWeight="500"
                     textTransform="uppercase"
                     textAlign="center"
                     color="var(--neutral100)"
-                    letterSpacing={'2px'}
+                    letterSpacing={'3px'}
+                    lineHeight={'110%'}
                 >
                     ETHEREUM ROLLUP ECOSYSTEM
                 </Typography>
