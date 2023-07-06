@@ -7,8 +7,11 @@ import TwitterIcon from '/public/images/twitter-icon.svg'
 import EmailIcon from '/public/images/email-icon.svg'
 import LimeChainLogo from '/public/images/limechain-logo.svg'
 import GithubIcon from '/public/images/github-icon.svg'
+import useLastModifiedDate from '@hooks/useLastModifiedDate'
 
 const Footer = () => {
+    const lastModifiedDate = useLastModifiedDate()
+
     return (
         <div className={styles.footer}>
             <div className={styles.group}>
@@ -50,6 +53,18 @@ const Footer = () => {
                         <EmailIcon fill="var(--icon-color)" />
                     </Link>
                 </div>
+                {lastModifiedDate && (
+                    <>
+                        <div className={styles.pipe}>{'|'}</div>
+                        <Typography
+                            variant={Text.BODY2}
+                            fontWeight="400"
+                            color={'var(--neutral50)'}
+                        >
+                            Last Updated {lastModifiedDate}
+                        </Typography>
+                    </>
+                )}
             </div>
             <div className={styles.group}>
                 <Link href="/privacy-policy">
