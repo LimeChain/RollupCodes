@@ -1,6 +1,6 @@
 import Avatar from '@components/Avatar'
 import Layout from '@components/Layout'
-import { AvatarSize, IDocMeta } from '@utils/types'
+import { AvatarSize, IDocMeta, Text } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
 import getConfig from 'next/config'
