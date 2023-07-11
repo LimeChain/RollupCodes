@@ -2,7 +2,7 @@ import Script from 'next/script'
 
 const Googleanalytics = () => {
     const IS_PRODUCTION = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-    const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID
+    const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
     if (!GA_TRACKING_ID || !IS_PRODUCTION) {
         return null
