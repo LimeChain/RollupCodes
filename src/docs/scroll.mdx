@@ -1,0 +1,185 @@
+---
+title: Scroll
+subtitle: Scroll is a ZK Rollup Layer 2 dedicated to enhance Ethereum scalability through a bytecode-equivalent zkEVM circuit. The protocol features a centralised sequencer operated by the Base team. The team focuses on decentralizing every component of their stack.
+labels:
+    - ZK Rollup
+    - EVM
+    - Testnet
+links:
+    website:
+        url: https://scroll.io/
+        name: scroll.io
+    docs:
+        url: https://docs.scroll.io/en/home/
+        name: Docs
+    l2beat:
+        url: https://l2beat.com/scaling/projects/scroll
+        name: L2Beat
+    github:
+        url: https://github.com/scroll-tech
+        name: Github
+    twitter:
+        url: https://twitter.com/Scroll_ZKP
+        name: Scroll_ZKP
+---
+
+<Section title="Overview">
+
+    Note: The rollup is still in Testnet phase and specification may change without notice. The information below is based on the current state of the rollup and may get outdated.
+
+    Scroll is a zkRollup Layer 2 dedicated to enhance Ethereum scalability through a bytecode-equivalent zkEVM circuit.
+    
+    ###### Focus
+
+    - Final testnet before launching our mainnet on Ethereum
+    - Decentralizing each component of their stack
+
+    <Labels labels={['ZK Rollup', 'EVM', 'Testnet']} title="Scroll" />
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block time" value="3 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future" />
+
+    <Parameter name="Gas Limit" value="10 million" tooltip="The gas limit that can be consumed by an L2 block" />
+
+    <Parameter name="Sequencing Frequency" value="2 - 4 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
+
+    <Parameter name="Finality"  value="<30 minutes" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x2D567EcE699Eabe5afCd141eDB7A4f2D0D6ce8a0" url="https://sepolia.etherscan.io/address/0x2D567EcE699Eabe5afCd141eDB7A4f2D0D6ce8a0" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="zkTrie (Merkle Patricia trie + Poseidon Hashing)" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={[<Reference key="0" label="l2geth(Go)" url="https://github.com/scroll-tech/go-ethereum" />]} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+    - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+    - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718)
+    - **Type 126** - User Transactions. Represent custom [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transaction called `L1MessageTx` Transaction. This type of transaction is initiated on the L1 bridge contract.
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~10 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of sending a message from Ethereum to the L2. Scroll executes the message with a system address on behalf of the L1 sender.',
+                    value: '~300 000 L1 gas',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1.',
+                    value: '~1 hour',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Scroll. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
+                    value: '~200 000 L2 gas',
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+
+    <Legend />
+
+    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
+
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 40 | BLOCKHASH | `block.blockhash` | Returns keccak(chain_id || block_number) for the last 256 blocks. | Get the L1 block hash fro block number <Modified /> |
+    | 41 | COINBASE | `block.coinbase` | Returns the pre-deployed fee vault contract address 0x5300000000000000000000000000000000000005. | Get the L1 block’s beneficiary address <Modified /> |
+    | 44 | DIFFICULTY / PREVRANDAO | `block.difficulty` | Returns 0. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
+    | 48 | BASEFEE | `block.basefee` | Disabled. If the opcode is encountered, the transaction will be reverted. | Returns the value of the base fee of the current block it is executing in <Unsupported /> |
+    | ff | SELFDESTRUCT | `selfdestruct` | Disabled. If the opcode is encountered, the transaction will be reverted. | Halt execution and register account for later deletion <Unsupported /> |
+
+</Section>
+
+<Section title="Precompiled Contracts">
+
+    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | <Copy label="0x02" value="0x02" /> | `SHA2-256` | Not supported | Hash function <Unsupported /> |
+    | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | Not supported | Hash function <Unsupported /> |
+    | <Copy label="0x05" value="0x05" /> | `modexp` | only supports inputs of size less than or equal to 32 bytes (i.e. `u256`). | Arbitrary-precision exponentiation under modulo <Modified /> |
+    | <Copy label="0x08" value="0x08" /> | `ecPairing` | the number of points(sets, pairs) is limited to 4, instead of 6. | Bilinear function on groups on the elliptic curve 'alt_bn128' <Modified /> |
+    | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
+
+</Section>
+
+<Section title="System Contracts">
+
+    The following system contracts have been introduced on the Rollup.
+
+    | Address | Name | Description |
+    | :--- | :--- | :--- |
+    | <Copy value="0x2D567EcE699Eabe5afCd141eDB7A4f2D0D6ce8a0" label="0x2D5...a0" /> | <Reference label="L1 Rollup (Scroll Chain)" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/ScrollChain.sol" /> | L1 Rollup (Scroll Chain) |
+    | <Copy value="0x13FBE0D0e5552b8c9c4AE9e2435F38f37355998a" label="0x13f...8a" /> | <Reference label="L1 ERC20 Gateway Router" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1ERC20Gateway.sol" /> | L1 ERC20 gateway |
+    | <Copy value="0x9aD3c5617eCAa556d6E166787A97081907171230" label="0x9ad...30" /> | <Reference label="L2 ERC20 Gateway Router" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2ERC20Gateway.sol" /> | L2 ERC20 gateway |
+    | <Copy value="0x50c7d3e7f7c656493D1D76aaa1a836CedfCBB16A" label="0x50c...6a" /> | <Reference label="L1 Messenger" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/L1ScrollMessenger.sol" /> | L1 Messenger |
+    | <Copy value="0xBa50f5340FB9F3Bd074bD638c9BE13eCB36E603d" label="0xba5...3d" /> | <Reference label="L2 Messenger" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/L2ScrollMessenger.sol" /> | L2 Messenger |
+    | <Copy value="0x8A54A2347Da2562917304141ab67324615e9866d" label="0x8a5...6d" /> | <Reference label="L1 ETH Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1ETHGateway.sol" /> | L1 ETH Gateway |
+    | <Copy value="0x91e8ADDFe1358aCa5314c644312d38237fC1101C" label="0x91e...1c" /> | <Reference label="L2 ETH Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2ETHGateway.sol" /> | L2 ETH Gateway |
+    | <Copy value="0x3dA0BF44814cfC678376b3311838272158211695" label="0x3dA...95" /> | <Reference label="L1 WETH Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1WETHGateway.sol" /> | L1 WETH Gateway |
+    | <Copy value="0x481B20A927206aF7A754dB8b904B052e2781ea27" label="0x481...27" /> | <Reference label="L2 WETH Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2WETHGateway.sol" /> | L2 WETH Gateway |
+    | <Copy value="0x65D123d6389b900d954677c26327bfc1C3e88A13" label="0x65D...13" /> | <Reference label="L1 ERC20 Standard Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1StandardERC20Gateway.sol" /> | L1 ERC20 Standard Gateway |
+    | <Copy value="0xaDcA915971A336EA2f5b567e662F5bd74AEf9582" label="0xaDc...82" /> | <Reference label="L2 ERC20 Standard Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2StandardERC20Gateway.sol" /> | L2 ERC20 Standard Gateway |
+    | <Copy value="0x31C994F2017E71b82fd4D8118F140c81215bbb37" label="0x31C...37" /> | <Reference label="L1 ERC20 Custom Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1CustomERC20Gateway.sol" /> | L1 ERC20 Custom Gateway |
+    | <Copy value="0x058dec71E53079F9ED053F3a0bBca877F6f3eAcf" label="0x058...cf" /> | <Reference label="L2 ERC20 Custom Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2CustomERC20Gateway.sol" /> | L2 ERC20 Custom Gateway |
+    | <Copy value="0xEF27A5E63aa3f1B8312f744b9b4DcEB910Ba77AC" label="0xEF2...AC" /> | <Reference label="L1 ERC721 Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1ERC721Gateway.sol" /> | L1 ERC721 Gateway |
+    | <Copy value="0x179B9415194B67DC3c0b8760E075cD4415785c97" label="0x179...97" /> | <Reference label="L2 ERC721 Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2ERC721Gateway.sol" /> | L2 ERC721 Gateway |
+    | <Copy value="0xa5Df8530766A85936EE3E139dECE3bF081c83146" label="0xa5D...46" /> | <Reference label="L1 ERC1155 Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/gateways/L1ERC1155Gateway.sol" /> | L1 ERC1155 Gateway |
+    | <Copy value="0xe17C9b9C66FAF07753cdB04316D09f52144612A5" label="0xe17...A5" /> | <Reference label="L2 ERC1155 Gateway" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/gateways/L2ERC1155Gateway.sol" /> | L2 ERC1155 Gateway |
+    | <Copy value="0x247969F4fad93a33d4826046bc3eAE0D36BdE548" label="0x247...48" /> | <Reference label="L2 Gas Oracle (deployed on Sepolia)" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/L2GasPriceOracle.sol" /> | L2 Gas price oracle on L1 |
+    | <Copy value="0x5300000000000000000000000000000000000000" label="0x530...00" /> | <Reference label="Message Queue" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/predeploys/L2MessageQueue.sol" /> | L2 Message queue predeploy |
+    | <Copy value="0x5300000000000000000000000000000000000002" label="0x530...02" /> | <Reference label="Gas Price Oracle" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/predeploys/L1GasPriceOracle.sol" /> | L1 gas price on L2 predeploy |
+    | <Copy value="0x5300000000000000000000000000000000000003" label="0x530...03" /> | <Reference label="Whitelist" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/predeploys/Whitelist.sol" /> | Whitelist on L2 predeploy |
+    | <Copy value="0x5300000000000000000000000000000000000004" label="0x530...04" /> | <Reference label="WETH L2" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/predeploys/WrappedEther.sol" /> | WETH on L2 predeploy |
+    | <Copy value="0x5300000000000000000000000000000000000005" label="0x530...05" /> | <Reference label="Transaction Fee Vault" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/predeploys/L2TxFeeVault.sol" /> | Transaction Fee Vault on L2 predeploy |
+
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />The `earliest` parameter will not work as expected currently, because genesis block balances are not currently imported | Returns the balance of the account of the given address. <Modified /> |
+    | `eth_getLogs` | Address, From block, To block, topics, pagination options | Returns an array of logs matching filter with given id<br /><br />Will never return more than 1000 log entries. For this reason, you can use pagination options to request the next page. Pagination options params: logIndex, blockNumber, transactionIndex | Returns an array of all logs matching filter with given id. <Modified /> |
+   
+
+    Scroll recommends using [Custom RPCs](https://sepolia-blockscout.scroll.io/api-docs)
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    Scroll charges an additional L1 data fee. You can use the predeployed [L1GasOracle](https://blockscout.scroll.io/address/0x5300000000000000000000000000000000000002) to get an estimate of the current L1 fee
+
+</Section>
+
+<Section title="Tools">
+
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+
+</Section>
