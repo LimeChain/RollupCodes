@@ -1,0 +1,167 @@
+---
+title: Taiko
+subtitle: Arbitrum is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Fraud proofs are enabled for whitelisted validators. The network focuses on developing support for non-EVM-based contracts (EVM+), although they are not yet in production.
+labels:
+    - Optimistic Rollup
+    - EVM
+    - Mainnet
+links:
+    website:
+        url: https://taiko.xyz/
+        name: taiko.xyz
+    docs:
+        url: https://taiko.xyz/docs
+        name: Docs
+    l2beat:
+        url: https://l2beat.com/scaling/projects/taiko
+        name: L2Beat
+    github:
+        url: https://github.com/taikoxyz
+        name: Github
+    twitter:
+        url: https://twitter.com/taikoxyz
+        name: taikoxyz
+    discord:
+        url: https://discord.com/invite/taikoxyz
+        name: Discord
+---
+
+<Section title="Overview">
+
+    Taiko is a decentralized, Ethereum-equivalent Type 1 ZK-Rollup. 
+
+    ###### Focus
+
+
+    <Labels labels={['ZK Rollup', 'EVM', 'Testnet']} title="Taiko" />
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block Time" value="Any" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+
+    <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block"/>
+
+    <Parameter name="Sequencing Frequency" value="30 - 120 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
+
+    <Parameter name="Finality" value="7 days" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6" url="https://etherscan.io/address/0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={<Reference label="taiko-geth" url="https://github.com/taikoxyz/taiko-geth" />} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 1** - User Transaction. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 2** - User Transaction. [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
+        - **Type 100** - System (Bridge) Transaction. A deposit of ETH from L1 to L2 via the Arbitrum bridge
+        - **Type 101** - System (Bridge) Transaction. An L1 user can use to call an L2 contract via the bridge
+        - **Type 102** - System (Bridge) Transaction. An L1 contract can use to call an L2 contract via the bridge
+        - **Type 104** - User Transaction. Used to redeem a retryable ticket on L2, which finalizes a retryable that failed to execute automatically (usually due to low gas)
+        - **Type 105** - System (Bridge) Transaction. Retryable tickets are submitted via the L1 bridge and allow arbitrary L1 to L2 messages to be created and executed on L2
+        - **Type 106** - System (Internal) Transaction. Transactions created by the ArbOS itself for certain state updates, like L1 base fee and block number
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~6-9 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Arbitrum, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
+                    value: 'No added cost',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1.',
+                    value: '7 days',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum',
+                    value: '60 000 L1 gas',
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+
+    <Legend />
+
+    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
+
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
+    | 33 | CALLER | `msg.sender` | Same behaviour as on Ethereum for L2 to L2 transactions <br /><br /> Returns the L2 address alias of the L1 contract that triggered the message for L1-to-L2 "retryable ticket" transactions. See [retryable ticket address aliasing](https://developer.arbitrum.io/arbos/l1-to-l2-messaging#address-aliasing) for more. | Returns caller address <Modified /> |
+    | 40 | BLOCKHASH | `blockhash(x)` | Returns a cryptographically insecure, pseudo-random hash for `x` within the range `block.number - 256 <= x < block.number`. <br /><br /> If `x` is outside of this range, `blockhash(x)` will return 0. This includes `blockhash(block.number)`, which always returns `0` just like on Ethereum. <br /><br /> The hashes returned do not come from L1. | Returns the hash of one of the 256 most recent complete blocks <Modified /> |
+    | 41 | COINBASE | `block.coinbase` | Returns `0` | Returns the L1 block’s beneficiary address <Modified /> |
+    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | 43 | NUMBER | `block.number` | Returns an "estimate" of the L1 block number at which the Sequencer received the transaction (see [Block Numbers and Time](https://developer.arbitrum.io/time)) | Returns the L1 block number <Modified /> |
+    | 44 | DIFFICULTY | `block.difficulty` and `block.prevrandao` | Returns the constant `2500000000000000` | Returns the output of the randomness beacon provided by the beacon chain <Modified /> |
+
+</Section>
+
+<Section title="Precompiled Contracts">
+
+    All Precompiled Contracts defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.
+
+</Section>
+
+<Section title="System Contracts">
+
+    The Rollup has introduced the following system contracts.
+
+    | Address | Name | Description |
+    | :--- | :--- | :--- |
+    | <Copy value="0x6d" label="0x6d" /> | <Reference label="ArbAggregator" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbAggregator.go" /> | Provides aggregators and their user's methods for configuring how they participate in L1 aggregation. Arbitrum One's default aggregator is the Sequencer, which a user will prefer unless `SetPreferredAggregator` is invoked to change it.|
+    | <Copy value="0x6c" label="0x6c" /> | <Reference label="ArbGasInfo" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbGasInfo.go" /> | Provides data for gas costs in wei and ArbGas, estimates for L1 basefee as-well as information on the chain speed limit, pool size and transaction gas limit.|
+    | <Copy value="0x6e" label="0x6e" /> | <Reference label="ArbRetryableTx" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbRetryableTx.go" /> | Provides methods for managing retryables (cross domain messages). [Retryable documentation](https://developer.arbitrum.io/arbos/l1-to-l2-messaging).|
+    | <Copy value="0x64" label="0x64" /> | <Reference label="ArbSys" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbSys.go" /> | Provides system-level functionality for getting L2 block number, hash, checking if a call is top-level, sending cross-domain messages as-well as sending ETH to L1.|
+
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_syncing` | None | Returns object with sync status data or `FALSE`, when not syncing. The object contains rollup specific information on the sync state of the node such as the last seen or processed batch as-well as L1 state information and messages processed. <br /><br /> Specific list of the differences [here](https://developer.arbitrum.io/arbitrum-ethereum-differences#eth_syncing-rpc-method). | Returns object with sync status data or `FALSE`, when not syncing. <Modified /> |
+    | `eth_getBlockByHash` | Hash of a block | Returns information for a given block.<br /><br />Adds additional information such as l1 block number, send count and send root. | Returns information for a given block. <Modified /> |
+    | `eth_getBlockByNumber` | Integer of a block number, or the string "earliest", "latest" or "pending” | Returns information for a given block.<br /><br />Adds additional information such as l1 block number, send count and send root. | Returns information for a given block. <Modified /> |
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    The L2 fees of Arbitrum work identically to gas fees on Ethereum. Arbitrum transactions must also, however, pay an L1 fee component to cover the cost of their calldata. (See [L1 pricing](https://developer.arbitrum.io/arbos/l1-pricing).)
+
+</Section>
+
+<Section title="Tools">
+
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+
+    [@arbitrum/sdk](https://github.com/OffchainLabs/arbitrum-sdk) is an npm library providing a set of tools for interacting with Arbitrum in regards to L1 ↔ L2 messaging.
+
+</Section>
