@@ -6,7 +6,7 @@
     row-gap: 16px;
     column-gap: 16px;
     padding-bottom: 64px;
-    justify-content: space-between;
+    justify-content: flex-start;
     @include tablet {
         flex-direction: row;
         flex-wrap: wrap;
