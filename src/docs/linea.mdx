@@ -1,6 +1,6 @@
 ---
 title: "Linea"
-subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure. The Rollup uses quantum-resistant cryptography for its validity proofs."
+subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure."
 labels:
   - ZK-Rollup
   - EVM
@@ -27,7 +27,7 @@ links:
 ---
 
 <Section title="Overview">
-Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure. The Rollup uses quantum-resistant cryptography for its validity proofs.
+Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure.
 
 ###### Focus
 - Open-sourcing the Rollup's Sequencer and Prover
@@ -51,7 +51,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Parameter name="State Trie" value="Sparse Merkle Trie + MiMC Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. The following can be used as follower nodes:", <Reference key="0" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. Geth node supports both SMT + MiMC for state root calculation and MPT + Keccak. The following can be used as follower nodes:", <Reference key="0" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="1" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
@@ -141,18 +141,26 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Legend />
 
+    The endpoints `eth_gasPrice` and `eth_feeHistory` have [modified underlying logic](https://docs.linea.build/build-on-linea/gas-fees). Base fee is fixed to constant "7".
+
     The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | `eth_newBlockFilter` | None | Not supported  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
-    | `eth_newFilter` | None | Not supported  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
+    | `eth_newBlockFilter` | None | Implemented in Node, not available in providers yet  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
+    | `eth_newFilter` | None | Implemented in Node, not available in providers yet  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
     
 </Section>
 
 <Section title="Transaction Fees">
 
-    Other than the L1 gas fee component, Linea charges L2 gas fees which should be around 1/15th of Ethereum's.
+    Transaction fees are paid in Ether. 
+    
+    There is no concept of an L1 calldata fee commonly used in other rollups.
+    
+    Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch.
+    
+    Information on the gas price can be retrieved from the JSON RPC endpoint.
 
     [L2 Gas fees](https://docs.linea.build/build-on-linea/gas-fees).
 
