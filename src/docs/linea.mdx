@@ -115,6 +115,8 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | PREVRANDAO (legacy DIFFICULTY) | `block.difficulty` | Returns a fixed number "2" | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
     | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
 
@@ -154,13 +156,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
 <Section title="Transaction Fees">
 
-    Transaction fees are paid in Ether. 
-    
-    There is no concept of an L1 calldata fee commonly used in other rollups.
-    
-    Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch.
-    
-    Information on the gas price can be retrieved from the JSON RPC endpoint.
+    Transaction fees are paid in Ether. There is no concept of an L1 calldata fee commonly used in other rollups. Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch. Information on the gas price can be retrieved from the JSON RPC endpoint.
 
     [L2 Gas fees](https://docs.linea.build/build-on-linea/gas-fees).
 
