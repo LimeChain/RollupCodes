@@ -51,7 +51,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Parameter name="State Trie" value="Sparse Merkle Trie + MiMC Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. Geth node supports both SMT + MiMC for state root calculation and MPT + Keccak. The following can be used as follower nodes:", <Reference key="0" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="1" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. The following can be used as follower nodes:", <Reference key="0" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="1" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
