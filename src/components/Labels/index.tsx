@@ -11,6 +11,7 @@ const rollupsFirstColors: Record<string, string> = {
     optimism: '#F59762',
     base: '#F59762',
     polygon_zkevm: '#7A8FFF',
+    linea: '#7A8FFF',
     zksync_era: '#7A8FFF',
 }
 
