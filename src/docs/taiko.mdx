@@ -1,6 +1,6 @@
 ---
 title: Taiko
-subtitle:  Taiko is a decentralized, Ethereum-equivalent Type 1 ZK-Rollup. The protocol does not have a sequencer since anyone can become a proposer.
+subtitle: Taiko is a decentralized, Type 1 ZK-Rollup. The protocol does not have a sequencer allowing anyone to become a proposer in a premissionless manner. Prover markets are implemented allowing anyone to be a prover and earn fees for proving L2 blocks.
 labels:
     - ZK-Rollup
     - EVM
@@ -28,9 +28,11 @@ links:
 
 <Section title="Overview">
 
-    Taiko is a decentralized, Ethereum-equivalent Type 1 ZK-Rollup. 
-
+    Taiko is a decentralized, Type 1 ZK-Rollup. The protocol does not have a sequencer allowing anyone to become a proposer in a premissionless manner. Prover markets are implemented allowing anyone to be a prover and earn fees for proving L2 blocks.
+    
     ###### Focus
+
+    - Full OPCODE EVM equivalence.
 
 
     <Labels labels={['ZK-Rollup', 'EVM', 'Testnet']} title="Taiko" />
@@ -39,19 +41,17 @@ links:
 
 <Section title="General">
 
-    <Parameter name="Block Time" value="Irregular*" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+    <Parameter name="Block Time" value="Irregular*" tooltip="The rate at which the rollup produces blocks. Blocks are produced on demand with average time of 4 seconds"/>
 
     <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block"/>
 
-    <Parameter name="Sequencing Frequency" value="30 - 120 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
-
-    <Parameter name="Finality" value="7 days" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+    <Parameter name="Finality" value="90 minutes" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" url="https://sepolia.etherscan.io/address/0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={<Reference label="taiko-geth" url="https://github.com/taikoxyz/taiko-geth" />} tooltip="The different execution-client implementations of the rollup" />
+    <Parameter name="Execution Node Implementations" value={<Reference label="taiko-geth" url="https://github.com/taikoxyz/taiko-geth" />} tooltip="The different execution-client implementations of the rollup" />
     
     <Parameter name="Proposer and Prover Implementations" value={<Reference label="taiko-client" url="https://github.com/taikoxyz/taiko-client" />} tooltip="The different client implementations of the rollup" />
 
@@ -68,13 +68,13 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
-                    value: '~6-9 minutes',
+                    tooltip: 'The maximum time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '90 minutes',
                 },
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
-                    value: 'No added cost',
+                    value: '~110 000 L1 gas',
                 },
             ],
         },
@@ -84,7 +84,7 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1.',
-                    value: '7 days',
+                    value: '90 minutes',
                 },
                 {
                     label: 'Cost',
