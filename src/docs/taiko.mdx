@@ -1,6 +1,6 @@
 ---
 title: Taiko
-subtitle: Taiko is a decentralized, Type 1 ZK-Rollup. The protocol does not have a sequencer allowing anyone to become a proposer in a premissionless manner. Prover markets are implemented allowing anyone to be a prover and earn fees for proving L2 blocks.
+subtitle: Taiko is a decentralized ZK-Rollup. The protocol does not have a sequencer allowing anyone to become a proposer in a premissionless manner. Prover markets are implemented allowing anyone to be a prover and earn fees for proving L2 blocks.
 labels:
     - ZK-Rollup
     - EVM
@@ -62,19 +62,24 @@ links:
         - **Type 2** - User Transaction. [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
     ___
 
-    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain" data={[
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Taiko protocol will provide proof of the data transfer on the destination chain" data={[
         {
             title: 'L1 → L2',
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The maximum time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
-                    value: '90 minutes',
+                    tooltip: 'The maximum time it takes for a message to be made available on the rollup after it is included in the Ethereum block.',
+                    value: '< 90 minutes',
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
-                    value: '~110 000 L1 gas',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko. In case of automaitic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Taiko.',
+                    value: '~110 000 L1 gas + ~440 000 L2 gas (in case of manual delivery)',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered. In both automatic and manual delivery, users are waiting for a prover to generate validity proof for the target chain (max 90 minutes). In case of manual delivery users need to claim the message themselves as opposed to automatic',
+                    value: 'Both manual and automatic delivery are supported'
                 },
             ],
         },
@@ -83,13 +88,18 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1.',
-                    value: '90 minutes',
+                    tooltip: 'The maximum time it takes for a message to be made available on Ethereum after being included in an Taiko block and proved for L1.',
+                    value: '< 90 minutes',
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum',
-                    value: '60 000 L1 gas',
+                    tooltip: 'The gas cost of purely sending a message from Taiko to Ethereum. In case of automaitic claiming on L1 Senders on L2 pay an additional ETH fee determined by market conditions on Ethereum.',
+                    value: '~129 000 L2 gas + ~440 000 L1 gas(in case of manual delivery)',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered. In both automatic and manual delivery, users are waiting for a prover to generate validity proof for the target chain (max 90 minutes). In case of manual delivery users need to claim the message themselves as opposed to automatic',
+                    value: 'Both manual and automatic delivery are supported'
                 },
             ],
         },
@@ -101,13 +111,19 @@ links:
 
     <Legend />
 
-    All OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup.
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
+    | 48 | BASEFEE | | Returns `1` (wei) | Returns the base fee <Modified />  |
+
+    All other OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however the execution of those OPCODEs by the circuits is not 100% EVM equivalent.
 
 </Section>
 
 <Section title="Precompiled Contracts">
 
-    All Precompiled Contracts defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup.
+    > ⚠️ All Precompiled Contacts defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of those Precompiles is currently not covered by the circuits and therefore not present in the Validity proof
 
 </Section>
 
@@ -132,7 +148,7 @@ links:
 
 <Section title="Transaction Fees">
 
-    The L2 fees of Arbitrum work identically to gas fees on Ethereum. Arbitrum transactions must also, however, pay an L1 fee component to cover the cost of their calldata. (See [L1 pricing](https://developer.arbitrum.io/arbos/l1-pricing).)
+    The L2 fees of Taiko work identically to gas fees on Ethereum.
 
 </Section>
 
@@ -140,6 +156,5 @@ links:
 
     Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
 
-    [@arbitrum/sdk](https://github.com/OffchainLabs/arbitrum-sdk) is an npm library providing a set of tools for interacting with Arbitrum in regards to L1 ↔ L2 messaging.
-
+    [Taiko bridge](https://bridge.jolnir.taiko.xyz/)
 </Section>
