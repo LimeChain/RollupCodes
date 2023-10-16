@@ -125,7 +125,7 @@ links:
 
     | Address | Name | Description |
     | :--- | :--- | :--- |
-    | <Copy value="0x2D567EcE699Eabe5afCd141eDB7A4f2D0D6ce8a0" label="0x2D5...a0" /> | <Reference label="L1 Rollup (Scroll Chain)" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/ScrollChain.sol" /> | The main contract of the Scroll Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks. |
+    | <Copy value="0xa13BAF47339d63B743e7Da8741db5456DAc1E556" label="0xa13...56" /> | <Reference label="L1 Rollup (Scroll Chain)" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/ScrollChain.sol" /> | The main contract of the Scroll Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks. |
     | <Copy value="0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367" label="0x50c...6a" /> | <Reference label="L1 Messenger" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/L1ScrollMessenger.sol" /> | Provides messaging functionality between L1 and L2. Provides functionality for sending and receiving messages between domains (Ethereum and Scroll). |
     | <Copy value="0x485149079c421f9e4c465276BbaBB2fE0748d138" label="0xba5...3d" /> | <Reference label="L2 Messenger" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/L2ScrollMessenger.sol" /> | Provides messaging functionality between L2 and L1. Provides functionality for sending and receiving messages between domains (Ethereum and Scroll). |
     | <Copy value="0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E" label="0x247...48" /> | <Reference label="L2 Gas Oracle" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/L2GasPriceOracle.sol" /> | L2 Gas price oracle on Ethereum. |
@@ -144,7 +144,7 @@ links:
     | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />The `earliest` parameter will not work as expected currently, because genesis block balances are not currently imported | Returns the balance of the account of the given address. <Modified /> |
     | `eth_getLogs` | Address, From block, To block, topics, pagination options | Returns an array of logs matching filter with given id<br /><br />Will never return more than 1000 log entries. For this reason, you can use pagination options to request the next page. Pagination options params: logIndex, blockNumber, transactionIndex | Returns an array of all logs matching filter with given id. <Modified /> |
    
-    Scroll recommends using [Custom RPCs](https://sepolia-blockscout.scroll.io/api-docs)
+    Scroll recommends using [Custom RPCs](https://blockscout.scroll.io/api-docs)
 
 </Section>
 
