@@ -115,7 +115,7 @@ links:
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
-    | 48 | BASEFEE | | Returns `1` (wei) | Returns the base fee <Modified />  |
+    | 48 | BASEFEE | `block.basefee` | Returns `1` (wei) | Returns the base fee <Modified />  |
 
     All other OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however the execution of those OPCODEs by the circuits is not 100% EVM equivalent.
 
