@@ -81,9 +81,19 @@ const getDocsMetadata = async () => {
         markdownDocs.map((fileName) => {
             const fileContents = fs.readFileSync(`${folder}${fileName}`, 'utf8')
             const matterResult = matter(fileContents)
+
+            const hasDarkLogo = fs.existsSync(
+                `public/images/${fileName.replace('.mdx', '')}-dark-logo.svg`
+            )
+
+
             docs.push({
                 title: matterResult?.data?.title,
-                logo: `images/${fileName.replace('.mdx', '')}-logo.svg`,
+                // Light logo will be used as default if there is ONLY one
+                lightLogo: `images/${fileName.replace('.mdx', '')}-logo.svg`,
+                darkLogo: hasDarkLogo
+                    ? `images/${fileName.replace('.mdx', '')}-dark-logo.svg`
+                    : '',
                 subtitle: matterResult?.data?.subtitle,
                 slug: fileName.replace('.mdx', ''),
                 labels: matterResult?.data?.labels,
