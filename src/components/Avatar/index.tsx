@@ -1,18 +1,29 @@
 import Typography from '@components/Typography'
-import { AvatarSize, Headings, Text, Font } from '@utils/types'
+import { AvatarSize, Headings, Text, Font, ThemeMode } from '@utils/types'
 import styles from './styles.module.scss'
 import classNames from 'classnames'
 import Image from 'next/image'
 import useScreenModes from '@hooks/useScreenModes'
+import { useTheme } from 'next-themes'
 
 interface IAvatar {
     name: string
-    src: string
+    lightLogo: string
+    darkLogo?: string
     size?: AvatarSize
 }
 
-const Avatar = ({ name = '', size = AvatarSize.SMALL, src }: IAvatar) => {
+const Avatar = ({
+    name = '',
+    size = AvatarSize.SMALL,
+    lightLogo,
+    darkLogo,
+}: IAvatar) => {
     const isLarge = Boolean(AvatarSize.LARGE === size)
+    const { theme } = useTheme()
+    const isDarkTheme = ThemeMode[ThemeMode.DARK].toLowerCase() === theme
+
+    const src = isDarkTheme ? lightLogo : darkLogo ? darkLogo : lightLogo
 
     const { isMobile } = useScreenModes()
 

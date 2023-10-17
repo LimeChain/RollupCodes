@@ -76,7 +76,8 @@ export default function Details({ content }: IContent) {
             <Hero getHeight={(height) => setAdditionalPaddingTop(height)}>
                 <Avatar
                     size={AvatarSize.LARGE}
-                    src={content?.meta?.logo}
+                    lightLogo={content?.meta?.lightLogo}
+                    darkLogo={content?.meta?.darkLogo}
                     name={content?.meta?.title}
                 />
                 <DropdownLinks links={content?.meta?.links} />
@@ -123,9 +124,17 @@ const getDocsContent = async (): Promise<DocsContent> => {
                 mdxOptions: { remarkPlugins: [remarkGfm] },
             })
 
+            const hasDarkLogo = fs.existsSync(
+                `public/images/${fileName.replace('.mdx', '')}-dark-logo.svg`
+            )
+
             const meta = {
                 title: data?.title,
-                logo: `../images/${fileName.replace('.mdx', '')}-logo.svg`,
+                // Light logo will be used as default if there is ONLY one
+                lightLogo: `../images/${fileName.replace('.mdx', '')}-logo.svg`,
+                darkLogo: hasDarkLogo
+                    ? `../images/${fileName.replace('.mdx', '')}-dark-logo.svg`
+                    : '',
                 subtitle: data?.subtitle,
                 slug: fileName.replace('.mdx', ''),
                 labels: data?.labels,
