@@ -76,7 +76,8 @@ export interface ITypography {
 export interface IDocMeta {
     title: string
     subtitle: string
-    logo: string
+    lightLogo: string
+    darkLogo?: string
     slug: string
     labels: string[]
     links: Links
