@@ -60,7 +60,6 @@ const Copy = ({ value, label }: { value: string; label: string }) => {
     return (
         <div className={styles.copy}>
             {label && label}
-            { /* ts-ignore */}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                     <span className={styles.copyIcon}>
                         {copied ? <CheckmarkIcon /> : <CopyIcon />}

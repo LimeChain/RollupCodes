@@ -41,9 +41,9 @@ links:
 
 <Section title="General">
 
-    <Parameter name="Block Time" value="Irregular*" tooltip="The rate at which the rollup produces blocks. Blocks are produced on demand with average time of 4 seconds"/>
+    <Parameter name="Block Time" value="On demand*" tooltip="The rate at which the rollup produces blocks. Blocks are produced on demand."/>
 
-    <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block"/>
+    <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
 
     <Parameter name="Finality" value="90 minutes" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
 
@@ -69,7 +69,7 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The maximum time it takes for a message to be made available on the rollup after it is included in the Ethereum block.',
-                    value: '< 90 minutes',
+                    value: '90 minutes',
                 },
                 {
                     label: 'Cost',
@@ -89,7 +89,7 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The maximum time it takes for a message to be made available on Ethereum after being included in an Taiko block and proved for L1.',
-                    value: '< 90 minutes',
+                    value: '90 minutes',
                 },
                 {
                     label: 'Cost',
@@ -148,7 +148,7 @@ links:
 
 <Section title="Transaction Fees">
 
-    The L2 fees of Taiko work identically to gas fees on Ethereum.
+    Transaction fees are paid in Ether. There is no concept of an L1 calldata fee commonly used in other rollups. Developers must set gasPrice high enough so that the proposer would include their transaction in the proposed block. The base fee is set to a constant '1' wei. 
 
 </Section>
 
