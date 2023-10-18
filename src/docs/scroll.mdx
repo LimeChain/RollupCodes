@@ -145,9 +145,6 @@ links:
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />The `earliest` parameter will not work as expected currently, because genesis block balances are not currently imported | Returns the balance of the account of the given address. <Modified /> |
-    | `eth_getLogs` | Address, From block, To block, topics, pagination options | Returns an array of logs matching filter with given id<br /><br />Will never return more than 1000 log entries. For this reason, you can use pagination options to request the next page. Pagination options params: logIndex, blockNumber, transactionIndex | Returns an array of all logs matching filter with given id. <Modified /> |
-   
-    Scroll recommends using [Custom RPCs](https://blockscout.scroll.io/api-docs)
 
 </Section>
 
