@@ -142,7 +142,12 @@ links:
 
     <Legend />
 
-    All RPC endpoints defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup.
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `taiko_headL1Origin` | None | Returns the latest L2 block's corresponding L1 origin | N/A <Added /> |
+    | `taiko_l1OriginByID` | L2 block number | Returns the L2 block's corresponding L1 origin | N/A <Added /> |
 
 </Section>
 
