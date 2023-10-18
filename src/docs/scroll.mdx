@@ -138,13 +138,7 @@ links:
 
 <Section title="RPC-API">
 
-    <Legend />
-
-    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
-
-    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :----- | :--------------- | :-------------------- |
-    | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />The `earliest` parameter will not work as expected currently, because genesis block balances are not currently imported | Returns the balance of the account of the given address. <Modified /> |
+    The Scroll JSON RPC API behaves the same way as the canonical Ethereum L1 implementation of the JSON RPC API.
 
 </Section>
 
