@@ -4,7 +4,7 @@ subtitle: Taiko is a decentralized ZK-Rollup. The protocol does not have a seque
 labels:
     - ZK-Rollup
     - EVM
-    - Mainnet
+    - Testnet
 links:
     website:
         url: https://taiko.xyz/
@@ -45,7 +45,7 @@ links:
 
     <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
 
-    <Parameter name="Finality" value="90 minutes" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+    <Parameter name="Finality" value="90 minutes" tooltip="The maximum time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" url="https://sepolia.etherscan.io/address/0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
