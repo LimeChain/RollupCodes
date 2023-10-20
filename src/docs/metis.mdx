@@ -1,0 +1,158 @@
+---
+title: Metis
+subtitle: Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO from Memo Labs.
+labels:
+    - Optimistic Rollup
+    - OVM
+    - Mainnet
+links:
+    website:
+        url: https://www.metis.io/
+        name: metis.io
+    docs:
+        url: https://docs.metis.io/dev/
+        name: Docs
+    l2beat:
+        url: https://l2beat.com/scaling/projects/metis
+        name: L2Beat
+    github:
+        url: https://github.com/MetisProtocol
+        name: Github
+    twitter:
+        url: https://twitter.com/MetisDAO
+        name: MetisDAO
+    discord:
+        url: https://discord.com/invite/RqfEJZXnxd
+        name: Discord
+---
+
+<Section title="Overview">
+
+    Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO from Memo Labs.
+    
+    ###### Focus
+
+    <Labels labels={['Optimistic Rollup', 'OVM', 'Mainnet']} title="Metis" />
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block Time" value="Irregular* with average block time of 6.1 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+
+    <Parameter name="Gas Limit" value="1.1 billion" tooltip="The gas limit that can be consumed by an L2 block"/>
+
+    <Parameter name="Sequencing Frequency" value="60 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
+
+    <Parameter name="Finality" value="7 days" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xf209815E595Cdf3ed0aAF9665b1772e608AB9380" url="https://etherscan.io/address/0xf209815E595Cdf3ed0aAF9665b1772e608AB9380" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={<Reference label="l2geth (Go)" url="https://github.com/MetisProtocol/mvm/tree/develop/l2geth" />} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 1** - User Transaction. A compressed EIP155 transaction that uses an alternative signature hashing algorithm.
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Metis protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~6-9 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Metis, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
+                    value: '~90 000 L1 gas',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a Metis block and sequenced to L1.',
+                    value: '7 days',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Metis',
+                    value: '600 000 L1 gas',
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+
+    <Legend />
+
+    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
+
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 40 | BLOCKHASH | `blockhash(block.number)` | returns constant `0x0000000000000000000000000000000000000000000000000000000000000000` | Get the hash of one of the 256 most recent complete blocks <Unsupported /> |
+    | 41 | COINBASE | `block.coinbase` | returns constant `0x4200000000000000000000000000000000000011` | Get the L1 block’s beneficiary address <Modified /> |
+    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
+    | 44 | PREVRANDAO | `block.prevrandao` | Returns constant `0` | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
+    | 48 | BASEFEE | `block.basefee` | Undefined | Get the base fee <Unsupported /> |
+    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
+    
+</Section>
+
+<Section title="Precompiled Contracts">
+
+    All Precompiled Contracts defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.
+
+</Section>
+
+<Section title="System Contracts">
+
+    The Rollup has introduced the following system contracts.
+
+    | Address | Name | Description |
+    | :--- | :--- | :--- |
+    | <Copy value="0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be" label="0xf51...be" /> | <Reference label="BondManager" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/verification/BondManager.sol" /> | This contract is, for now, a stub of the "real" BondManager that does nothing butallow the "OVM_Proposer" to submit state root batches |
+    | <Copy value="0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9" label="0x56a...C9" /> | <Reference label="CanonicalTransactionChain" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/rollup/CanonicalTransactionChain.sol" /> | The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the rollup state. |
+    | <Copy value="0xf209815E595Cdf3ed0aAF9665b1772e608AB9380" label="0xf20...80" /> | <Reference label="StateCommitmentChain" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/rollup/StateCommitmentChain.sol" /> | The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). |
+    | <Copy value="0x081D1101855bD523bA69A9794e0217F0DB6323ff" label="0x081...ff" /> | <Reference label="L1CrossDomainMessenger" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/messaging/L1CrossDomainMessenger.sol" /> | The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. |
+    
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_getBlockByNumber` | Integer block number or string one of `safe`, `latest` or `pending` | Returns information for a given block.<br /><br />Adds additional information for transactions such as l1 block number, l1 timestamp, queue origin and raw transaction. | Returns information for a given block. <Modified /> |
+    | `eth_getBlockByHash` | hash | Returns information for a given block.<br /><br />Adds additional information for transactions such as l1 block number, l1 timestamp, queue origin and raw transaction. | Returns information for a given block. <Modified /> |
+    | `eth_getTransactionByHash` | hash | Returns information for a given transaction. <br /><br />Adds additional information such as l1 block number, l1 timestamp, queue origin and raw transaction. | Returns information for a given transaction. <Modified /> |
+    | `eth_getTransactionReceipt` | hash | Returns information for a given transaction. <br /><br />Adds additional information related to L1 calldata fees. | Returns information for a given transaction. <Modified /> |
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    The L2 fees of Metis work identically to gas fees on Ethereum. Metis transactions must also, however, pay an L1 fee component to cover the cost of their calldata paid in METIS. You should use `eth_gasPrice` to determine the appropriate gas price needed.
+
+</Section>
+
+<Section title="Tools">
+
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+
+</Section>
