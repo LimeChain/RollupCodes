@@ -1,0 +1,175 @@
+---
+title: "Linea"
+subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure."
+labels:
+  - ZK-Rollup
+  - EVM
+  - Mainnet
+links:
+  website:
+    url: "https://linea.build/"
+    name: "linea.build"
+  docs:
+    url: "https://docs.linea.build/"
+    name: "Docs"
+  l2beat:
+    url: "https://l2beat.com/scaling/projects/linea"
+    name: "L2Beat"
+  github:
+    url: "https://github.com/Consensys/linea-contracts"
+    name: "Github"
+  twitter:
+    url: "https://twitter.com/LineaBuild"
+    name: "LineaBuild"
+  discord:
+    url: "https://discord.com/invite/linea"
+    name: "Discord"
+---
+
+<Section title="Overview">
+Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure.
+
+###### Focus
+- Open-sourcing the Rollup's Sequencer and Prover
+- Increase the Validity Proof coverage. Currently, the execution of precompiles is not part of the validity proof.
+- Progressively decentralize the upgradeability and governance of the Rollup 
+
+<Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="Linea" />
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block Time" value="12 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+
+    <Parameter name="Gas Limit" value="61 million" tooltip="The gas limit that can be consumed by an L2 block"/>
+
+    <Parameter name="Sequencing Frequency" value="30 - 120 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1." />
+
+    <Parameter name="Finality" value="8 - 32 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around 15 minutes, but its submission is delayed by at least 8 hours as a security measure during the alpha phase. The protocol may delay the submission up to 32 hours in order to minimize the L1 gas cost." />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xd19d4B5d358258f05D7B411E21A1460D11B0876F" url="https://etherscan.io/address/0xd19d4B5d358258f05D7B411E21A1460D11B0876F" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Main trie is Sparse Merkle Trie + MiMC Hashing. Secondary MPT + Keccak Hashing is maintained for follower nodes" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. The following can be used as follower nodes:", <Reference key="0" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="1" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 1** - User Transaction. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 2** - User Transaction. [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Linea protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~17min'
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Linea. In case of automaitic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Linea.',
+                    value: '~66 000 L1 gas + ~71 000 L2 gas (in case of manual delivery)'
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered. In both automatic and manual delivery, users are waiting for a central unit to add the message hashes on the target chain (~17 minutes). In case of manual delivery users need to claim the message themselves as opposed to automatic',
+                    value: 'Both manual and automatic delivery are supported'
+                },
+            ]
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: "The time it takes for a message to be made available on Ethereum after being included in an Linea block and sequenced to L1. Messages can only be claimed after ZK proof has been submitted on L1 and L2 state has been finalized.",
+                    value: '8 to 32 hours'
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of executing a message on Ethereum after being sent from Linea. The fee for the prover is paid by the sender on L2.',
+                    value: '~73 000 L2 gas'
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the smart contract on the target chain is called.',
+                    value: 'Manual'
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+
+    <Legend />
+
+    Linea uses the London version of the EVM.
+
+    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
+
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
+    | 44 | PREVRANDAO (legacy DIFFICULTY) | `block.difficulty` | Returns a fixed number "2" | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
+    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
+
+</Section>
+
+<Section title="Precompiled Contracts">
+
+    > ⚠️ All Precompiled Contacts defined in the canonical Ethereum L1 implementation (until London hard fork) have the same behaviour on the Rollup, however, the execution of those Precompiles is currently not covered by the circuits and therefore not present in the Validity proof
+
+</Section>
+
+<Section title="System Contracts">
+
+    The Rollup has introduced the following system contracts.
+
+    | Address | Name | Description |
+    | :--- | :--- | :--- |
+    | <Copy value="0xd19d4B5d358258f05D7B411E21A1460D11B0876F" label="0xd19...6F" /> | <Reference label="ZkEvmV2" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/ZkEvmV2.sol" /> | The main contract of the Linea zkEVM Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks and provides messaging functionality between L1 and L2. Provides functionality for sending and receiving messages between domains (Ethereum and Linea). |
+    | <Copy value="0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec" label="0x508...ec" /> | <Reference label="L2 Message Service" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/messageService/l2/L2MessageService.sol" /> | Provides functionality for sending and receiving messages between domains (Ethereum and Linea zkEVM). |
+
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The endpoints `eth_gasPrice` and `eth_feeHistory` have [modified underlying logic](https://docs.linea.build/build-on-linea/gas-fees). Base fee is fixed to constant "7".
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_newBlockFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
+    | `eth_newFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
+    
+</Section>
+
+<Section title="Transaction Fees">
+
+    Transaction fees are paid in Ether. There is no concept of an L1 calldata fee commonly used in other rollups. Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch. Information on the gas price can be retrieved from the JSON RPC endpoint.
+
+    [L2 Gas fees](https://docs.linea.build/build-on-linea/gas-fees).
+
+</Section>
+
+<Section title="Tools">
+
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+
+    [Linea SDK](https://docs.linea.build/build-on-linea/linea-sdk) focuses on interacting with smart contracts on both Ethereum and Linea networks and provides custom functions to obtain message information.
+
+    [Linea Safe](https://safe.linea.build/welcome) is a white-label fork of Gnosis Safe deployed by the Linea team.
+
+    [ape-linea](https://github.com/Consensys/ape-linea) is a plugin developed by the Linea team for the [Ape](https://github.com/ApeWorX/ape) Web3 Development framework.
+
+</Section>

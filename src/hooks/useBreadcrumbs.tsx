@@ -22,7 +22,7 @@ const useBreadcrumbs = (): Breadcrumbs => {
             // by joining together the path parts up to this point.
             const href = '/' + asPathNestedRoutes.slice(0, idx + 1).join('/')
             // The title will just be the route string for now
-            const title = capitalize(subpath.replace('-', ' '))
+            const title = capitalize(subpath.replace('-', ' ')).split('#')[0]
             return { href, title }
         })
 
