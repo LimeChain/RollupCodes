@@ -1,6 +1,6 @@
 ---
 title: Metis
-subtitle: Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO from Memo Labs.
+subtitle: Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO distributed data storage system. The protocol provides an optimistic challenge mechanism that allows Validators to force Sequencer to post missing data, however it is not fully implemented yet.
 labels:
     - Optimistic Rollup
     - OVM
@@ -28,9 +28,11 @@ links:
 
 <Section title="Overview">
 
-    Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO from Memo Labs.
+    Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO distributed data storage system. The protocol provides an optimistic challenge mechanism that allows Validators to force Sequencer to post missing data, however it is not fully implemented yet.
     
     ###### Focus
+
+    - Finalization of the validator challenge mechanism.
 
     <Labels labels={['Optimistic Rollup', 'OVM', 'Mainnet']} title="Metis" />
 
@@ -54,8 +56,8 @@ links:
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
-        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
-        - **Type 1** - User Transaction. A compressed EIP155 transaction that uses an alternative signature hashing algorithm.
+        - **Type 0** - A compressed EIP155 transaction. The transaction that is signed follows EIP155. The type enum is `0`.
+        - **Type 1** - A compressed EIP155 transaction that uses an alternative signature hashing algorithm. The data is ABI encoded hashed and then signed with `eth_sign`. The type enum is `1`.
     ___
 
     <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Metis protocol will provide proof of the data transfer on the destination chain" data={[
@@ -65,7 +67,7 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
-                    value: '~6-9 minutes',
+                    value: '~3 minutes',
                 },
                 {
                     label: 'Cost',
@@ -96,6 +98,36 @@ links:
 <Section title="OPCODEs">
 
     <Legend />
+
+All currently unassigned opcodes which are not yet assigned in the EVM are also disallowed.
+
+
+ADDRESS
+BALANCE
+ORIGIN
+EXTCODESIZE
+EXTCODECOPY
+EXTCODEHASH
+GASLIMIT
+GASPRICE
+CREATE
+CREATE2
+CALLCODE
+DELEGATECALL
+STATICCALL
+SELFDESTRUCT
+SELFBALANCE
+SSTORE
+SLOAD
+CHAINID
+CALLER*
+CALL*
+REVERT*
+* The CALLER, CALL, and REVERT opcodes are also banned, except in the special case that they appear as part of one of the following "magic strings" of bytecode:
+
+CALLER PUSH1 0x00 SWAP1 GAS CALL PC PUSH1 0x0E ADD JUMPI RETURNDATASIZE PUSH1 0x00 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x00 REVERT JUMPDEST RETURNDATASIZE PUSH1 0x01 EQ ISZERO PC PUSH1 0x0a ADD JUMPI PUSH1 0x01 PUSH1 0x00 RETURN JUMPDEST
+CALLER POP PUSH1 0x00 PUSH1 0x04 GAS CALL
+
 
     The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
 
