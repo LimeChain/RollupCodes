@@ -42,18 +42,18 @@ links:
 
     <Parameter name="Sequencing Frequency" value="2 - 45 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the load of the network. Batches are created and posted once sufficient computation and calldata is produced. The protocol enforces a maximum delay at which batches are posted even though the targets for computation and calldata are not reached. " />
 
-    <Parameter name="Finality"  value="<30 minutes" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+    <Parameter name="Finality"  value="< 30 minutes" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xa13BAF47339d63B743e7Da8741db5456DAc1E556" url="https://etherscan.io/address/0xa13baf47339d63b743e7da8741db5456dac1e556" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
-    <Parameter name="State Trie" value="Merkle Patricia trie + Poseidon Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+    <Parameter name="State Trie" value="zkTrie (sparse binary Merkle Patricia Trie + Poseidon Hashing)" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
     <Parameter name="Node Implementations" value={[<Reference key="0" label="l2geth(Go)" url="https://github.com/scroll-tech/go-ethereum" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
     - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
-    - **Type 126** - User Transactions. Represent custom [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transaction called `L1MessageTx` Transaction. This type of transaction is used for messaging and bridging between L1 and L2.
+    - **Type 126** - User Transactions. Represent custom [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transaction called `L1MessageTx` Transaction. This type of transaction is used for messaging and bridging from L1 to L2.
 
     ___
 
@@ -63,7 +63,7 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block. Sequencer waits for the block containing the message to be considered safe (8 to 14 minutes) before sending to L2.',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block. Sequencer waits for the block containing the message to be considered finalized before sending to L2.',
                     value: '8 to 14 minutes',
                 },  
                 {
@@ -138,14 +138,26 @@ links:
 
 <Section title="RPC-API">
 
+    <Legend />
+
     The Scroll JSON RPC API behaves the same way as the canonical Ethereum L1 implementation of the JSON RPC API.
 
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `scroll_getBlockTraceByNumberOrHash`| Block number of Hash | Returns execution trace for the block. | N/A <Added /> |
+    | `scroll_getL1MessageByIndex` | Integer | Queries an L1 message by its index in the local database. | N/A <Added /> |
+    | `scroll_getFirstQueueIndexNotInL2Block` | Block hash | Returns the first L1 message queue index that is not included in the chain up to and including the provided block | N/A <Added /> |
+    | `scroll_getBlockByHash` | Hash, Flag `fullTx` (boolean) | Returns information about L2 block | N/A <Added /> |
+    | `scroll_getBlockByNumber` | Integer, Flag `fullTx` (boolean) | Returns  information about L2 block. | N/A <Added /> |
+    | `scroll_getSkippedTransaction` | Transaction hash | Returns transaction not included in verification by hash | N/A <Added /> |
+    | `scroll_getSkippedTransactionHashes` | From block, To block | Returns a list of transactions not included in verification | N/A <Added /> |
+    
 </Section>
 
 <Section title="Transaction Fees">
 
-    Transaction fees are paid in Ether. There is no explicit L1 calldata fee charged. Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch. Information on the gas price can be retrieved from the JSON RPC endpoint.
-    L1 calldata fee is incorporated into the L2 gas price. If you need to, you can use the predeployed [L1GasOracle](https://blockscout.scroll.io/address/0x5300000000000000000000000000000000000002) to get an estimate of the L1 fee that will be applied for a given transaction.
+    Transaction fees are paid in Ether. Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch. Information on the gas price can be retrieved from the JSON RPC endpoint.
+    The L1 calldata fee (aka L1 data fee) is deducted directly from the sender’s balance before a transaction’s execution, not paid for using gas. If you need to, you can use the predeployed [L1GasOracle](https://blockscout.scroll.io/address/0x5300000000000000000000000000000000000002) to get an estimate of the L1 fee that will be applied for a given transaction.
 
 </Section>
 
