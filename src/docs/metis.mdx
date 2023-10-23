@@ -1,9 +1,9 @@
 ---
 title: Metis
-subtitle: Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO distributed data storage system. The protocol provides an optimistic challenge mechanism that allows Validators to force Sequencer to post missing data, however it is not fully implemented yet.
+subtitle: Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO distributed data storage system. The protocol provides an optimistic challenge mechanism that allows Validators to force Sequencer to post missing data, however it is not fully implemented yet. Their virtual machine (MVM) is based on the optimistic virtual machine (OVM) and is compatible with the Ethereum Virtual Machine (EVM). 
 labels:
     - Optimistic Rollup
-    - OVM
+    - MVM
     - Mainnet
 links:
     website:
@@ -28,19 +28,19 @@ links:
 
 <Section title="Overview">
 
-    Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO distributed data storage system. The protocol provides an optimistic challenge mechanism that allows Validators to force Sequencer to post missing data, however it is not fully implemented yet.
-    
+    Metis is an EVM-compatible Optimistic Rollup. The protocol team centrally operates the sequencer. Transaction data is recorded off-chain in MEMO distributed data storage system. The protocol provides an optimistic challenge mechanism that allows Validators to force Sequencer to post missing data, however it is not fully implemented yet. Their virtual machine (MVM) is based on the optimistic virtual machine (OVM) and is compatible with the Ethereum Virtual Machine (EVM). 
+
     ###### Focus
 
     - Finalization of the validator challenge mechanism.
 
-    <Labels labels={['Optimistic Rollup', 'OVM', 'Mainnet']} title="Metis" />
+    <Labels labels={['Optimistic Rollup', 'MVM', 'Mainnet']} title="Metis" />
 
 </Section>
 
 <Section title="General">
 
-    <Parameter name="Block Time" value="Irregular* with average block time of 6.1 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+    <Parameter name="Block Time" value="Irregular*" tooltip="The rate at which the rollup produces blocks. Blocks are produced at irregular intervals by the sequencer."/>
 
     <Parameter name="Gas Limit" value="1.1 billion" tooltip="The gas limit that can be consumed by an L2 block"/>
 
@@ -99,36 +99,6 @@ links:
 
     <Legend />
 
-All currently unassigned opcodes which are not yet assigned in the EVM are also disallowed.
-
-
-ADDRESS
-BALANCE
-ORIGIN
-EXTCODESIZE
-EXTCODECOPY
-EXTCODEHASH
-GASLIMIT
-GASPRICE
-CREATE
-CREATE2
-CALLCODE
-DELEGATECALL
-STATICCALL
-SELFDESTRUCT
-SELFBALANCE
-SSTORE
-SLOAD
-CHAINID
-CALLER*
-CALL*
-REVERT*
-* The CALLER, CALL, and REVERT opcodes are also banned, except in the special case that they appear as part of one of the following "magic strings" of bytecode:
-
-CALLER PUSH1 0x00 SWAP1 GAS CALL PC PUSH1 0x0E ADD JUMPI RETURNDATASIZE PUSH1 0x00 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x00 REVERT JUMPDEST RETURNDATASIZE PUSH1 0x01 EQ ISZERO PC PUSH1 0x0a ADD JUMPI PUSH1 0x01 PUSH1 0x00 RETURN JUMPDEST
-CALLER POP PUSH1 0x00 PUSH1 0x04 GAS CALL
-
-
     The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
 
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
@@ -155,7 +125,7 @@ CALLER POP PUSH1 0x00 PUSH1 0x04 GAS CALL
 
     | Address | Name | Description |
     | :--- | :--- | :--- |
-    | <Copy value="0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be" label="0xf51...be" /> | <Reference label="BondManager" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/verification/BondManager.sol" /> | This contract is, for now, a stub of the "real" BondManager that does nothing butallow the "OVM_Proposer" to submit state root batches |
+    | <Copy value="0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be" label="0xf51...be" /> | <Reference label="BondManager" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/verification/BondManager.sol" /> | This contract is, for now, a stub of the "real" BondManager that does nothing but allow the "OVM_Proposer" to submit state root batches |
     | <Copy value="0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9" label="0x56a...C9" /> | <Reference label="CanonicalTransactionChain" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/rollup/CanonicalTransactionChain.sol" /> | The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the rollup state. |
     | <Copy value="0xf209815E595Cdf3ed0aAF9665b1772e608AB9380" label="0xf20...80" /> | <Reference label="StateCommitmentChain" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/rollup/StateCommitmentChain.sol" /> | The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). |
     | <Copy value="0x081D1101855bD523bA69A9794e0217F0DB6323ff" label="0x081...ff" /> | <Reference label="L1CrossDomainMessenger" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/messaging/L1CrossDomainMessenger.sol" /> | The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. |
