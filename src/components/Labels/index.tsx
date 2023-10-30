@@ -20,11 +20,15 @@ const rollupsFirstColors: Record<string, string> = {
 const getRollupFirstColor = (value: string): string =>
     rollupsFirstColors[value.toLowerCase().replace(' ', '_')]
 
+const getNetworkColor = (value: string): string => {
+    return value === "Mainnet" ? '#E47AFF' : '#FFEA7A'
+}
+
 const Labels = ({ labels, title }: ILabels) => {
     const colors = [
         getRollupFirstColor(title),
         '#69DC6E',
-        '#E47AFF',
+        getNetworkColor(labels[2]),
         '#DF1FA9',
         '#DDA411',
         '#00AB82',
