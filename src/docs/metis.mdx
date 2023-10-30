@@ -106,7 +106,7 @@ links:
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
     | 3A | GASPRICE | `blockhash.gasPrice` | returns constant `0` | Get price of gas in current environment <Modified /> |
-    | 40 | BLOCKHASH | `blockhash(block.number)` | returns constant `0x0000000000000000000000000000000000000000000000000000000000000000` | Get the hash of one of the 256 most recent complete blocks <Unsupported /> |
+    | 40 | BLOCKHASH | `blockhash(block.number)` | returns constant `0x0000000000000000000000000000000000000000000000000000000000000000` | Get the hash of one of the 256 most recent complete blocks <Modified /> |
     | 41 | COINBASE | `block.coinbase` | returns constant `0x4200000000000000000000000000000000000011` | Get the L1 block’s beneficiary address <Modified /> |
     | 42 | TIMESTAMP | `block.timestamp` | Returns timestamp up to 60 seconds in the past. | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
@@ -128,8 +128,6 @@ links:
 
     | Address | Name | Description |
     | :--- | :--- | :--- |
-    | <Copy value="0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a" label="0x6A1...1a" /> | <Reference label="CanonicalTransaction" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_CanonicalTransaction.sol" /> | The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the rollup state. |
-    | <Copy value="0xf209815E595Cdf3ed0aAF9665b1772e608AB9380" label="0xf20...80" /> | <Reference label="StateCommitmentChain" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/rollup/StateCommitmentChain.sol" /> | The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). |
     | <Copy value="0x081D1101855bD523bA69A9794e0217F0DB6323ff" label="0x081...ff" /> | <Reference label="L1CrossDomainMessenger" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L1/messaging/L1CrossDomainMessenger.sol" /> | The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. |
     | <Copy value="0x4200000000000000000000000000000000000007" label="0x420...07" /> | <Reference label="L2CrossDomainMessenger" url="https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/L2/messaging/L2CrossDomainMessenger.sol" /> | The L2 Cross Domain Messenger contract sends messages from L2 to L1, and relays messages from L1 onto L2. |
     
@@ -152,7 +150,7 @@ links:
 
 <Section title="Transaction Fees">
 
-    The L2 fees of Metis work identically to gas fees on Ethereum. Metis transactions must also, however, pay an L1 fee component to cover the cost of their calldata paid in METIS. You should use `eth_gasPrice` to determine the appropriate gas price needed.
+    Fees on Metis are denominated in METIS tokens. Metis transactions must pay an L1 fee component to cover the cost of their calldata. You should use `eth_gasPrice` to determine the appropriate gas price needed. Also `eth_estimateGas` is used to find an appropriate gas limit containing calculations of L1 gas.
 
 </Section>
 
