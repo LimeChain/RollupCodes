@@ -76,7 +76,7 @@ links:
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko. In case of automaitic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Taiko.',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko. In case of automatic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Taiko.',
                     value: '~110 000 L1 gas + ~440 000 L2 gas (in case of manual delivery)',
                 },
                 {
@@ -91,8 +91,8 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The maximum time it takes for a message to be made available on Ethereum after being included in an Taiko block, a validity proof is generated and passed to L1.',
-                    value: '90 minutes',
+                    tooltip: 'The average time it takes for a message to be made available on Ethereum after being included in an Taiko block, a validity proof is generated and passed to L1.',
+                    value: '~4 minutes',
                 },
                 {
                     label: 'Cost',
@@ -116,9 +116,10 @@ links:
 
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 41 | COINBASE | | Returns the address of the L2 block proposer | Gets the block’s beneficiary address <Modified />  |
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
-    | 48 | BASEFEE | `block.basefee` | Returns `1` (wei) | Returns the base fee <Modified />  |
+    | 48 | BASEFEE | `block.basefee` | Returns the L2 base fee | Returns the base fee <Modified />  |
 
     All other OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of some OPCODEs is not verified by the circuits and its not part of the validity proofs.
 
