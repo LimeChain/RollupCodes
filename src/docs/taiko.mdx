@@ -116,7 +116,7 @@ links:
 
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | 41 | COINBASE | block.coinbase | Returns the address of the L2 block proposer | Gets the block’s beneficiary address <Modified />  |
+    | 41 | COINBASE | `block.coinbase` | Returns the address of the L2 block proposer | Gets the block’s beneficiary address <Modified />  |
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 48 | BASEFEE | `block.basefee` | Returns the L2 base fee | Returns the base fee <Modified />  |
