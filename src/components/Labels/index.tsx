@@ -21,7 +21,7 @@ const getRollupFirstColor = (value: string): string =>
     rollupsFirstColors[value.toLowerCase().replace(' ', '_')]
 
 const getNetworkColor = (value: string): string => {
-    return value === "Mainnet" ? '#E47AFF' : '#FFEA7A'
+    return value === "Mainnet" ? '#C400F5' : '#8A7500'
 }
 
 const Labels = ({ labels, title }: ILabels) => {
