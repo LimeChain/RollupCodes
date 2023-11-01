@@ -1,6 +1,6 @@
 ---
 title: Taiko
-subtitle: Taiko aims to be a Type 1 EVM compatible ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+subtitle: Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
 labels:
     - ZK-Rollup
     - EVM
@@ -30,7 +30,7 @@ links:
 
     > ⚠️ The rollup is still in development. Information presented here may change by the time Mainnet is launched.
 
-    Taiko aims to be a Type 1 EVM compatible ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+    Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
    
     ###### Focus
 
@@ -48,7 +48,7 @@ links:
 
     <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
 
-    <Parameter name="Finality" value="~4 minutes" tooltip="The average time it takes for validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
+    <Parameter name="Verification" value="~90 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" url="https://sepolia.etherscan.io/address/0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
@@ -97,7 +97,7 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Taiko to Ethereum. In case of automaitic claiming on L1 Senders on L2 pay an additional ETH fee determined by market conditions on Ethereum.',
-                    value: '~129 000 L2 gas + ~440 000 L1 gas(in case of manual delivery)',
+                    value: '~129 000 L2 gas + ~440 000 L1 gas (in case of manual delivery)',
                 },
                 {
                     label: 'Delivery method',
@@ -157,7 +157,7 @@ links:
 
 <Section title="Transaction Fees">
 
-    Transaction fees are paid in Ether. There is no concept of an L1 calldata fee commonly used in other rollups. Developers must set gasPrice high enough so that the proposer would include their transaction in the proposed block. The base fee is set to a constant '1' wei. 
+    Transaction fees are paid in Ether. There is no concept of an L1 calldata fee commonly used in other rollups. Developers must set gasPrice high enough so that the proposer would include their transaction in the proposed block. The base fee adjusts based on the L2 block space demand. 
 
 </Section>
 
