@@ -1,0 +1,169 @@
+---
+title: Taiko
+subtitle: Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+labels:
+    - ZK-Rollup
+    - EVM
+    - Testnet
+links:
+    website:
+        url: https://taiko.xyz/
+        name: taiko.xyz
+    docs:
+        url: https://taiko.xyz/docs
+        name: Docs
+    l2beat:
+        url: https://l2beat.com/scaling/projects/taiko
+        name: L2Beat
+    github:
+        url: https://github.com/taikoxyz
+        name: Github
+    twitter:
+        url: https://twitter.com/taikoxyz
+        name: taikoxyz
+    discord:
+        url: https://discord.com/invite/taikoxyz
+        name: Discord
+---
+
+<Section title="Overview">
+
+    > ⚠️ The rollup is still in development. Information presented here may change by the time Mainnet is launched.
+
+    Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+   
+    ###### Focus
+
+    - Implementing circuits for verifying all OPCODEs and Precompiles. The execution of some components of the EVM is currently not verified by the circuits.
+    - Finalising development and launching Taiko Mainnet.
+
+
+    <Labels labels={['ZK-Rollup', 'EVM', 'Testnet']} title="Taiko" />
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block Time" value="On demand*" tooltip="The rate at which the rollup produces blocks. Blocks are produced on demand."/>
+
+    <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
+
+    <Parameter name="Verification" value="~90 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" url="https://sepolia.etherscan.io/address/0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Execution Node Implementations" value={<Reference label="taiko-geth" url="https://github.com/taikoxyz/taiko-geth" />} tooltip="The different execution-client implementations of the rollup" />
+    
+    <Parameter name="Proposer and Prover Implementations" value={<Reference label="taiko-client" url="https://github.com/taikoxyz/taiko-client" />} tooltip="The different client implementations of the rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 1** - User Transaction. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 2** - User Transaction. [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Taiko protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the rollup after it is included in the Ethereum block.',
+                    value: '~3 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko. In case of automatic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Taiko.',
+                    value: '~110 000 L1 gas + ~440 000 L2 gas (in case of manual delivery)',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered. In case of manual delivery users need to claim the message themselves by presenting merkle inclusion proof',
+                    value: 'Both manual and automatic delivery are supported'
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The average time it takes for a message to be made available on Ethereum after being included in an Taiko block, a validity proof is generated and passed to L1.',
+                    value: '~4 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Taiko to Ethereum. In case of automaitic claiming on L1 Senders on L2 pay an additional ETH fee determined by market conditions on Ethereum.',
+                    value: '~129 000 L2 gas + ~440 000 L1 gas (in case of manual delivery)',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered. In both automatic and manual delivery, users are waiting for a prover to generate validity proof for the target chain (max 90 minutes). In case of manual delivery users need to claim the message themselves as opposed to automatic',
+                    value: 'Both manual and automatic delivery are supported'
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+
+    <Legend />
+
+    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 41 | COINBASE | `block.coinbase` | Returns the address of the L2 block proposer | Gets the block’s beneficiary address <Modified />  |
+    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
+    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
+    | 48 | BASEFEE | `block.basefee` | Returns the L2 base fee | Returns the base fee <Modified />  |
+
+    All other OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of some OPCODEs is not verified by the circuits and its not part of the validity proofs.
+
+</Section>
+
+<Section title="Precompiled Contracts">
+
+    > ⚠️ All Precompiled Contacts defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of those Precompiles is currently not covered by the circuits and therefore not present in the Validity proof
+
+</Section>
+
+<Section title="System Contracts">
+
+    The Rollup has introduced the following system contracts.
+
+    | Address | Name | Description |
+    | :--- | :--- | :--- |
+    | <Copy value="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" label="0x95f..6f" /> | <Reference label="TaikoL1" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L1/TaikoL1.sol" /> | Used for proposing, proving and verifying L2 blocks on L1. |
+    | <Copy value="0x1000777700000000000000000000000000000001" label="0x10007777..01" /> | <Reference label="TaikoL2" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L2/TaikoL2.sol" /> | Used to create anchor transaction tracking latest synced L1 block hash and block height. |
+
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `taiko_headL1Origin` | None | Returns the latest L2 block's corresponding L1 origin | N/A <Added /> |
+    | `taiko_l1OriginByID` | L2 block number | Returns the L2 block's corresponding L1 origin | N/A <Added /> |
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    Transaction fees are paid in Ether. There is no concept of an L1 calldata fee commonly used in other rollups. Developers must set gasPrice high enough so that the proposer would include their transaction in the proposed block. The base fee adjusts based on the L2 block space demand. 
+
+</Section>
+
+<Section title="Tools">
+
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+
+    [Taiko bridge](https://bridge.jolnir.taiko.xyz/)
+</Section>
