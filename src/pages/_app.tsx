@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     <title>RollupCodes</title>
                     <meta
                         name="description"
-                        content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                        content="Rollup Codes: Interactive Reference of the Ethereum Rollup Ecosystem. A comprehensive tool for developers to compare and do an in-depth analysis of the expanding Ethereum ecosystem"
                     />
                     <meta
                         property="og:url"
@@ -56,7 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     />
                     <meta
                         property="og:description"
-                        content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                        content="A comprehensive tool for developers to compare and do an in-depth analysis of the expanding Ethereum ecosystem"
                         key="ogdesc"
                     />
                     <meta
@@ -81,7 +81,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     />
                     <meta
                         name="twitter:description"
-                        content="A comprehensive tool for developers to compare and and do in-depth analysis of the expanding Ethereum ecosystem"
+                        content="A comprehensive tool for developers to compare and do an in-depth analysis of the expanding Ethereum ecosystem"
                     />
                     <meta
                         name="twitter:image"
