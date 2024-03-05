@@ -133,9 +133,11 @@ links:
     | Address | Name | Description |
     | :--- | :--- | :--- |
     | <Copy value="0x6d" label="0x6d" /> | <Reference label="ArbAggregator" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbAggregator.go" /> | Provides aggregators and their user's methods for configuring how they participate in L1 aggregation. Arbitrum One's default aggregator is the Sequencer, which a user will prefer unless `SetPreferredAggregator` is invoked to change it.|
-    | <Copy value="0x6c" label="0x6c" /> | <Reference label="ArbGasInfo" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbGasInfo.go" /> | Provides data for gas costs in wei and ArbGas, estimates for L1 basefee as-well as information on the chain speed limit, pool size and transaction gas limit.|
+    | <Copy value="0x6c" label="0x6c" /> | <Reference label="ArbGasInfo" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbGasInfo.go" /> | Provides data for gas costs in wei and ArbGas, estimates for L1 basefee, the L1 pricer reward rate and recipient as-well as information on the chain speed limit, pool size and transaction gas limit.|
     | <Copy value="0x6e" label="0x6e" /> | <Reference label="ArbRetryableTx" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbRetryableTx.go" /> | Provides methods for managing retryables (cross domain messages). [Retryable documentation](https://developer.arbitrum.io/arbos/l1-to-l2-messaging).|
     | <Copy value="0x64" label="0x64" /> | <Reference label="ArbSys" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbSys.go" /> | Provides system-level functionality for getting L2 block number, hash, checking if a call is top-level, sending cross-domain messages as-well as sending ETH to L1.|
+    | <Copy value="0x65" label="0x65" /> | <Reference label="ArbInfo" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbInfo.go" /> | Provides the ability to lookup account's balance and contract's deployed code.|
+    | <Copy value="0x6b" label="0x6b" /> | <Reference label="ArbOwnerPublic" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbOwnerPublic.go" /> | Provides non-owners with info about the current chain owners.|
 
 </Section>
 
