@@ -86,7 +86,7 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from zkSync Era',
-                    value: 'No added cost',
+                    value: '10 000 L1 gas',
                 },
             ],
         },
@@ -115,6 +115,8 @@ links:
     | 38 | CODESIZE | | Gets the size of the code in case it is called on a Runtime code.<br /><br />If called on a deploy code, the returned size is the size of the constructor arguments only (excluding deploy code size). | Gets the size of the code running in the current environment. <Modified /> |
     | 39 | CODECOPY | | The Rollup does not provide a mechanism to access the bytecode of a contract. <br /><br />Copies only constructor arguments when executed on deploy code.<br /><br />Sets memory to `0`s when executed on runtime code compiled through old EVM codegen.<br /><br />Produces compile-time error in case it is executed on runtime code compiling through Yul codegen. | Copies the code running in the current environment to memory. |
     | 41 | COINBASE | | Returns the address of the `Bootloader` contract, which is `0x8001` | Gets the block’s beneficiary address <Modified />  |
+    | 42 | TIMESTAMP | | Returns the latest L2 block's timestamp | Returns the latest block’s timestamp <Modified /> |
+    | 43 | NUMBER | | Returns the latest L2 block's number | Returns the latest block’s number <Modified /> |
     | 44 | DIFFICULTY | `block.difficulty` | Returns the constant `2500000000000000` | Returns the output of the randomness beacon provided by the beacon chain <Modified />  |
     | 48 | BASEFEE | | Returns `250000000` (wei), however under very high L1 gas prices it may rise. | Returns the base fee <Modified />  |
     | 51 | MLOAD | | Loads word from memory.<br /><br />Memory growth is counted in bytes. Payment fees for memory growth are charged linearly at a rate of 1 erg per byte.<br /><br /> [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers may produce different `msize` compared to Ethereum's `solc` since fewer bytes have been allocated. This may lead to cases where the EVM panics, but ZK Sync EVM does not due to the difference in memory growth. | Load word from memory.<br /><br />Memory growth is in words (chunks). Payment for memory grows quadratically. <Modified /> |
@@ -227,8 +229,6 @@ links:
     ###### Other
 
     - [hardhat-zksync-toolbox](https://era.zksync.io/docs/tools/hardhat/plugins.html#hardhat-zksync-toolbox) is a hardhat plugin that bundles all zkSync related Hardhat plugins
-    - [Remix plugin](https://medium.com/nethermind-eth/the-zksync-era-remix-plugin-a-how-to-guide-fc54e8d24bd3) for building and deploying contracts from your browser
-    - [web3.js zkSync plugin](https://github.com/web3/web3-plugin-zksync) extends web3.js with zkSync-specific RPC methods
     - [foundry-zksync](https://github.com/matter-labs/foundry-zksync) provides Foundry functionality in Solidity for compiling, deploying, testing, and interacting with smart contracts on zkSync Era
 
 </Section>
