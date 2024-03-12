@@ -81,12 +81,12 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a zkSync Era block and sequenced to L1.',
-                    value: 'To be added',
+                    value: '24 hours',
                 },
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from zkSync Era',
-                    value: 'To be added',
+                    value: '10 000 L1 gas',
                 },
             ],
         },
@@ -115,8 +115,8 @@ links:
     | 38 | CODESIZE | | Gets the size of the code in case it is called on a Runtime code.<br /><br />If called on a deploy code, the returned size is the size of the constructor arguments only (excluding deploy code size). | Gets the size of the code running in the current environment. <Modified /> |
     | 39 | CODECOPY | | The Rollup does not provide a mechanism to access the bytecode of a contract. <br /><br />Copies only constructor arguments when executed on deploy code.<br /><br />Sets memory to `0`s when executed on runtime code compiled through old EVM codegen.<br /><br />Produces compile-time error in case it is executed on runtime code compiling through Yul codegen. | Copies the code running in the current environment to memory. |
     | 41 | COINBASE | | Returns the address of the `Bootloader` contract, which is `0x8001` | Gets the block’s beneficiary address <Modified />  |
-    | 42 | TIMESTAMP | | Returns the latest L1 batch timestamp | Returns the latest block’s timestamp <Modified /> |
-    | 43 | NUMBER | | Returns the latest L1 batch number | Returns the latest block’s number <Modified /> |
+    | 42 | TIMESTAMP | | Returns the latest L2 block's timestamp | Returns the latest block’s timestamp <Modified /> |
+    | 43 | NUMBER | | Returns the latest L2 block's number | Returns the latest block’s number <Modified /> |
     | 44 | DIFFICULTY | `block.difficulty` | Returns the constant `2500000000000000` | Returns the output of the randomness beacon provided by the beacon chain <Modified />  |
     | 48 | BASEFEE | | Returns `250000000` (wei), however under very high L1 gas prices it may rise. | Returns the base fee <Modified />  |
     | 51 | MLOAD | | Loads word from memory.<br /><br />Memory growth is counted in bytes. Payment fees for memory growth are charged linearly at a rate of 1 erg per byte.<br /><br /> [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers may produce different `msize` compared to Ethereum's `solc` since fewer bytes have been allocated. This may lead to cases where the EVM panics, but ZK Sync EVM does not due to the difference in memory growth. | Load word from memory.<br /><br />Memory growth is in words (chunks). Payment for memory grows quadratically. <Modified /> |
@@ -145,7 +145,6 @@ links:
     | <Copy label="0x07" value="0x07" /> | `ecMul` | Not supported | Scalar multiplication (MUL) on the elliptic curve 'alt_bn128' <Unsupported /> |
     | <Copy label="0x08" value="0x08" /> | `ecPairing` | Not supported | Bilinear function on groups on the elliptic curve 'alt_bn128' <Unsupported /> |
     | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
-    | <Copy label="0x01" value="0x03" /> | `ecRecover` | Elliptic curve digital signature algorithm (ECDSA) public key recovery function.<br /><br />Always returns a zero address for the zero digests. | Elliptic curve digital signature algorithm (ECDSA) public key recovery function. <Modified />  |
 
 </Section>
 
@@ -230,5 +229,6 @@ links:
     ###### Other
 
     - [hardhat-zksync-toolbox](https://era.zksync.io/docs/tools/hardhat/plugins.html#hardhat-zksync-toolbox) is a hardhat plugin that bundles all zkSync related Hardhat plugins
+    - [foundry-zksync](https://github.com/matter-labs/foundry-zksync) provides Foundry functionality in Solidity for compiling, deploying, testing, and interacting with smart contracts on zkSync Era
 
 </Section>
