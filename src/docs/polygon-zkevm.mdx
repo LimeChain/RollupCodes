@@ -120,6 +120,7 @@ links:
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Hash function <Unsupported /> |
+    | <Copy label="0x05" value="0x05" /> | `modexp` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Arbitrary-precision exponentiation under modulo <Unsupported /> |
     | <Copy label="0x09 " value="0x09" /> | `blake2f` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
 
 </Section>
@@ -145,7 +146,6 @@ links:
     | :----- | :----- | :--------------- | :-------------------- |
     | `debug_traceBatchByNumber` | Batch number | Gets traces at once for all the transactions attached to the same batch. | N/A <Added /> |
     | `eth_call` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Executes a new message call immediately without creating a transaction on the blockchain.<br /><br />Does not support state override and pending block.<br /><br />Does not support `from` values that are smart contract addresses. | Executes a new message call immediately without creating a transaction on the blockchain <Modified /> |
-    | `eth_coinbase` | None | Defines which address is going to receive the fees. | Returns the client coinbase address. <Modified /> |
     | `eth_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. <Modified /> |
     | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns the balance of the account of the given address. <Modified /> |
     | `eth_getCode` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns code at a given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns code at a given address. <Modified /> |
