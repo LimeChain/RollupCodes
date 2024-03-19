@@ -119,12 +119,8 @@ links:
 
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | <Copy label="0x02" value="0x02" /> | `SHA2-256` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Elliptic curve digital signature algorithm (ECDSA) public key recovery function. <Unsupported /> |
     | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Hash function <Unsupported /> |
     | <Copy label="0x05" value="0x05" /> | `modexp` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Arbitrary-precision exponentiation under modulo <Unsupported /> |
-    | <Copy label="0x06" value="0x06" /> | `ecAdd` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Point addition (ADD) on the elliptic curve `alt_bn128` <Unsupported /> |
-    | <Copy label="0x07" value="0x07" /> | `ecMul` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Scalar multiplication (MUL) on the elliptic curve `alt_bn128` <Unsupported /> |
-    | <Copy label="0x08" value="0x08" /> | `ecPairing` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Bilinear function on groups on the elliptic curve `alt_bn128` <Unsupported /> |
     | <Copy label="0x09 " value="0x09" /> | `blake2f` | The opcode reverts the execution, returns all gas to the previous context and sets the `success` flag to `0` | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
 
 </Section>
@@ -148,6 +144,7 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
+    | `debug_traceBatchByNumber` | Batch number | Gets traces at once for all the transactions attached to the same batch. | N/A <Added /> |
     | `eth_call` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Executes a new message call immediately without creating a transaction on the blockchain.<br /><br />Does not support state override and pending block.<br /><br />Does not support `from` values that are smart contract addresses. | Executes a new message call immediately without creating a transaction on the blockchain <Modified /> |
     | `eth_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. <Modified /> |
     | `eth_getBalance` | Address and integer block number (or the string `latest`, `earliest` or `pending`) | Returns the balance of the account of the given address.<br /><br />If the block number is set to `pending` it is replaced and computed with `latest` | Returns the balance of the account of the given address. <Modified /> |
@@ -161,7 +158,11 @@ links:
     | `zkevm_batchNumber` | None | Returns the latest batch number | N/A <Added /> |
     | `zkevm_batchNumberByBlockNumber` | Block number | Returns the batch number of the batch connected to the block. | N/A <Added /> |
     | `zkevm_consolidatedBlockNumber` | None | Returns the latest block number that is connected to the latest batch verified. | N/A <Added /> |
+    | `zkevm_estimateCounters` | Transaction parameters | Returns the estimate use of ZK counters for a given transaction. | N/A <Added /> |
+    | `zkevm_estimateFee` | Transaction parameters | Returns the estimate fee for a tx, this endpoint will take into account the effective gas price (if enabled) in the calculation of the fee. | N/A <Added /> |
+    | `zkevm_estimateGasPrice` | Transaction parameters | Returns the estimate gas price for a given transaction. | N/A <Added /> |
     | `zkevm_getBatchByNumber` | Hex batch number or a tag (`earliest` / `latest`) | Gets a batch for a given number | N/A <Added /> |
+    | `zkevm_getNativeBlockHashesInRange` | Filter with `fromBlock` and `toBlock` numbers | Returns the list of native block hashes (a.k.a state root) | N/A <Added /> |
     | `zkevm_isBlockConsolidated` | Hex string block number | Returns `true` if the provided block number is already connected to a batch that was already verified, otherwise false. | N/A <Added /> |
     | `zkevm_isBlockVirtualized` | Hex string block number | Returns `true` if the provided block number is already connected to a batch that was already virtualized, otherwise false. | N/A <Added /> |
     | `zkevm_verifiedBatchNumber` | Hex batch number | Returns the latest verified batch number. | N/A <Added /> |
