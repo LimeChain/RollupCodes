@@ -69,7 +69,7 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of sending a message from Ethereum to the L2. Scroll executes the message with a system address on behalf of the L1 sender. There is an additional ETH fee automatically calculated by an L2 gas price oracle to cover gas on the target chain.',
-                    value: '~210 000 L1 gas',
+                    value: '~139 000 L1 gas',
                 },
             ],
         },
@@ -106,6 +106,11 @@ links:
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | PREVRANDAO | `block.prevnrandao` | Returns 0. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
     | 48 | BASEFEE | `block.basefee` | Disabled. If the opcode is encountered, the transaction will be reverted. | Returns the value of the base fee of the current block it is executing in <Unsupported /> |
+    | 49 | BLOBHASH | `blobhash(index)` | Undefined. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
+    | 4a | BLOBBASEFEE | `block.blobbasefee` | Undefined. | Returns current block’s blob base fee.  <Unsupported /> |
+    | 5c | TLOAD | `tload(key)` | Undefined. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
+    | 5d | TSTORE | `tstore(key, value)` | Undefined. | Saves the value at the given address in the transient storage.  <Unsupported /> |
+    | 5e | MCOPY | `mcopy()` | Undefined. | Copies the memory from source to destination.  <Unsupported /> |
     | ff | SELFDESTRUCT | `selfdestruct` | Disabled. If the opcode is encountered, the transaction will be reverted. | Halt execution and register account for later deletion <Unsupported /> |
 
 </Section>
@@ -133,7 +138,7 @@ links:
     | <Copy value="0xa13BAF47339d63B743e7Da8741db5456DAc1E556" label="0xa13...56" /> | <Reference label="L1 Rollup (Scroll Chain)" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/ScrollChain.sol" /> | The main contract of the Scroll Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks. |
     | <Copy value="0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367" label="0x677...67" /> | <Reference label="L1 Messenger" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/L1ScrollMessenger.sol" /> | Provides functionality for sending messages from L1 to L2 and claiming L2 to L1 messages. |
     | <Copy value="0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC" label="0x781...bC" /> | <Reference label="L2 Messenger" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/L2ScrollMessenger.sol" /> | Provides functionality for sending messages from L2 to L1 and claiming L1 to L2 messages. |
-    | <Copy value="0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E" label="0xfDF...9E" /> | <Reference label="L2 Gas Oracle" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/L2GasPriceOracle.sol" /> | L2 Gas price oracle on Ethereum. |
+    | <Copy value="0xeBaed7A81c298B24EE6d59c22698A951dc448E01" label="0xeBa...01" /> | <Reference label="L1 Message Queue With Gas Price Oracle" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L1/rollup/L1MessageQueueWithGasPriceOracle.sol" /> | Holds all L1 to L2 messages and provides L2 Gas price oracle on Ethereum. |
     | <Copy value="0x5300000000000000000000000000000000000002" label="0x530...02" /> | <Reference label="L1 Gas Price Oracle" url="https://github.com/scroll-tech/scroll/blob/develop/contracts/src/L2/predeploys/L1GasPriceOracle.sol" /> | L1 gas price on Scroll. |
     
 </Section>
