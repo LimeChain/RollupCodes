@@ -106,11 +106,11 @@ links:
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | PREVRANDAO | `block.prevnrandao` | Returns 0. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
     | 48 | BASEFEE | `block.basefee` | Disabled. If the opcode is encountered, the transaction will be reverted. | Returns the value of the base fee of the current block it is executing in <Unsupported /> |
-    | 49 | BLOBHASH | `blobhash(index)` | Undefined. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
-    | 4a | BLOBBASEFEE | `block.blobbasefee` | Undefined. | Returns current block’s blob base fee.  <Unsupported /> |
-    | 5c | TLOAD | `tload(key)` | Undefined. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
-    | 5d | TSTORE | `tstore(key, value)` | Undefined. | Saves the value at the given address in the transient storage.  <Unsupported /> |
-    | 5e | MCOPY | `mcopy()` | Undefined. | Copies the memory from source to destination.  <Unsupported /> |
+    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
+    | 4a | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
+    | 5c | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
+    | 5d | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
+    | 5e | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
     | ff | SELFDESTRUCT | `selfdestruct` | Disabled. If the opcode is encountered, the transaction will be reverted. | Halt execution and register account for later deletion <Unsupported /> |
 
 </Section>
@@ -126,6 +126,7 @@ links:
     | <Copy label="0x05" value="0x05" /> | `modexp` | Supports only inputs of size less than or equal to 32 bytes (i.e. `u256`). | Arbitrary-precision exponentiation under modulo <Modified /> |
     | <Copy label="0x08" value="0x08" /> | `ecPairing` | The number of points(sets, pairs) is limited to 4, instead of 6. | Bilinear function on groups on the elliptic curve 'alt_bn128' <Modified /> |
     | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
+    | <Copy label="0x0a" value="0x0a" /> | `pointEvaluation` | Not supported | Verifies a KZG proof <Unsupported /> |
 
 </Section>
 
