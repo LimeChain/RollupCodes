@@ -162,6 +162,7 @@ links:
 
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :--- | :--- | :--- |
+    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
     | <Copy label="0x8002" value="0x8002" /> | <Reference label="AccountCodeStorage" url="https://github.com/matter-labs/era-system-contracts/blob/main/contracts/AccountCodeStorage.sol" /> | Stores a mapping of modified versions of code hashes and account addresses. It is used by the custom compilers in order to simulate extcodehash and extcodesize opcodes. | N/A <Added /> |
     | <Copy label="0x8003" value="0x8003" /> | <Reference label="NonceHolder" url="https://github.com/matter-labs/era-system-contracts/blob/main/contracts/NonceHolder.sol" /> | Along with `bootloader` this contract ensures that the pair (sender, nonce) is always unique, thus ensuring the uniqueness of transaction hashes. Can be used to provide nonce-related information for an account. | N/A <Added /> |
     | <Copy label="0x8004" value="0x8004" /> | <Reference label="KnownCodesStorage" url="https://github.com/matter-labs/era-system-contracts/blob/main/contracts/KnownCodesStorage.sol" /> | Maintains a mapping of known code hashes and additional metadata. It is mostly consumed by other system contracts but can provide bytecode-related information for a given address. | N/A <Added /> |
@@ -171,7 +172,6 @@ links:
     | <Copy label="0x800a" value="0x800a" /> | <Reference label="L2EthToken" url="https://github.com/matter-labs/era-system-contracts/blob/main/contracts/L2EthToken.sol" /> | Used by the bootloader and `MsgValueSimulator` and `ContractDeployer` system contracts to perform balance changes while simulating the `msg.value` behaviour on Ethereum. | N/A <Added /> |
     | <Copy label="0x800b" value="0x800b" /> | <Reference label="SystemContext" url="https://github.com/matter-labs/era-system-contracts/blob/main/contracts/SystemContext.sol" /> | Provides context variables such as `chainId`, `tx.origin`, `gasPrice`, `blockGasLimit` etc. It is utilised by the custom compiler to provide the implementation of block-related opcodes. | N/A <Added /> |
     | <Copy label="0x800c" value="0x800c" /> | <Reference label="BootloaderUtilities" url="https://github.com/matter-labs/era-system-contracts/blob/main/contracts/BootloaderUtilities.sol" /> | Provides utility functions for computing transaction hashes for a given transaction data depending on its transaction type. It is utilised by the Bootloader contract. | N/A <Added /> |
-    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
 
 </Section>
 
