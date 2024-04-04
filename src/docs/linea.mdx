@@ -1,6 +1,6 @@
 ---
 title: "Linea"
-subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source prover. As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure."
+subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure."
 labels:
   - ZK-Rollup
   - EVM
@@ -27,10 +27,10 @@ links:
 ---
 
 <Section title="Overview">
-Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source prover. As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure.
+Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure.
 
 ###### Focus
-- Open-sourcing the Rollup's prover
+- Open-sourcing the Rollup's Sequencer and Prover
 - Increase the Validity Proof coverage. Currently, the execution of precompiles is not part of the validity proof.
 - Progressively decentralize the upgradeability and governance of the Rollup 
 
@@ -51,7 +51,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Parameter name="State Trie" value="Main trie is Sparse Merkle Trie + MiMC Hashing. Secondary MPT + Keccak Hashing is maintained for follower nodes" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. The following can be used as follower nodes:", <Reference key="0" label="linea-besu" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. The following can be used as follower nodes:", <Reference key="0" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="1" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
@@ -151,14 +151,13 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Legend />
 
-    The endpoints `eth_gasPrice` and `eth_feeHistory` have [modified underlying logic](https://docs.linea.build/build-on-linea/gas-fees). Base fee is fixed to constant "7".
-
     The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | `eth_newBlockFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
     | `eth_newFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
+    | `linea_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Estimates the gas cost for a transaction including the layer 1 and layer 2 fees <br /> <br /> `linea_estimateGas` uses the same inputs as the standard `eth_estimateGas`, but returns the recommended gas limit, the base fee per gas, and the priority fee per gas | N/A <Added /> |
     
 </Section>
 
