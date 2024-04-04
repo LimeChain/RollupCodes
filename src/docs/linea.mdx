@@ -39,7 +39,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
 <Section title="General">
 
-    <Parameter name="Block Time" value="12 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+    <Parameter name="Block Time" value="3 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
 
     <Parameter name="Gas Limit" value="61 million" tooltip="The gas limit that can be consumed by an L2 block"/>
 
@@ -118,6 +118,11 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | PREVRANDAO (legacy DIFFICULTY) | `block.difficulty` | Returns a fixed number "2" | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
+    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
+    | 4a | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
+    | 5c | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
+    | 5d | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
+    | 5e | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
     | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
 
 </Section>
@@ -130,12 +135,15 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
 <Section title="System Contracts">
 
-    The Rollup has introduced the following system contracts.
+    <Legend />
 
-    | Address | Name | Description |
-    | :--- | :--- | :--- |
-    | <Copy value="0xd19d4B5d358258f05D7B411E21A1460D11B0876F" label="0xd19...6F" /> | <Reference label="ZkEvmV2" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/ZkEvmV2.sol" /> | The main contract of the Linea zkEVM Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks and provides messaging functionality between L1 and L2. Provides functionality for sending and receiving messages between domains (Ethereum and Linea). |
-    | <Copy value="0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec" label="0x508...ec" /> | <Reference label="L2 Message Service" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/messageService/l2/L2MessageService.sol" /> | Provides functionality for sending and receiving messages between domains (Ethereum and Linea zkEVM). |
+    The following system contracts behave differently compared to the canonical Ethereum L1.
+
+    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :--- | :--- | :--- | :--- |
+    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
+    | <Copy value="0xd19d4B5d358258f05D7B411E21A1460D11B0876F" label="0xd19...6F" /> | <Reference label="ZkEvmV2" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/ZkEvmV2.sol" /> | The main contract of the Linea zkEVM Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks and provides messaging functionality between L1 and L2. Provides functionality for sending and receiving messages between domains (Ethereum and Linea). | N/A <Added /> |
+    | <Copy value="0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec" label="0x508...ec" /> | <Reference label="L2 Message Service" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/messageService/l2/L2MessageService.sol" /> | Provides functionality for sending and receiving messages between domains (Ethereum and Linea zkEVM). | N/A <Added /> |
 
 </Section>
 
@@ -143,14 +151,13 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Legend />
 
-    The endpoints `eth_gasPrice` and `eth_feeHistory` have [modified underlying logic](https://docs.linea.build/build-on-linea/gas-fees). Base fee is fixed to constant "7".
-
     The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | `eth_newBlockFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
     | `eth_newFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
+    | `linea_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Estimates the gas cost for a transaction including the layer 1 and layer 2 fees <br /> <br /> `linea_estimateGas` uses the same inputs as the standard `eth_estimateGas`, but returns the recommended gas limit, the base fee per gas, and the priority fee per gas | N/A <Added /> |
     
 </Section>
 
