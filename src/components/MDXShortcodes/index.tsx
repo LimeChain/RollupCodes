@@ -58,7 +58,7 @@ const Copy = ({ value, label }: { value: string; label: string }) => {
     }, [copied])
 
     return (
-        <div className={styles.copy}>
+        <div className={styles.copy} title={value}>
             {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
                     <span className={styles.copyIcon}>
