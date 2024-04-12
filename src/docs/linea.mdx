@@ -45,7 +45,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Parameter name="Sequencing Frequency" value="30 - 120 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1." />
 
-    <Parameter name="Finality" value="8 - 32 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around 15 minutes, but its submission is delayed by at least 8 hours as a security measure during the alpha phase. The protocol may delay the submission up to 32 hours in order to minimize the L1 gas cost." />
+    <Parameter name="Objective Finality" value="8 - 32 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around 15 minutes, but its submission is delayed by at least 8 hours as a security measure during the alpha phase. The protocol may delay the submission up to 32 hours in order to minimize the L1 gas cost." />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xd19d4B5d358258f05D7B411E21A1460D11B0876F" url="https://etherscan.io/address/0xd19d4B5d358258f05D7B411E21A1460D11B0876F" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
