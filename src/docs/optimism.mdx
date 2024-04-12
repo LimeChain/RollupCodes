@@ -45,7 +45,7 @@ links:
 
     <Parameter name="Sequencing Frequency" value="0.5 - 2 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
 
-    <Parameter name="Objective Finality"  value="7 days" tooltip="The time it takes for an L2 transaction to be considered final after it is sequenced on L1" />
+    <Parameter name="Objective Finality"  value="7 days" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xdfe97868233d1aa22e815a266982f2cf17685a27" url="https://etherscan.io/address/0xdfe97868233d1aa22e815a266982f2cf17685a27" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
