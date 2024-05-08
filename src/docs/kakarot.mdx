@@ -1,0 +1,133 @@
+---
+title: Kakarot
+subtitle: Kakarot is an EVM-compatible ZK-Rollup that leverages Cairo to spearhead innovations on Ethereum. (change)
+labels:
+    - ZK-Rollup
+    - EVM
+    - Testnet
+links:
+    website:
+        url: https://www.kakarot.org/
+        name: kakarot.org
+    docs:
+        url: https://docs.kakarot.org/
+        name: Docs
+    l2beat:
+        url: https://invalid.com
+        name: L2BEAT
+    github:
+        url: https://github.com/kkrt-labs
+        name: Github
+    twitter:
+        url: https://twitter.com/KakarotZkEvm
+        name: kakarot
+    discord:
+        url: https://discord.gg/kakarotzkevm
+        name: Discord
+---
+
+<Section title="Overview">
+
+    > ⚠️ The rollup is still in development. Information presented here may change by the time Mainnet is launched.
+
+    Kakarot...
+   
+    ###### Focus
+
+    - ...
+    - Finalising development and launching Kakarot Mainnet.
+
+    <Labels labels={['ZK-Rollup', 'EVM', 'Testnet']} title="Kakarot" />
+
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block Time" value="?" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+
+    <Parameter name="Gas Limit" value="20 million" tooltip="The gas limit that can be consumed by an L2 block"/>
+
+    <Parameter name="Sequencing Frequency" value="?" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
+
+    <Parameter name="Objective Finality" value="?" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="?" url="?" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Pedersen Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={<Reference label="?" url="?" />} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+        - ?
+    ___
+
+    <MultiRowParameters title="Messaging???" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '???',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Arbitrum, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
+                    value: '???',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1.',
+                    value: '???',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum',
+                    value: '???',
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+    <Table data={opcodes} type="opcodes" />
+</Section>
+
+<Section title="Precompiled Contracts">
+    <Table data={precompiles} type="precompiles" />
+</Section>
+
+<Section title="System Contracts">
+    <Table data={system_contracts} type="system_contracts" />
+</Section>
+
+<Section title="RPC-API???">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+</Section>
+
+<Section title="Transaction Fees">
+
+    ???
+
+</Section>
+
+<Section title="Tools">
+
+    ???
+
+</Section>

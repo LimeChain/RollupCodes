@@ -15,6 +15,7 @@ const rollupsFirstColors: Record<string, string> = {
     linea: '#7A8FFF',
     scroll: '#7A8FFF',
     zksync_era: '#7A8FFF',
+    kakarot: '#7A8FFF',
 }
 
 const getRollupFirstColor = (value: string): string =>

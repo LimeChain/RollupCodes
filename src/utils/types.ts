@@ -108,3 +108,19 @@ export interface ICrumb {
 }
 
 export type Breadcrumbs = ICrumb[]
+
+export type CustomChainSpec = {
+    opcodes: ChainSpecElementsMap,
+    precompiles: ChainSpecElementsMap,
+    system_contracts: ChainSpecElementsMap
+}
+
+export type ChainSpecElementsMap = {
+    [index: string]: ChainSpecElement
+}
+
+export type ChainSpecElement = {
+    name: string,
+    description?: string,
+    ethDescription?: string
+}
