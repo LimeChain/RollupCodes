@@ -111,7 +111,6 @@ links:
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | DIFFICULTY | `block.difficulty` | Random value. <br /><br /> As this value is set by the sequencer, it is less reliably random than the L1 equivalent. <br /><br /> [You can use an oracle for randomness](https://community.optimism.io/docs/useful-tools/oracles/#verifiable-randomness-function-vrf). | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
-    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
     | 49 | BLOBHASH | `blobhash(index)` | Undefined | Returns versioned hash of the `index`-th blob associated with the current transaction. <Unsupported /> |
     | 4a | BLOBBASEFEE | `block.blobbasefee` | Always returns 1 | Returns current block’s blob base fee. <Modified /> |   
 
