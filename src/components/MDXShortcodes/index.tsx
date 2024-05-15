@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import QuestionMarkIcon from '/public/images/question-mark-icon.svg'
 import { Tooltip as TooltipComponent } from 'react-tooltip'
 import Typography from '@components/Typography'
-import { ChainSpecElement, ChainSpecElementsMap, Text } from '@utils/types'
+import { ChainSpecElement, ChainSpecElementStatus, ChainSpecElementsMap, Text } from '@utils/types'
 import classNames from 'classnames'
 import UnsupportedIcon from '/public/images/unsupported-triangle-icon.svg'
 import ModifiedIcon from '/public/images/modified-triangle-icon.svg'
@@ -231,24 +231,24 @@ const MultiRowParameters = ({
     )
 }
 
-const getStatusNumber = (data: ChainSpecElement) => {
+const getElementStatus = (data: ChainSpecElement): ChainSpecElementStatus => {
     const rollupDesc = data.description
     const ethDesc = data.ethDescription
 
     if (!rollupDesc) {
-        return 1
+        return ChainSpecElementStatus.Unsupported
     } else if (!ethDesc) {
-        return 3
+        return ChainSpecElementStatus.Added
     } else {
-        return 2
+        return ChainSpecElementStatus.Modified
     }
 }
 
 const getStatus = (data: ChainSpecElement) => {
-    switch (getStatusNumber(data)) {
-        case 1: return Unsupported();
-        case 2: return Modified();
-        case 3: return Added();
+    switch (getElementStatus(data)) {
+        case ChainSpecElementStatus.Unsupported: return Unsupported();
+        case ChainSpecElementStatus.Modified: return Modified();
+        case ChainSpecElementStatus.Added: return Added();
     }
 }
 
@@ -262,8 +262,8 @@ const sortTableData = (type: string) => {
         // Sort by status first: Unsupported > Modified > Added
         // Sort alphabetically after that
         return function ([address1, data1]: [string, ChainSpecElement], [address2, data2]: [string, ChainSpecElement]) {
-            const status1 = getStatusNumber(data1)
-            const status2 = getStatusNumber(data2)
+            const status1 = getElementStatus(data1)
+            const status2 = getElementStatus(data2)
             if (status1 === status2) {
                 return parseInt(address1, 16) - parseInt(address2, 16)
             } else {

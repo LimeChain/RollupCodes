@@ -124,3 +124,9 @@ export type ChainSpecElement = {
     description?: string,
     ethDescription?: string
 }
+
+export enum ChainSpecElementStatus {
+    Unsupported = 1,
+    Modified = 2,
+    Added = 3
+}
