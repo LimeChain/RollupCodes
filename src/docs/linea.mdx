@@ -115,15 +115,15 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
+    | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
+    | 5C | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
+    | 5D | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
+    | 5E | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
+    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | PREVRANDAO (legacy DIFFICULTY) | `block.difficulty` | Returns a fixed number "2" | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
-    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
-    | 4a | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
-    | 5c | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
-    | 5d | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
-    | 5e | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
-    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
 
 </Section>
 

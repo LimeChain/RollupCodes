@@ -105,13 +105,13 @@ links:
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
     | 41 | COINBASE | `block.coinbase` | Undefined | Get the L1 block’s beneficiary address <Unsupported /> |
+    | 49 | BLOBHASH | `blobhash(index)` | Undefined | Returns versioned hash of the `index`-th blob associated with the current transaction. <Unsupported /> |
     | 32 | ORIGIN | `tx.origin` | The opcodes has the same behaviour as in Ethereum L1 except for situations in which the transaction is an L1 to L2 transaction. <br /><br /> In that case `tx.origin` is set to the [aliased address](https://community.optimism.io/docs/developers/build/differences/#address-aliasing) of the address that triggered the transaction. | Get the execution origination address <Modified /> |
     | 33 | CALLER | `msg.sender` | The opcode has the same behaviour as in Ethereum L1 except for situations in which the transaction is an L1 to L2 transaction. <br /><br /> In that case, the top-level contract to be called on L2 has `msg.sender` set to the [aliased address](https://community.optimism.io/docs/developers/build/differences/#address-aliasing) of the address that triggered the transaction. | Get caller address <Modified /> |
     | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | DIFFICULTY | `block.difficulty` | Random value. <br /><br /> As this value is set by the sequencer, it is less reliably random than the L1 equivalent. <br /><br /> [You can use an oracle for randomness](https://community.optimism.io/docs/useful-tools/oracles/#verifiable-randomness-function-vrf). | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
-    | 49 | BLOBHASH | `blobhash(index)` | Undefined | Returns versioned hash of the `index`-th blob associated with the current transaction. <Unsupported /> |
-    | 4a | BLOBBASEFEE | `block.blobbasefee` | Always returns 1 | Returns current block’s blob base fee. <Modified /> |
+    | 4A | BLOBBASEFEE | `block.blobbasefee` | Always returns 1 | Returns current block’s blob base fee. <Modified /> |
 
 </Section>
 
