@@ -104,6 +104,7 @@ links:
 
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
+    | 39 | CODECOPY | | The Rollup does not provide a mechanism to access the bytecode of a contract. <br /><br />Copies only constructor arguments when executed on deploy code.<br /><br />Sets memory to `0`s when executed on runtime code compiled through old EVM codegen.<br /><br />Produces compile-time error in case it is executed on runtime code compiling through Yul codegen. | Copies the code running in the current environment to memory. <Unsupported /> |
     | 3C | EXTCODECOPY | | Not supported. <br /><br />zkSync Era does not provide a mechanism to access the bytecode of a contract.<br /><br />Produces a compile-time error with the custom compiler. | Copies an account’s code to memory. <Unsupported /> |
     | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
     | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
@@ -118,7 +119,6 @@ links:
     | 35 | CALLDATALOAD | | Gets the input data of the current environment.<br /><br />`offset` greater than 2^32-33 causes execution to panic. | Gets input data of the current environment  <Modified /> |
     | 37 | CALLDATACOPY | |  Copies input data in the current environment to memory.<br /><br />Executes a loop of `calldataload` and `mstore` in order to load and copy the `calldata` into memory. The execution will panic if `2^32-32 + offset %32 < offset + len.` | Copies input data in the current environment to memory. <Modified /> |
     | 38 | CODESIZE | | Gets the size of the code in case it is called on a Runtime code.<br /><br />If called on a deploy code, the returned size is the size of the constructor arguments only (excluding deploy code size). | Gets the size of the code running in the current environment. <Modified /> |
-    | 39 | CODECOPY | | The Rollup does not provide a mechanism to access the bytecode of a contract. <br /><br />Copies only constructor arguments when executed on deploy code.<br /><br />Sets memory to `0`s when executed on runtime code compiled through old EVM codegen.<br /><br />Produces compile-time error in case it is executed on runtime code compiling through Yul codegen. | Copies the code running in the current environment to memory. <Modified /> |
     | 41 | COINBASE | | Returns the address of the `Bootloader` contract, which is `0x8001` | Gets the block’s beneficiary address <Modified />  |
     | 42 | TIMESTAMP | | Returns the latest L2 block's timestamp | Returns the latest block’s timestamp <Modified /> |
     | 43 | NUMBER | | Returns the latest L2 block's number | Returns the latest block’s number <Modified /> |
