@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 const normalizedRollupTitles: {[key: string]: string} = {
     'arbitrum-one': 'Arbitrum One',
     'base': 'Base',
+    'blast': 'Blast',
     'linea': 'Linea',
     'optimism': 'Optimism',
     'polygon-zkevm': 'Polygon zkEVM',
