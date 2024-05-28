@@ -10,6 +10,7 @@ const rollupsFirstColors: Record<string, string> = {
     arbitrum_one: '#F59762',
     optimism: '#F59762',
     base: '#F59762',
+    blast: '#F59762',
     polygon_zkevm: '#7A8FFF',
     taiko: '#7A8FFF',
     linea: '#7A8FFF',
