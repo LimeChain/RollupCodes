@@ -4,13 +4,13 @@ subtitle: Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Ro
 labels:
     - ZK-Rollup
     - EVM
-    - Testnet
+    - Mainnet
 links:
     website:
         url: https://taiko.xyz/
         name: taiko.xyz
     docs:
-        url: https://taiko.xyz/docs
+        url: https://docs.taiko.xyz
         name: Docs
     l2beat:
         url: https://l2beat.com/scaling/projects/taiko
@@ -28,17 +28,13 @@ links:
 
 <Section title="Overview">
 
-    > ⚠️ The rollup is still in development. Information presented here may change by the time Mainnet is launched.
-
     Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
    
     ###### Focus
 
     - Implementing circuits for verifying all OPCODEs and Precompiles. The execution of some components of the EVM is currently not verified by the circuits.
-    - Finalising development and launching Taiko Mainnet.
 
-
-    <Labels labels={['ZK-Rollup', 'EVM', 'Testnet']} title="Taiko" />
+    <Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="Taiko" />
 
 </Section>
 
@@ -50,7 +46,7 @@ links:
 
     <Parameter name="Objective Finality" value="~90 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" url="https://sepolia.etherscan.io/address/0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" url="https://etherscan.io/address/0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
