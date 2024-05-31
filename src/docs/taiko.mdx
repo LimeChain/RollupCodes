@@ -42,9 +42,11 @@ links:
 
     <Parameter name="Block Time" value="On demand*" tooltip="The rate at which the rollup produces blocks. Blocks are produced on demand."/>
 
-    <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
+    <Parameter name="Gas Limit" value="240,250,000" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
 
-    <Parameter name="Objective Finality" value="~90 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
+    <Parameter name="Sequencing Frequency" value="12 - 60 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
+
+    <Parameter name="Objective Finality" value="~1.5 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" url="https://etherscan.io/address/0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
@@ -141,8 +143,7 @@ links:
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :--- | :--- | :--- |
     | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
-    | <Copy value="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" label="0x95f..6f" /> | <Reference label="TaikoL1" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L1/TaikoL1.sol" /> | Used for proposing, proving and verifying L2 blocks on L1. | N/A <Added /> |
-    | <Copy value="0x1000777700000000000000000000000000000001" label="0x10007777..01" /> | <Reference label="TaikoL2" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L2/TaikoL2.sol" /> | Used to create anchor transaction tracking latest synced L1 block hash and block height. | N/A <Added />
+    | <Copy value="0x1670000000000000000000000000000000010001" label="0x167...001" /> | <Reference label="TaikoL2" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L2/TaikoL2.sol" /> | Used to create anchor transaction tracking latest synced L1 block hash and block height. | N/A <Added />
 
 </Section>
 
