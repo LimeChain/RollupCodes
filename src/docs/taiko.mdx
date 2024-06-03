@@ -50,7 +50,7 @@ links:
 
     <Parameter name="Sequencing Frequency" value="12 - 60 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
-    <Parameter name="Objective Finality" value="1 day" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1. Currently the SGX proofs are considered final if they have not been contested for 24 hours" />
+    <Parameter name="Objective Finality" value="1 day" tooltip="The time it takes for the rollup to be considered objectively final. State sequenced through SGX proofs is considered final if it has not been contested for 24 hours" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" url="https://etherscan.io/address/0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
