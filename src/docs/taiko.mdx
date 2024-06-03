@@ -1,8 +1,8 @@
 ---
 title: Taiko
-subtitle: Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+subtitle: Taiko is a Based Contestable Rollup that aims to be maximally compatible with Ethereum. At the moment, the protocol uses SGX proofs and doesn't allow Ethereum block builders to sequence transactions.
 labels:
-    - ZK-Rollup
+    - Optimistic Rollup
     - EVM
     - Mainnet
 links:
@@ -28,13 +28,15 @@ links:
 
 <Section title="Overview">
 
-    Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+   Taiko is a Based Contestable Rollup that aims to be a Type 1 (Ethereum-equivalent) ZK-Rollup with decentralised and permissionless sequencers and provers. The current design uses SGX proofs and doesn't allow Ethereum block builders to sequence transactions. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
    
     ###### Focus
 
     - Implementing circuits for verifying all OPCODEs and Precompiles. The execution of some components of the EVM is currently not verified by the circuits.
+    - Allow Ethereum block builders to sequence Taiko blocks
+    - Аdding ZK validity proofs and prover marketplace
 
-    <Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="Taiko" />
+    <Labels labels={['Optimistic Rollup', 'EVM', 'Mainnet']} title="Taiko" />
 
 </Section>
 
@@ -46,7 +48,7 @@ links:
 
     <Parameter name="Sequencing Frequency" value="12 - 60 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
-    <Parameter name="Objective Finality" value="~1.5 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
+    <Parameter name="Objective Finality" value="1 day" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1. Currently the SGX proofs are considered final if they have not been contested for 24 hours" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" url="https://etherscan.io/address/0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
