@@ -1,16 +1,16 @@
 ---
 title: Taiko
-subtitle: Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+subtitle: Taiko aims to be a Based and Type1 equivalent Rollup. It uses tiered multi-proofs system. Currently the protocol uses SGX proofs (lowest tier proofs) which makes it an Optimistic Rollup. The zkEVM circuits are higher tier proofs not yet enabled in production.
 labels:
-    - ZK-Rollup
+    - Optimistic Rollup
     - EVM
-    - Testnet
+    - Mainnet
 links:
     website:
         url: https://taiko.xyz/
         name: taiko.xyz
     docs:
-        url: https://taiko.xyz/docs
+        url: https://docs.taiko.xyz
         name: Docs
     l2beat:
         url: https://l2beat.com/scaling/projects/taiko
@@ -28,17 +28,15 @@ links:
 
 <Section title="Overview">
 
-    > ⚠️ The rollup is still in development. Information presented here may change by the time Mainnet is launched.
-
-    Taiko aims to be a based rollup and Type 1 (Ethereum-equivalent) ZK-Rollup. The current design uses decentralised and permissionless sequencers and provers. The zkEVM circuits are based on the Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs, where the team is active contributor.
+   Taiko aims to be a Based and Type1 (Ethereum-equivalent) ZK-Rollup with decentralized and permissionless sequencers and provers. It uses tiered multi-proofs system. Currently the protocol uses SGX proofs (lowest tier proofs) which makes it an Optimistic Rollup. Permissionless sequencing and higher proof tiers such as the zkEVM circuits are not yet enabled in production.
    
     ###### Focus
 
     - Implementing circuits for verifying all OPCODEs and Precompiles. The execution of some components of the EVM is currently not verified by the circuits.
-    - Finalising development and launching Taiko Mainnet.
+    - Decentralize sequencers by allowing anyone to sequence Taiko blocks
+    - Enabling higher tier proof systems such as ZK validity proofs and a Prover marketplace
 
-
-    <Labels labels={['ZK-Rollup', 'EVM', 'Testnet']} title="Taiko" />
+    <Labels labels={['Optimistic Rollup', 'EVM', 'Mainnet']} title="Taiko" />
 
 </Section>
 
@@ -46,11 +44,13 @@ links:
 
     <Parameter name="Block Time" value="On demand*" tooltip="The rate at which the rollup produces blocks. Blocks are produced on demand."/>
 
-    <Parameter name="Gas Limit" value="8.18 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
+    <Parameter name="Gas Limit" value="240 million" tooltip="The gas limit that can be consumed by an L2 block. 180 000 gas is reserved for the anchor transaction."/>
 
-    <Parameter name="Objective Finality" value="~90 minutes" tooltip="The time it takes for a validity proof of an L2 block to be generated and submitted after it is sequenced on L1." />
+    <Parameter name="Sequencing Frequency" value="12 - 60 seconds" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" url="https://sepolia.etherscan.io/address/0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Objective Finality" value="1 day" tooltip="The time it takes for the rollup to be considered objectively final. State sequenced through SGX proofs is considered final if it has not been contested for 24 hours" />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" url="https://etherscan.io/address/0x06a9ab27c7e2255df1815e6cc0168d7755feb19a" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
@@ -145,8 +145,7 @@ links:
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :--- | :--- | :--- |
     | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
-    | <Copy value="0x95fF8D3CE9dcB7455BEB7845143bEA84Fe5C4F6f" label="0x95f..6f" /> | <Reference label="TaikoL1" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L1/TaikoL1.sol" /> | Used for proposing, proving and verifying L2 blocks on L1. | N/A <Added /> |
-    | <Copy value="0x1000777700000000000000000000000000000001" label="0x10007777..01" /> | <Reference label="TaikoL2" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L2/TaikoL2.sol" /> | Used to create anchor transaction tracking latest synced L1 block hash and block height. | N/A <Added />
+    | <Copy value="0x1670000000000000000000000000000000010001" label="0x167...001" /> | <Reference label="TaikoL2" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/L2/TaikoL2.sol" /> | Used to create anchor transaction tracking latest synced L1 block hash and block height. | N/A <Added />
 
 </Section>
 
