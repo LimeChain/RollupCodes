@@ -1,6 +1,6 @@
 ---
 title: Kakarot
-subtitle: Kakarot is an EVM-compatible ZK-Rollup that leverages Cairo to spearhead innovations on Ethereum. (change)
+subtitle: Kakarot is an EVM-compatible ZK-Rollup that leverages Cairo to spearhead innovations on Ethereum. At the moment, the rollup uses a trusted and centralised sequencer operated by the core team.
 labels:
     - ZK-Rollup
     - EVM
@@ -30,12 +30,13 @@ links:
 
     > ⚠️ The rollup is still in development. Information presented here may change by the time Mainnet is launched.
 
-    Kakarot...
+    Kakarot is an EVM-compatible high-level ZK-Rollup that leverages Cairo to spearhead innovations on Ethereum. Because Kakarot is built on Cairo, its codebase is extremely slim and thus extremely easy to maintain, adapt to Ethereum changes, or add new features to
    
     ###### Focus
 
-    - ...
-    - Finalising development and launching Kakarot Mainnet.
+    - Use the Starkware SHARP for proving the state 
+    - Finalising development and launching Kakarot Mainnet
+    - Add new features such as native account abstraction to the EVM
 
     <Labels labels={['ZK-Rollup', 'EVM', 'Testnet']} title="Kakarot" />
 
@@ -44,57 +45,30 @@ links:
 
 <Section title="General">
 
-    <Parameter name="Block Time" value="?" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
+    <Parameter name="Block Time" value="On demand*" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future"/>
 
-    <Parameter name="Gas Limit" value="20 million" tooltip="The gas limit that can be consumed by an L2 block"/>
+    <Parameter name="Gas Limit" value="7 million" tooltip="The gas limit that can be consumed by an L2 block"/>
 
-    <Parameter name="Sequencing Frequency" value="?" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
+    <Parameter name="Sequencing Frequency" value="~1-7 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
-    <Parameter name="Objective Finality" value="?" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
+    <Parameter name="Objective Finality" value="At the moment the rollup uses Mock SHARP that accepts every block optimistically" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="?" url="?" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x74ca1ac5bd4c3c97006d2b7b9375dd3b6c17accd" url="https://sepolia.etherscan.io/address/0x74ca1ac5bd4c3c97006d2b7b9375dd3b6c17accd" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Pedersen Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={<Reference label="?" url="?" />} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={<Reference key="0" label="Kakarot" url="https://github.com/kkrt-labs/kakarot" />} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
-        - ?
+        - **Type 0** - User Transaction. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+        - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718)
+        - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
     ___
 
-    <MultiRowParameters title="Messaging???" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Arbitrum protocol will provide proof of the data transfer on the destination chain" data={[
-        {
-            title: 'L1 → L2',
-            rows: [
-                {
-                    label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
-                    value: '???',
-                },
-                {
-                    label: 'Cost',
-                    tooltip: 'The gas cost of purely sending a message from Ethereum to Arbitrum, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
-                    value: '???',
-                },
-            ],
-        },
-        {
-            title: 'L2 → L1',
-            rows: [
-                {
-                    label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Arbitrum block and sequenced to L1.',
-                    value: '???',
-                },
-                {
-                    label: 'Cost',
-                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum',
-                    value: '???',
-                },
-            ],
-        },
-    ]} />
+    <Parameter name="Messaging" />
+
+    L1->L2 and L2->L1 messaging is currently under development.
 
 </Section>
 
@@ -110,7 +84,7 @@ links:
     <Table data={system_contracts} type="system_contracts" />
 </Section>
 
-<Section title="RPC-API???">
+<Section title="RPC-API">
 
     <Legend />
 
@@ -118,16 +92,30 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_getFilterChanges` | Filter ID | Not supported  | Polling method for a filter, which returns an array of events that have occurred since the last poll. <Unsupported /> |
+    | `eth_getFilterLogs` | Filter ID | Not supported  | Returns an array of all logs matching filter with given id. <Unsupported /> |
+    | `eth_newBlockFilter` | None | Not supported  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
+    | `eth_newFilter` | Filter object | Not supported  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
+    | `eth_newPendingTransactionFilter` | None | Not supported  | Creates a filter object in the node, to notify when a new transaction arrives. <Unsupported /> |
+    | `eth_uninstallFilter` | Filter ID | Not supported  | Uninstalls a filter with the given filter id. <Unsupported /> |
+    | `eth_feeHistory` | `blockCount`, `newestBlock` and `rewardPercentiles` array | Since Kakarot has no fee market, this will return the base fee over a range of blocks. | Returns the collection of historical gas information. <Modified /> |
+    | `eth_maxPriorityFeePerGas` | None | Response is always 0 | Get the priority fee needed to be included in a block. <Modified /> |
+    | `eth_getUncleByBlockHashAndIndex` | Block hash and integer index | Response is always 0 | Returns information about a uncle of a block by hash and uncle index position. <Modified /> |
+    | `eth_getUncleByBlockNumberAndIndex` | Block number (integer) and integer index | Response is always 0 | Returns information about a uncle of a block by number and uncle index position. <Modified /> |
+
+
 </Section>
 
 <Section title="Transaction Fees">
 
-    ???
+    Currently the transaction fee for all transactions is 0
 
 </Section>
 
 <Section title="Tools">
 
-    ???
+    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+    
+    > ⚠️ When using Hardhat it is recommended to change the configuration of Ignition as shown [here](https://docs.kakarot.org/ecosystem/sdk#hardhat-ignition)
 
 </Section>

@@ -156,7 +156,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | `eth_newBlockFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter in the node, to notify when a new block arrives. <Unsupported /> |
-    | `eth_newFilter` | None | Not supported by public nodes. Supported when running your own follower node  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
+    | `eth_newFilter` | Filter object | Not supported by public nodes. Supported when running your own follower node  | Creates a filter object, based on filter options, to notify when the state changes (logs). <Unsupported /> |
     | `linea_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Estimates the gas cost for a transaction including the layer 1 and layer 2 fees <br /> <br /> `linea_estimateGas` uses the same inputs as the standard `eth_estimateGas`, but returns the recommended gas limit, the base fee per gas, and the priority fee per gas | N/A <Added /> |
     
 </Section>
