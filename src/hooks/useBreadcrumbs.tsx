@@ -1,7 +1,18 @@
-import capitalize from '@utils/capitalize'
 import { Breadcrumbs } from '@utils/types'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
+
+const normalizedRollupTitles: {[key: string]: string} = {
+    'arbitrum-one': 'Arbitrum One',
+    'base': 'Base',
+    'blast': 'Blast',
+    'linea': 'Linea',
+    'optimism': 'Optimism',
+    'polygon-zkevm': 'Polygon zkEVM',
+    'scroll': 'Scroll',
+    'taiko': 'Taiko',
+    'zksync-era': 'zkSync Era'
+}
 
 const useBreadcrumbs = (): Breadcrumbs => {
     const router = useRouter()
@@ -22,7 +33,7 @@ const useBreadcrumbs = (): Breadcrumbs => {
             // by joining together the path parts up to this point.
             const href = '/' + asPathNestedRoutes.slice(0, idx + 1).join('/')
             // The title will just be the route string for now
-            const title = capitalize(subpath.replace('-', ' ')).split('#')[0]
+            const title = normalizedRollupTitles[subpath.split('#')[0]] || subpath.split('#')[0]
             return { href, title }
         })
 

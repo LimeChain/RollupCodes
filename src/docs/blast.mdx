@@ -1,35 +1,35 @@
 ---
-title: Optimism
-subtitle: Optimism is an Optimistic Rollup boasting near full equivalence to Ethereum. The protocol features a centralised sequencer operated by the Optimism team. Fraud proofs have yet to be enabled on the platform. The way the protocol is structured and maintained makes it easy  for external teams to reuse the technology and create/deploy their own rollups.
+title: Blast
+subtitle: Blast is an Optimistic Rollup utilizing the OP Stack technology. It provides native yield for ETH and stablecoins.
 labels:
     - Optimistic Rollup
     - EVM
     - Mainnet
 links:
     website:
-        url: https://www.optimism.io/
-        name: optimism.io
+        url: https://www.blast.io/
+        name: blast.io
     docs:
-        url: https://community.optimism.io/
+        url: https://docs.blast.io/
         name: Docs
     l2beat:
-        url: https://l2beat.com/scaling/projects/optimism
+        url: https://l2beat.com/scaling/projects/blast
         name: L2BEAT
     github:
-        url: https://github.com/ethereum-optimism/optimism
+        url: https://github.com/blast-io/blast
         name: Github
     twitter:
-        url: https://twitter.com/OptimismFND
-        name: optimismFND
+        url: https://twitter.com/Blast_L2
+        name: Blast_L2
 ---
 
 <Section title="Overview">
-   Optimism is an Optimistic Rollup boasting near full equivalence to Ethereum. The protocol features a centralised sequencer operated by the Optimism team. Fraud proofs have yet to be enabled on the platform. The way the protocol is structured and maintained makes it easy  for external teams to reuse the technology and create/deploy their own rollups.
+   Blast is an EVM-compatible, optimistic rollup utilizing the OP Stack that raises the baseline yield for users and developers without changing the experience cryptonatives expect.
 
     ###### Focus
 
-    - RetroPGF funding model where valuable projects are funded retroactively through a community vote
-    - Optimism SuperChain
+    - Provide yield to ETH and stablecoins
+    - Share gas revenue with the Dapps
 
     <Labels labels={['Optimistic Rollup', 'EVM', 'Mainnet']} title="Optimism" />
 
@@ -47,21 +47,21 @@ links:
 
     <Parameter name="Objective Finality"  value="7 days" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xdfe97868233d1aa22e815a266982f2cf17685a27" url="https://etherscan.io/address/0xdfe97868233d1aa22e815a266982f2cf17685a27" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x826d1b0d4111ad9146eb8941d7ca2b6a44215c76" url="https://etherscan.io/address/0x826d1b0d4111ad9146eb8941d7ca2b6a44215c76" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={[<Reference key="0" label="op-geth (Go)" url="https://github.com/ethereum-optimism/op-geth" />, <Reference  key="1" label="op-erigon (Go)" url="https://github.com/testinprod-io/op-erigon" />, <Reference  key="2" label="magi (Rust)" url="https://github.com/a16z/magi" />]} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={[<Reference key="0" label="blast-geth (Go)" url="https://github.com/blast-io/blast/tree/master/blast-geth" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
     - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
     - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718)
     - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
-    - **Type 126** - System Transactions. They can be transactions [importing L1 data into Optimism](https://docs.optimism.io/connect/resources/glossary#l1-attributes-deposited-transaction) or [User-deposited transactions](https://docs.optimism.io/connect/resources/glossary#user-deposited-transaction)
+    - **Type 126** - System Transactions. They can be transactions [importing L1 data into Blast](https://docs.optimism.io/connect/resources/glossary#l1-attributes-deposited-transaction) or [User-deposited transactions](https://docs.optimism.io/connect/resources/glossary#user-deposited-transaction)
     ___
 
-    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain" data={[
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Blast protocol will provide proof of the data transfer on the destination chain" data={[
         {
             title: 'L1 → L2',
             rows: [
@@ -72,7 +72,7 @@ links:
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of sending a message from Ethereum to the L2. Optimism executes the message with a system address on behalf of the L1 sender. L2 gas is paid by the sender of the message on L1.',
+                    tooltip: 'The gas cost of sending a message from Ethereum to the L2. Blast executes the message with a system address on behalf of the L1 sender. L2 gas is paid by the sender of the message on L1.',
                     value: '~38 000 L1 gas',
                 },
             ],
@@ -82,12 +82,12 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an Optimism block and sequenced to L1.',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a Blast block and sequenced to L1.',
                     value: '7 days',
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
+                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Blast. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
                     value: '600 000 L1 gas',
                 },
             ],
@@ -136,19 +136,19 @@ links:
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :--- | :--- | :--- | :--- |
     | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | The contract has the following differences compared to the L1: <br /><br /> 1. Data is updated with ~6-7 slots of delay <br /> 2. `HISTORY_BUFFER_LENGTH` is set to 1024 compared to 8191, meaning that the history is kept for ~3.41 hours compared to ~27 hours on L1 | The contract receives a timestamp and returns the beacon root associated with it <Modified /> |
-    | <Copy value="0x4200000000000000000000000000000000000006" label="0x420...06" /> | <Reference label="WETH" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/WETH.sol" /> | The standard implementation of Wrapped Ether on Optimism | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000007" label="0x420...07" /> | <Reference label="L2CrossDomainMessenger" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol" />| Provides a higher level API for sending cross-domain messages compared to directly calling the `L2ToL1MessagePasser`. Allows for replayability if the L1 to L2 transaction reverts on L2 | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000010" label="0x420...10" /> | <Reference label="L2StandardBridge" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2StandardBridge.sol" /> | Provides a higher level API built on top of the `L2CrossDomainMessenger` that gives standard interface for sending ETH or ERC20 across domains | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000011" label="0x420...11" /> | <Reference label="SequencerFeeVault" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/SequencerFeeVault.sol" /> | Accumulates any transaction priority fee and is the value of `block.coinbase`. When enough fees accumulate in this account, they can be withdrawn to an immutable L1 address | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000012" label="0x420...12" /> | <Reference label="OptimismMintableERC20Factory" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol" /> | Responsible for creating ERC20 contracts on L2 that can be used for depositing native L1 tokens into. These ERC20 contracts can be created permisionlessly and implement the interface required by the `StandardBridge` to just work with deposits and withdrawals | N/A <Added /> |
-    | <Copy value="0x420000000000000000000000000000000000000F" label="0x420...0F" /> | <Reference label="GasPriceOracle" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/GasPriceOracle.sol" /> | Provides information of L1 base fee data and calculates the L1 fee  for a given transaction | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000042" label="0x420...42" /> | GovernanceToken | The Optimism OP governance token. | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000015" label="0x420...15" /> | <Reference label="L1Block" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L1Block.sol" /> | Responsible for maintaining L1 context in L2. This allows for L1 state to be accessed in L2 | N/A <Added /> |
-    | <Copy value="0x4200000000000000000000000000000000000016" label="0x420...16" /> | <Reference label="L2ToL1MessagePasser" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol" /> | Stores commitments to withdrawal transactions. When a user is submitting the withdrawing transaction on L1, they provide a proof that the transaction that they withdrew on L2 is in the `sentMessages` mapping of this contract | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000006" label="0x420...006" /> | <Reference label="WETH" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/WETH.sol" /> | The standard implementation of Wrapped Ether on Blast | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000007" label="0x420...007" /> | <Reference label="L2CrossDomainMessenger" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol" />| Provides a higher level API for sending cross-domain messages compared to directly calling the `L2ToL1MessagePasser`. Allows for replayability if the L1 to L2 transaction reverts on L2 | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000010" label="0x420...010" /> | <Reference label="L2StandardBridge" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2StandardBridge.sol" /> | Provides a higher level API built on top of the `L2CrossDomainMessenger` that gives standard interface for sending ETH or ERC20 across domains | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000011" label="0x420...011" /> | <Reference label="SequencerFeeVault" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/SequencerFeeVault.sol" /> | Accumulates any transaction priority fee and is the value of `block.coinbase`. When enough fees accumulate in this account, they can be withdrawn to an immutable L1 address | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000012" label="0x420...012" /> | <Reference label="OptimismMintableERC20Factory" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol" /> | Responsible for creating ERC20 contracts on L2 that can be used for depositing native L1 tokens into. These ERC20 contracts can be created permisionlessly and implement the interface required by the `StandardBridge` to just work with deposits and withdrawals | N/A <Added /> |
+    | <Copy value="0x420000000000000000000000000000000000000F" label="0x420...00F" /> | <Reference label="GasPriceOracle" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/GasPriceOracle.sol" /> | Provides information of L1 base fee data and calculates the L1 fee  for a given transaction | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000015" label="0x420...015" /> | <Reference label="L1Block" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L1Block.sol" /> | Responsible for maintaining L1 context in L2. This allows for L1 state to be accessed in L2 | N/A <Added /> |
+    | <Copy value="0x4200000000000000000000000000000000000016" label="0x420...016" /> | <Reference label="L2ToL1MessagePasser" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol" /> | Stores commitments to withdrawal transactions. When a user is submitting the withdrawing transaction on L1, they provide a proof that the transaction that they withdrew on L2 is in the `sentMessages` mapping of this contract | N/A <Added /> |
     | <Copy value="0x4200000000000000000000000000000000000017" label="0x420...017" /> | <Reference label="OptimismMintableERC721Factory" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/universal/OptimismMintableERC721Factory.sol" /> | Responsible for creating ERC721 contracts on L2 that can be used for depositing native L1 NFTs into | N/A <Added /> |
     | <Copy value="0x4200000000000000000000000000000000000018" label="0x420...018" /> | <Reference label="ProxyAdmin" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/universal/ProxyAdmin.sol" /> | Owner of all of the proxy contracts set at the predeploys. It is itself behind a proxy. The owner of the ProxyAdmin will have the ability to upgrade any of the other predeploy contracts | N/A <Added /> |
     | <Copy value="0x4200000000000000000000000000000000000019" label="0x420...019" /> | <Reference label="BaseFeeVault" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/BaseFeeVault.sol" /> | Receives the basefees on L2. The basefee is not burnt on L2 like it is on L1. Once the contract has received a certain amount of fees, the ETH can be withdrawn to an immutable address on L1 | N/A <Added /> |
     | <Copy value="0x420000000000000000000000000000000000001a" label="0x420...01a" /> | <Reference label="L1FeeVault" url="https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L1FeeVault.sol" /> | Receives the L1 portion of the transaction fees. Once the contract has received a certain amount of fees, the ETH can be withdrawn to an immutable address on L1 | N/A <Added /> |
+    | <Copy value="0x4300000000000000000000000000000000000002" label="0x430...002" /> | <Reference label="Blast" url="https://github.com/blast-io/blast/blob/master/blast-optimism/packages/contracts-bedrock/src/L2/Blast.sol" /> | Used for configuring yield and gas fees mode for smart contracts | N/A <Added /> |
 
 </Section>
 
@@ -172,7 +172,7 @@ links:
 
 <Section title="Transaction Fees">
 
-    Optimism charges an additional L1 data fee. You can use [@eth-optimism/sdk](https://sdk.optimism.io/modules.html#asL2Provider)
+    Blast charges an additional L1 data fee. You can use [@eth-optimism/sdk](https://sdk.optimism.io/modules.html#asL2Provider)
     for wrapping the RPC ethers provider and get access to the L1 and L2 gas
     costs information.
 
@@ -182,6 +182,6 @@ links:
 
     Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
 
-    [@eth-optimism/sdk](https://www.npmjs.com/package/@eth-optimism/sdk) is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
+    [@eth-optimism/sdk](https://www.npmjs.com/package/@eth-optimism/sdk) is an npm library providing a set of tools for interacting with Blast in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
 
 </Section>
