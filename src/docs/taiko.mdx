@@ -159,6 +159,8 @@ links:
     | :----- | :----- | :--------------- | :-------------------- |
     | `taiko_headL1Origin` | None | Returns the latest L2 block's corresponding L1 origin | N/A <Added /> |
     | `taiko_l1OriginByID` | L2 block number | Returns the L2 block's corresponding L1 origin | N/A <Added /> |
+    | `taiko_getSyncMode` | None | Returns the current sync mode of the L2 node. <br /><br /> Sync mode can be `full`, `snap` or `light`. | N/A <Added /> |
+    | `taikoAuth_txPoolContent` | `beneficiary` - coinbase address <br /> `baseFee` <br /> `blockMaxGasLimit`<br /> `maxBytesPerTxList` <br /> `locals` - a list of prioritised transaction senders from the transaction pool <br /> `maxTransactionsLists` | Returns multiple transaction lists from the transaction pool, which satisfy all the given limits. <br/> <br/> Requires JWT authentication. | N/A <Added />
 
 </Section>
 
