@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import QuestionMarkIcon from '/public/images/question-mark-icon.svg'
 import { Tooltip as TooltipComponent } from 'react-tooltip'
 import Typography from '@components/Typography'
-import { Text } from '@utils/types'
+import { ChainSpecElement, ChainSpecElementStatus, ChainSpecElementsMap, Text } from '@utils/types'
 import classNames from 'classnames'
 import UnsupportedIcon from '/public/images/unsupported-triangle-icon.svg'
 import ModifiedIcon from '/public/images/modified-triangle-icon.svg'
@@ -15,10 +15,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ReferenceIcon from '/public/images/reference-icon.svg'
 import CheckmarkIcon from '/public/images/checkmark-icon.svg'
-
-type Props = {
-    children: string | JSX.Element
-}
+import { solidityEquivalent, systemContractUrl } from '@utils/chain-spec-info'
 
 const Tooltip = ({ tooltip }: { tooltip: string }) => {
     const id = Math.random()
@@ -61,9 +58,9 @@ const Copy = ({ value, label }: { value: string; label: string }) => {
         <div className={styles.copy} title={value}>
             {label && label}
             <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
-                    <span className={styles.copyIcon}>
-                        {copied ? <CheckmarkIcon /> : <CopyIcon />}
-                    </span>
+                <span className={styles.copyIcon}>
+                    {copied ? <CheckmarkIcon /> : <CopyIcon />}
+                </span>
             </CopyToClipboard>
         </div>
     )
@@ -234,6 +231,131 @@ const MultiRowParameters = ({
     )
 }
 
+const getElementStatus = (data: ChainSpecElement): ChainSpecElementStatus => {
+    const rollupDesc = data.description
+    const ethDesc = data.ethDescription
+
+    if (!rollupDesc) {
+        return ChainSpecElementStatus.Unsupported
+    } else if (!ethDesc) {
+        return ChainSpecElementStatus.Added
+    } else {
+        return ChainSpecElementStatus.Modified
+    }
+}
+
+const getStatus = (data: ChainSpecElement) => {
+    switch (getElementStatus(data)) {
+        case ChainSpecElementStatus.Unsupported: return Unsupported();
+        case ChainSpecElementStatus.Modified: return Modified();
+        case ChainSpecElementStatus.Added: return Added();
+    }
+}
+
+const sortTableData = (type: string) => {
+    if (type === "opcodes") {
+        // Sort by opcode number
+        return function ([opcode1]: [string, ChainSpecElement], [opcode2]: [string, ChainSpecElement]) {
+            return parseInt(opcode1, 16) - parseInt(opcode2, 16)
+        }
+    } else {
+        // Sort by status first: Unsupported > Modified > Added
+        // Sort alphabetically after that
+        return function ([address1, data1]: [string, ChainSpecElement], [address2, data2]: [string, ChainSpecElement]) {
+            const status1 = getElementStatus(data1)
+            const status2 = getElementStatus(data2)
+            if (status1 === status2) {
+                return parseInt(address1, 16) - parseInt(address2, 16)
+            } else {
+                return status1 - status2
+            }
+        }
+    }
+}
+
+const shortAddress = (address: string) => {
+    if (address.length < 6) {
+        return address
+    } else {
+        return address.slice(0, 5) + "..." + address.slice(-2)
+    }
+}
+
+const displayTableElementName = (type: string, name: string) => {
+    if (type === "opcodes") {
+        return name
+    } else if (type === "precompiles") {
+        return (<code>{name}</code>)
+    } else {
+        const url = systemContractUrl(name)
+        return url ? Reference({ url, label: name }) : name
+    }
+}
+
+const displaySolidityEquivalent = (opcode: string) => {
+    const text = solidityEquivalent(opcode)
+    return (
+        <td align='left'>
+            {(text) ? <code>{text}</code> : ""}
+        </td>)
+}
+
+const Table = ({
+    data,
+    type
+}: {
+    data: ChainSpecElementsMap,
+    type: string
+}) => {
+    // Only show different data
+    const filteredData = Object.entries(data)
+        .filter(([_, data]) => data.description !== data.ethDescription)
+
+    let visualizedType
+    if (type === "opcodes") {
+        visualizedType = "OPCODEs"
+    } else if (type === "precompiles") {
+        visualizedType = "precompiled contracts"
+    } else {
+        visualizedType = "system contracts"
+    }
+
+    return (Object.keys(filteredData).length > 0)
+        ? (
+            <div>
+                <Legend/>
+                <p>The following {visualizedType} behave differently compared to the canonical Ethereum L1</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th align='left'>{type === "opcodes" ? "Opcode" : "Address"}</th>
+                            <th align='left'>Name</th>
+                            {type === "opcodes" ? (<th align='left'>Solidity Equivalent</th>) : ""}
+                            <th align='left'>Rollup Behaviour</th>
+                            <th align='left'>Ethereum L1 Behaviour</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredData
+                            .sort(sortTableData(type))
+                            .map(([id, element]) => {
+                                return (
+                                    <tr key={id}>
+                                        <td align='left'>{type === "opcodes" ? id : Copy({ value: id, label: shortAddress(id) })}</td>
+                                        <td align='left'>{displayTableElementName(type, element.name)}</td>
+                                        {type === "opcodes" ? displaySolidityEquivalent(element.name) : ""}
+                                        <td align='left'>{element.description || "N/A"}</td>
+                                        <td align='left'>{element.ethDescription || "N/A"} {getStatus(element)}</td>
+                                    </tr>
+                                )
+                            })}
+                    </tbody>
+                </table>
+            </div>
+        )
+        : (<p>All {visualizedType} defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.</p>)
+}
+
 const MDXShortcodes = {
     Labels,
     Section,
@@ -246,6 +368,7 @@ const MDXShortcodes = {
     Copy,
     Reference,
     MultiRowParameters,
+    Table
 }
 
 export default MDXShortcodes
