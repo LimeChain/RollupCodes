@@ -1,6 +1,6 @@
 import Avatar from '@components/Avatar'
 import Layout from '@components/Layout'
-import { AvatarSize, IDocMeta, Text } from '@utils/types'
+import { AvatarSize, IDocMeta, Text, CustomChainSpec } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
 import getConfig from 'next/config'
@@ -40,17 +40,19 @@ type Content = {
 
 type StaticPropsResult = {
     props: {
-        content: Content
+        content: Content,
+        chainSpec: CustomChainSpec
     }
 }
 
 type DocsContent = Record<string, Content>
 
 interface IContent {
-    content: Content
+    content: Content,
+    chainSpec: CustomChainSpec
 }
 
-export default function Details({ content }: IContent) {
+export default function Details({ content, chainSpec }: IContent) {
     const router = useRouter()
     const [additionalPaddingTop, setAdditionalPaddingTop] = useState<
         number | undefined
@@ -99,6 +101,7 @@ export default function Details({ content }: IContent) {
                     <MDXRemote
                         {...content?.mdxContent}
                         components={MDXShortcodes}
+                        scope={chainSpec}
                     />
                 </div>
             </div>
@@ -151,6 +154,34 @@ const getDocsContent = async (): Promise<DocsContent> => {
     return docs
 }
 
+const getChainSpec = async (network: string): Promise<CustomChainSpec> => {
+    const folder = 'chain-specs/specifications/'
+
+    const customChainSpec: CustomChainSpec = {
+        opcodes: {},
+        precompiles: {},
+        system_contracts: {}
+    }
+
+    try {
+        const fileContents = fs.readFileSync(`${folder}${network}.json`, 'utf8')
+        const chainSpec = JSON.parse(fileContents)
+        await Promise.all(chainSpec.forks.map(async (fork: CustomChainSpec) => {
+            Object.entries(fork.opcodes).forEach(([opcode, data]) => {
+                customChainSpec.opcodes[opcode] = data;
+            })
+            Object.entries(fork.precompiles).forEach(([precompile, data]) => {
+                customChainSpec.precompiles[precompile] = data;
+            })
+            Object.entries(fork.system_contracts).forEach(([system_contract, data]) => {
+                customChainSpec.system_contracts[system_contract] = data;
+            })
+        }))
+    } catch (e) {}
+
+    return customChainSpec
+}
+
 const getDocsPaths = (): Paths => {
     const folder = 'src/docs/'
     const path = join(serverRuntimeConfig.APP_ROOT, folder)
@@ -180,6 +211,27 @@ export async function getStaticProps({
 
     const contents = await getDocsContent()
     const content = contents[slug]
+    const [chainSpec, ethChainSpec] = await Promise.all([getChainSpec(slug), getChainSpec('ethereum')])
 
-    return { props: { content } }
+    // Merge the specifications
+    Object.entries(ethChainSpec.opcodes).forEach(([op, data]) => {
+        if (!chainSpec.opcodes[op]) {
+            chainSpec.opcodes[op] = { name: data.name }
+        }
+        chainSpec.opcodes[op].ethDescription = data.description
+    })
+    Object.entries(ethChainSpec.precompiles).forEach(([address, data]) => {
+        if (!chainSpec.precompiles[address]) {
+            chainSpec.precompiles[address] = { name: data.name }
+        }
+        chainSpec.precompiles[address].ethDescription = data.description
+    })
+    Object.entries(ethChainSpec.system_contracts).forEach(([address, data]) => {
+        if (!chainSpec.system_contracts[address]) {
+            chainSpec.system_contracts[address] = { name: data.name }
+        }
+        chainSpec.system_contracts[address].ethDescription = data.description
+    })
+
+    return { props: { content, chainSpec } }
 }
