@@ -51,9 +51,9 @@ links:
 
     <Parameter name="Sequencing Frequency" value="~1-7 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1" />
 
-    <Parameter name="Objective Finality" value="At the moment the rollup uses Mock SHARP that accepts every block optimistically" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
+    <Parameter name="Objective Finality" value="At the moment the rollup uses a mock prover that accepts every block as finalized once it is sequenced" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x74ca1ac5bd4c3c97006d2b7b9375dd3b6c17accd" url="https://sepolia.etherscan.io/address/0x74ca1ac5bd4c3c97006d2b7b9375dd3b6c17accd" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x74ca1ac5bd4c3c97006d2b7b9375dd3b6c17accd" url="https://sepolia.etherscan.io/address/0x74ca1ac5bd4c3c97006d2b7b9375dd3b6c17accd" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network. It is an instance of the Starkware's Starknet contract" />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Pedersen Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
