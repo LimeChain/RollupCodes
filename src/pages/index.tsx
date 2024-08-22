@@ -18,6 +18,8 @@ const { serverRuntimeConfig } = getConfig()
 
 export default function Home({ docs }: IHomeProps) {
     const { isMobile } = useScreenModes()
+    // Sorts the "Mainnet" rollups before the "Testnet" ones
+    docs.sort((_, b) => b.labels.includes("Mainnet") ? 0 : -1)
     return (
         <Layout loading={docs?.length === 0}>
             <Typography
