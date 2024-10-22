@@ -1,0 +1,4 @@
+[submodule "chain-specs"]
+	path = chain-specs
+	url = https://github.com/LimeChain/chain-specs
+	branch = main
