@@ -28,13 +28,13 @@ links:
 
 <Section title="Overview">
 
-   Taiko aims to be a Based and Type1 (Ethereum-equivalent) ZK-Rollup with decentralized and permissionless sequencers and provers. It uses tiered multi-proofs system. Currently the protocol uses SGX proofs (lowest tier proofs) which makes it an Optimistic Rollup. Permissionless sequencing and higher proof tiers such as the zkEVM circuits are not yet enabled in production.
+   Taiko aims to be a Based and Type1 (Ethereum-equivalent) ZK-Rollup with decentralized and permissionless sequencers and provers. It uses tiered multi-proofs system. Currently the protocol uses SGX proofs (lowest tier proofs) which makes it an Optimistic Rollup. Higher proof tiers such as the zkEVM circuits are not yet enabled in production.
    
     ###### Focus
 
-    - Implementing circuits for verifying all OPCODEs and Precompiles. The execution of some components of the EVM is currently not verified by the circuits.
-    - Decentralize sequencers by allowing anyone to sequence Taiko blocks
+    - Implementing circuits for verifying all OPCODEs and Precompiles. The execution of some components of the EVM is currently not verified by the circuits
     - Enabling higher tier proof systems such as ZK validity proofs and a Prover marketplace
+    - Support transaction preconfirmations for enhanced user experience 
 
     <Labels labels={['Optimistic Rollup', 'EVM', 'Mainnet']} title="Taiko" />
 
