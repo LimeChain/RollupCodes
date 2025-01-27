@@ -1,6 +1,6 @@
 ---
 title: "Linea"
-subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure."
+subtitle: "Linea is a ZK-Rollup that targets EVM compatibility. As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure."
 labels:
   - ZK-Rollup
   - EVM
@@ -16,7 +16,7 @@ links:
     url: "https://l2beat.com/scaling/projects/linea"
     name: "L2BEAT"
   github:
-    url: "https://github.com/Consensys/linea-contracts"
+    url: "https://github.com/Consensys/linea-monorepo"
     name: "Github"
   twitter:
     url: "https://twitter.com/LineaBuild"
@@ -27,10 +27,9 @@ links:
 ---
 
 <Section title="Overview">
-Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally operates a closed-source coordinator (sequencer + prover). As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure.
+Linea is a ZK-Rollup that targets EVM compatibility. As it’s a product of ConsenSys, it is positioned to potentially benefit from better utilisation of the ecosystem's tools and infrastructure.
 
 ###### Focus
-- Open-sourcing the Rollup's Sequencer and Prover
 - Increase the Validity Proof coverage. Currently, the execution of precompiles is not part of the validity proof.
 - Progressively decentralize the upgradeability and governance of the Rollup 
 
@@ -51,7 +50,7 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     <Parameter name="State Trie" value="Main trie is Sparse Merkle Trie + MiMC Hashing. Secondary MPT + Keccak Hashing is maintained for follower nodes" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={["The production Sequencer and Prover are closed-source. The following can be used as follower nodes:", <Reference key="0" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="1" label="linea-besu (Work in progress)" url="https://github.com/Consensys/linea-besu" />]} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={[<Reference key="0" label="linea-besu" url="https://github.com/Consensys/linea-besu" />, <Reference key="1" label="besu" url="https://github.com/hyperledger/besu" />, <Reference key="2" label="erigon" url="https://github.com/erigontech/erigon" />, <Reference key="3" label="geth (Go)" url="https://github.com/Consensys/go-ethereum" />, <Reference key="4" label="nethermind" url="https://github.com/NethermindEth/nethermind" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
@@ -156,6 +155,8 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | `linea_estimateGas` | The transaction call object and integer block number (or the string `latest`, `earliest` or `pending`) | Estimates the gas cost for a transaction including the layer 1 and layer 2 fees <br /> <br /> `linea_estimateGas` uses the same inputs as the standard `eth_estimateGas`, but returns the recommended gas limit, the base fee per gas, and the priority fee per gas | N/A <Added /> |
+    | `linea_getTransactionExclusionStatusV1` | `txHash` | Queries a temporary database maintained by the transaction exclusion API service to check if a transaction was rejected by the sequencer, connected P2P node, or RPC nodes for exceeding data line limits that would prevent the prover from generating a proof. <br /> <br /> Note: You can only check for transaction rejection within seven days of the transaction attempt. Querying transactions older than this will return a `null` response <br /> <br /> If the transaction is rejected, the API call will succeed and provide the reason; otherwise, it will return `null` | N/A <Added /> |
+    | `linea_getProof` | Address, storage keys and block parameter | Returns the account and storage values, including the Merkle proof, of the specified account. The supplied block parameter must be an L2 block that has been finalized on L1 | N/A <Added /> |
     
 </Section>
 
@@ -171,10 +172,8 @@ Linea is a ZK-Rollup that targets EVM compatibility. The protocol team centrally
 
     Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
 
-    [Linea SDK](https://docs.linea.build/build-on-linea/linea-sdk) focuses on interacting with smart contracts on both Ethereum and Linea networks and provides custom functions to obtain message information.
+    [Linea SDK](https://docs.linea.build/api/linea-sdk) focuses on interacting with smart contracts on both Ethereum and Linea networks and provides custom functions to obtain message information.
 
     [Linea Safe](https://safe.linea.build/welcome) is a white-label fork of Gnosis Safe deployed by the Linea team.
-
-    [ape-linea](https://github.com/Consensys/ape-linea) is a plugin developed by the Linea team for the [Ape](https://github.com/ApeWorX/ape) Web3 Development framework.
 
 </Section>
