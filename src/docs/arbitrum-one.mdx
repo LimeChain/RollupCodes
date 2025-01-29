@@ -115,7 +115,6 @@ links:
     | 33 | CALLER | `msg.sender` | Same behaviour as on Ethereum for L2 to L2 transactions <br /><br /> Returns the L2 address alias of the L1 contract that triggered the message for L1-to-L2 "retryable ticket" transactions. See [retryable ticket address aliasing](https://developer.arbitrum.io/arbos/l1-to-l2-messaging#address-aliasing) for more. | Returns caller address <Modified /> |
     | 40 | BLOCKHASH | `blockhash(x)` | Returns a cryptographically insecure, pseudo-random hash for `x` within the range `block.number - 256 <= x < block.number`. <br /><br /> If `x` is outside of this range, `blockhash(x)` will return 0. This includes `blockhash(block.number)`, which always returns `0` just like on Ethereum. <br /><br /> The hashes returned do not come from L1. | Returns the hash of one of the 256 most recent complete blocks <Modified /> |
     | 41 | COINBASE | `block.coinbase` | Returns `0` | Returns the L1 block’s beneficiary address <Modified /> |
-    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
     | 43 | NUMBER | `block.number` | Returns an "estimate" of the L1 block number at which the Sequencer received the transaction (see [Block Numbers and Time](https://developer.arbitrum.io/time)) | Returns the L1 block number <Modified /> |
     | 44 | PREVRANDAO | `block.difficulty` and `block.prevrandao` | Returns the constant `1` | Returns the output of the randomness beacon provided by the beacon chain <Modified /> |
 
