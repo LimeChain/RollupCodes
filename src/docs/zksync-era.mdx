@@ -137,8 +137,6 @@ links:
 
     <Legend />
 
-    > ⚠️ Precomiles `ecAdd`, `ecMul`, and `ecPairing` are supported on ZKsync Era.
-
     The following Precompiled Contracts behave differently compared to the canonical Ethereum L1
 
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
@@ -148,7 +146,7 @@ links:
     | <Copy label="0x05" value="0x05" /> | `modexp` | Not supported | Arbitrary-precision exponentiation under modulo <Unsupported /> |
     | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
     | <Copy label="0x0a" value="0x0a" /> | `pointEvaluation` | Not supported | Verifies a KZG proof <Unsupported /> |
-    | <Copy label="0x100" value="0x0a" /> | `Secp256r1` | Supported | Efficient elliptic curve cryptography for digital signatures on mobile devices and hardware that have a TEE <Added /> |
+    | <Copy label="0x100" value="0x0a" /> | `p256Verify` | Performs signature verifications in the secp256r1 elliptic curve | Not supported <Added /> |
 
 </Section>
 
