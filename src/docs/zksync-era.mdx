@@ -44,7 +44,7 @@ links:
 
     <Parameter name="Sequencing Frequency" value="~6-15 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. Minutes vary based on the load of the rollup" />
 
-    <Parameter name="Objective Finality" value="24 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around an hour, but its submission is delayed by ~21 hours as a security measure during the alpha phase. [More info](https://docs.zksync.io/zksync-protocol/security/withdrawal-delay)" />
+    <Parameter name="Objective Finality" value="3 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around an hour, but its submission is delayed by ~3 hours as a security measure. [More info](https://docs.zksync.io/zksync-protocol/security/withdrawal-delay)" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x32400084C286CF3E17e7B677ea9583e60a000324" url="https://etherscan.io/address/0x32400084C286CF3E17e7B677ea9583e60a000324" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
@@ -81,7 +81,7 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a ZKsync Era block and sequenced to L1.',
-                    value: "24 hours (enforced by protocol's security execution delay)",
+                    value: "3 hours (enforced by protocol's execution delay)",
                 },
                 {
                     label: 'Cost',
