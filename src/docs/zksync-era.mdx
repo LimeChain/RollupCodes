@@ -1,6 +1,6 @@
 ---
-title: zkSync Era
-subtitle: zkSync Era is a ZK-Rollup that targets EVM compatibility in its zk-friendly custom virtual machine. It provides standard JSON RPC API and preserves key EVM features such as smart contract composability while introducing some new concepts such as native account abstraction.
+title: ZKsync Era
+subtitle: ZKsync Era is a ZK-Rollup that targets EVM compatibility in its zk-friendly custom virtual machine. It provides standard JSON RPC API and preserves key EVM features such as smart contract composability while introducing some new concepts such as native account abstraction.
 labels:
     - ZK-Rollup
     - EVM
@@ -10,7 +10,7 @@ links:
         url: https://zksync.io/
         name: zksync.io
     docs:
-        url: https://era.zksync.io/docs/
+        url: https://docs.zksync.io
         name: Docs
     l2beat:
         url: https://l2beat.com/scaling/projects/zksync-era
@@ -25,26 +25,26 @@ links:
 
 <Section title="Overview">
 
-    zkSync Era is a ZK-Rollup building its own zk-friendly and EVM-compatible virtual machine. It leverages a standard JSON RPC API and supports key EVM features such as smart contract composability.  In addition, it introduces novel functionalities such as native account abstraction. All contracts deployed on ZK Sync have to be recompiled with the rollup’s  custom-built compiler.
+    ZKsync Era is a ZK-Rollup building its own zk-friendly and EVM-compatible virtual machine. It leverages a standard JSON RPC API and supports key EVM features such as smart contract composability.  In addition, it introduces novel functionalities such as native account abstraction. All contracts deployed on ZKsync Era have to be compiled with the rollup’s  custom-built compiler.
 
     ###### Focus
 
     - Balancing the trade-off between EVM compatibility and the ZK-friendly architecture of the Rollup
-    - Introducing Account Abstraction as a first-level citizen of the protocol
+    - Introducing Account Abstraction natively as a first-level citizen of the protocol
 
-    <Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="zkSync Era" />
+    <Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="ZKsync Era" />
 
 </Section>
 
 <Section title="General">
 
-    <Parameter name="Block Time" value="5 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future" />
+    <Parameter name="Block Time" value="2 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future" />
 
     <Parameter name="Gas Limit" value="2^32-1" tooltip="The gas limit returned by the RPC API for L2 blocks, although, this value is temporal and will be updated. Some system contracts indicate that the current value is 80 million." />
 
     <Parameter name="Sequencing Frequency" value="~6-15 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. Minutes vary based on the load of the rollup" />
 
-    <Parameter name="Objective Finality" value="24 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around an hour, but its submission is delayed by ~21 hours as a security measure during the alpha phase" />
+    <Parameter name="Objective Finality" value="3 hours" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final. ZK proof generation takes around an hour, but its submission is delayed by ~3 hours as a security measure. [More info](https://docs.zksync.io/zksync-protocol/security/withdrawal-delay)" />
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x32400084C286CF3E17e7B677ea9583e60a000324" url="https://etherscan.io/address/0x32400084C286CF3E17e7B677ea9583e60a000324" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
@@ -56,10 +56,10 @@ links:
 
     - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions.
     - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions.
-    - **Type 113** - User Transactions. Represent custom [EIP-712](https://era.zksync.io/docs/reference/concepts/transactions/transactions.html#eip-712-transactions) transactions that enable Account Abstraction on the protocol level.
+    - **Type 113** - User Transactions. Represent custom [EIP-712](https://docs.zksync.io/zksync-protocol/rollup/transaction-lifecycle#eip-712-0x71) transactions that enable Account Abstraction on the protocol level.
     ___
 
-    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the zkSync Era protocol will provide proof of the data transfer on the destination chain" data={[
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the ZKsync Era protocol will provide proof of the data transfer on the destination chain" data={[
         {
             title: 'L1 → L2',
             rows: [
@@ -70,7 +70,7 @@ links:
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of purely sending a message from Ethereum to zkSync Era, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to ZKsync Era, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
                     value: 'No added cost',
                 },
             ],
@@ -80,12 +80,12 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a zkSync Era block and sequenced to L1.',
-                    value: '24 hours',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a ZKsync Era block and sequenced to L1.',
+                    value: "3 hours (enforced by protocol's execution delay)",
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from zkSync Era',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from ZKsync Era',
                     value: '10 000 L1 gas',
                 },
             ],
@@ -96,7 +96,7 @@ links:
 
 <Section title="OPCODEs">
 
-    > ⚠️ Contracts deployed on zkSync Era must be compiled with a custom compiler ([zksolc](https://github.com/matter-labs/zksolc-bin) or [zkvyper](https://github.com/matter-labs/zkvyper-bin)). The Rollup is not bytecode compatible and all smart contracts must be recompiled with the custom compiler prior to deployment on zkSync Era.
+    > ⚠️ Contracts deployed on ZKsync Era must be compiled with a custom compiler ([zksolc](https://github.com/matter-labs/zksolc-bin) or [zkvyper](https://github.com/matter-labs/zkvyper-bin)). The Rollup is not bytecode compatible and all smart contracts must be recompiled with the custom compiler prior to deployment on ZKsync Era.
 
     <Legend />
 
@@ -105,33 +105,31 @@ links:
     | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :--- | :-------------------| :--------------- | :-------------------- |
     | 39 | CODECOPY | | The Rollup does not provide a mechanism to access the bytecode of a contract. <br /><br />Copies only constructor arguments when executed on deploy code.<br /><br />Sets memory to `0`s when executed on runtime code compiled through old EVM codegen.<br /><br />Produces compile-time error in case it is executed on runtime code compiling through Yul codegen. | Copies the code running in the current environment to memory. <Unsupported /> |
-    | 3C | EXTCODECOPY | | Not supported. <br /><br />zkSync Era does not provide a mechanism to access the bytecode of a contract.<br /><br />Produces a compile-time error with the custom compiler. | Copies an account’s code to memory. <Unsupported /> |
+    | 3C | EXTCODECOPY | | Not supported. <br /><br />ZKsync Era does not provide a mechanism to access the bytecode of a contract.<br /><br />Produces a compile-time error with the custom compiler. | Copies an account’s code to memory. <Unsupported /> |
     | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
     | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
     | 58 | PC | | Gets the value of the program counter prior to the increment corresponding to this instruction.<br /><br />Inaccessible in Yul and Solidity `>= 0.7.0` but accessible in Solidity `0.6`.<br /><br />Produces a compile-time error with the custom compiler. | Gets the value of the program counter prior to the increment corresponding to this instruction. <Unsupported /> |
-    | 5C | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
-    | 5D | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
     | 5E | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
-    | F0 | CREATE | `new C();` | Not supported.<br /><br /> The [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers provide syntactic sugar solution to developers. <br /><br /> Compilers replace `CREATE` opcodes with `CALL` to a system contract `ContractDeployer` providing contract deployment functionality. <br /><br />The address of the contract is calculated by `address = keccak(CREATE_PREFIX, sender, senderNonce)`. [Reference](https://github.com/matter-labs/era-system-contracts/blob/7658f9a18e4642e04c2e06e9468ca111d48ea1f0/contracts/ContractDeployer.sol#LL110C3-L110C3)<br /><br />More information is provided [here](https://era.zksync.io/docs/reference/architecture/differences-with-ethereum.html#evm-instructions) and [here](https://era.zksync.io/docs/reference/architecture/differences-with-ethereum.html#datasize-dataoffset-datacopy). |  Creates a new contract. The address is calculated by: `address = keccak256(rlp([sender_address,sender_nonce]))[12:]` <Unsupported /> |
     | F2 | CALLCODE | | Not supported.<br /><br />Produces a compile-time error with the custom compiler. | Message-call into this account with alternative account’s code <Unsupported /> |
-    | F5 | CREATE2 | `new C{salt: _s}()` | Not supported. <br /><br />The [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers provide syntactic sugar solution to developers. <br /><br /> Compilers replace `CREATE2` opcodes with `CALL` to a system contract `ContractDeployer` providing contract deployment functionality.<br /><br />The address of the newly deployed contract is calculated by `address = keccak256(CREATE2_PREFIX, sender, salt, bytecodeHash, constructorInputHash) [Reference](https://github.com/matter-labs/era-system-contracts/blob/7658f9a18e4642e04c2e06e9468ca111d48ea1f0/contracts/ContractDeployer.sol#LL110C3-L110C3)<br /><br />More information is provided [here](https://era.zksync.io/docs/reference/architecture/differences-with-ethereum.html#evm-instructions) and [here](https://era.zksync.io/docs/reference/architecture/differences-with-ethereum.html#datasize-dataoffset-datacopy). | Creates a new contract. The address is calculated as follows: `address = keccak256(0xff + sender_address + salt + keccak256(init_bytecode))[12:]` <Unsupported /> |
     | FF | SELFDESTRUCT | | Not supported. <br /><br />Produces a compile-time error with the custom compiler. | Halts execution and sends all Ether balance to the specified address. Registers the account for later deletion if executed in the same transaction as the contract was created.<br /><br />Deprecated with [EIP-6059](https://eips.ethereum.org/EIPS/eip-6049) <Unsupported /> |
     | 35 | CALLDATALOAD | | Gets the input data of the current environment.<br /><br />`offset` greater than 2^32-33 causes execution to panic. | Gets input data of the current environment  <Modified /> |
     | 37 | CALLDATACOPY | |  Copies input data in the current environment to memory.<br /><br />Executes a loop of `calldataload` and `mstore` in order to load and copy the `calldata` into memory. The execution will panic if `2^32-32 + offset %32 < offset + len.` | Copies input data in the current environment to memory. <Modified /> |
     | 38 | CODESIZE | | Gets the size of the code in case it is called on a Runtime code.<br /><br />If called on a deploy code, the returned size is the size of the constructor arguments only (excluding deploy code size). | Gets the size of the code running in the current environment. <Modified /> |
     | 41 | COINBASE | | Returns the address of the `Bootloader` contract, which is `0x8001` | Gets the block’s beneficiary address <Modified />  |
-    | 42 | TIMESTAMP | | Returns the latest L2 block's timestamp | Returns the latest block’s timestamp <Modified /> |
-    | 43 | NUMBER | | Returns the latest L2 block's number | Returns the latest block’s number <Modified /> |
+    | 42 | TIMESTAMP | `block.timestamp` | Returns the latest L2 block's timestamp | Returns the latest block’s timestamp <Modified /> |
+    | 43 | NUMBER | `block.number` | Returns the latest L2 block's number | Returns the latest block’s number <Modified /> |
     | 44 | DIFFICULTY | `block.difficulty` | Returns the constant `2500000000000000` | Returns the output of the randomness beacon provided by the beacon chain <Modified />  |
     | 48 | BASEFEE | | Returns `250000000` (wei), however under very high L1 gas prices it may rise. | Returns the base fee <Modified />  |
-    | 51 | MLOAD | | Loads word from memory.<br /><br />Memory growth is counted in bytes. Payment fees for memory growth are charged linearly at a rate of 1 erg per byte.<br /><br /> [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers may produce different `msize` compared to Ethereum's `solc` since fewer bytes have been allocated. This may lead to cases where the EVM panics, but ZK Sync EVM does not due to the difference in memory growth. | Load word from memory.<br /><br />Memory growth is in words (chunks). Payment for memory grows quadratically. <Modified /> |
-    | 52 | MSTORE | | Saves word to memory.<br /><br />Memory growth is counted in bytes.<br /><br />Payment fees for memory growth are charged linearly at a rate of 1 erg per byte.<br /><br />The custom compiler may produce different msize compared to Ethereum since fewer bytes have been allocated. This may lead to cases where the EVM panics, but ZK Sync EVM does not due to the difference in memory growth | Save word to memory.<br /><br />Memory growth is in words (chunks).<br /><br />Payment for memory grows quadratically. <Modified />|
-    | F1 | CALL | | Creates a new sub-context and executes the code of the given account.<br /><br /> The OPCODE does not support sending ether natively <br /><br /> If not compiled with zk-solc or zk-vyper, Ether must be send using a system contract `MsgValueSimulator` prior to executing the `CALL` opcode.<br /><br /> zk-solc and zk-vyper compilers inject the call to the system contract under the hood during compilation. <br /><br /> Memory growth occurs after the call has ended, leading to a difference in the memory size (`msize`). As a result, zkSync Era may not panic in situations where EVM would panic due to differences in memory growth. | Creates a new sub-context and executes the code of the given account.<br /><br />Memory growth occurs before the call itself. <Modified /> |
+    | 51 | MLOAD | | Loads word from memory.<br /><br />Memory growth is counted in bytes. Payment fees for memory growth are charged linearly at a rate of 1 erg per byte.<br /><br /> [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers may produce different `msize` compared to Ethereum's `solc` since fewer bytes have been allocated. This may lead to cases where the EVM panics, but ZKsync's EraVM does not due to the difference in memory growth. | Load word from memory.<br /><br />Memory growth is in words (chunks). Payment for memory grows quadratically. <Modified /> |
+    | 52 | MSTORE | | Saves word to memory.<br /><br />Memory growth is counted in bytes.<br /><br />Payment fees for memory growth are charged linearly at a rate of 1 erg per byte.<br /><br />The custom compiler may produce different msize compared to Ethereum since fewer bytes have been allocated. This may lead to cases where the EVM panics, but ZKsync's EraVM does not due to the difference in memory growth | Save word to memory.<br /><br />Memory growth is in words (chunks).<br /><br />Payment for memory grows quadratically. <Modified />|
+    | F0 | CREATE | `new C();` | The [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers provide syntactic sugar solution to developers. <br /><br /> Compilers replace `CREATE` opcodes with `CALL` to a system contract `ContractDeployer` providing contract deployment functionality. <br /><br />The address of the contract is calculated by `address = keccak(CREATE_PREFIX, sender, senderNonce)`. [Reference](https://github.com/matter-labs/era-system-contracts/blob/7658f9a18e4642e04c2e06e9468ca111d48ea1f0/contracts/ContractDeployer.sol#LL110C3-L110C3)<br /><br />More information is provided [here](https://docs.zksync.io/zksync-protocol/differences/evm-instructions) and [here](https://docs.zksync.io/zksync-protocol/differences/evm-instructions#create-create2). |  Creates a new contract. The address is calculated by: `address = keccak256(rlp([sender_address,sender_nonce]))[12:]` <Modified /> |
+    | F1 | CALL | | Creates a new sub-context and executes the code of the given account.<br /><br /> The OPCODE does not support sending ether natively <br /><br /> If not compiled with zk-solc or zk-vyper, Ether must be send using a system contract `MsgValueSimulator` prior to executing the `CALL` opcode.<br /><br /> zk-solc and zk-vyper compilers inject the call to the system contract under the hood during compilation. <br /><br /> Memory growth occurs after the call has ended, leading to a difference in the memory size (`msize`). As a result, ZKsync Era may not panic in situations where EVM would panic due to differences in memory growth. | Creates a new sub-context and executes the code of the given account.<br /><br />Memory growth occurs before the call itself. <Modified /> |
     | F3 | RETURN | | Exits the current context successfully.<br /><br />Constructors return the array of immutable values. If you use `RETURN` in an assembly block in the constructor, it returns the array of immutable values initialized so far. | Exits the current context successfully. <Modified /> |
-    | F4 | DELEGATECALL | | Message-call into this account with an alternative account’s code, but persisting the current values for sender and value. <br /><br /> The OPCODE does not support sending ether natively <br /><br /> If not compiled with zk-solc or zk-vyper, Ether must be send using a system contract `MsgValueSimulator` prior to executing the `CALL` opcode.<br /><br /> zk-solc and zk-vyper compilers inject the call to the system contract under the hood during compilation. <br /><br /> Memory growth occurs after the call has ended, leading to a difference in the memory size (`msize`). As a result, zkSync Era may not panic in situations where EVM would panic due to differences in memory growth. | Message-call into this account with an alternative account’s code, but persisting the current values for sender and value.<br /><br />Memory growth occurs before the call itself. <Modified /> |
-    | FA | STATICCALL | | Executes a static message call into an account.<br /><br />Memory growth occurs after the call has ended, leading to a difference in the memory size (`msize`). As a result, zkSync Era may not panic in situations where EVM would panic due to differences in memory growth. | Executes a static message call into an account.<br /><br />Memory growth occurs before the call itself. <Modified /> |
+    | F4 | DELEGATECALL | | Message-call into this account with an alternative account’s code, but persisting the current values for sender and value. <br /><br /> The OPCODE does not support sending ether natively <br /><br /> If not compiled with zk-solc or zk-vyper, Ether must be send using a system contract `MsgValueSimulator` prior to executing the `CALL` opcode.<br /><br /> zk-solc and zk-vyper compilers inject the call to the system contract under the hood during compilation. <br /><br /> Memory growth occurs after the call has ended, leading to a difference in the memory size (`msize`). As a result, ZKsync Era may not panic in situations where EVM would panic due to differences in memory growth. | Message-call into this account with an alternative account’s code, but persisting the current values for sender and value.<br /><br />Memory growth occurs before the call itself. <Modified /> |
+    | F5 | CREATE2 | `new C{salt: _s}()` | The [zksolc](https://github.com/matter-labs/zksolc-bin) and [zkvyper](https://github.com/matter-labs/zkvyper-bin) compilers provide syntactic sugar solution to developers. <br /><br /> Compilers replace `CREATE2` opcodes with `CALL` to a system contract `ContractDeployer` providing contract deployment functionality.<br /><br />The address of the newly deployed contract is calculated by `address = keccak256(CREATE2_PREFIX, sender, salt, bytecodeHash, constructorInputHash) [Reference](https://github.com/matter-labs/era-system-contracts/blob/7658f9a18e4642e04c2e06e9468ca111d48ea1f0/contracts/ContractDeployer.sol#LL110C3-L110C3)<br /><br />More information is provided [here](https://docs.zksync.io/zksync-protocol/differences/evm-instructions) and [here](https://docs.zksync.io/zksync-protocol/differences/evm-instructions#create-create2). | Creates a new contract. The address is calculated as follows: `address = keccak256(0xff + sender_address + salt + keccak256(init_bytecode))[12:]` <Modified /> |
+    | FA | STATICCALL | | Executes a static message call into an account.<br /><br />Memory growth occurs after the call has ended, leading to a difference in the memory size (`msize`). As a result, ZKsync Era may not panic in situations where EVM would panic due to differences in memory growth. | Executes a static message call into an account.<br /><br />Memory growth occurs before the call itself. <Modified /> |
 
-    Additional information on the differences in OPCODES can be in [Differences with Ethereum Docs](https://era.zksync.io/docs/reference/architecture/differences-with-ethereum.html#codecopy).
+    Additional information on the differences in OPCODES can be found in [the ZKSync protocol documentation](https://docs.zksync.io/zksync-protocol/differences/evm-instructions).
 
 </Section>
 
@@ -146,11 +144,9 @@ links:
     | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | Not supported | Hash function <Unsupported /> |
     | <Copy label="0x04" value="0x04" /> | `identity` | Not supported | Returns the input <Unsupported /> |
     | <Copy label="0x05" value="0x05" /> | `modexp` | Not supported | Arbitrary-precision exponentiation under modulo <Unsupported /> |
-    | <Copy label="0x06" value="0x06" /> | `ecAdd` | Not supported | Point addition (ADD) on the elliptic curve 'alt_bn128' <Unsupported /> |
-    | <Copy label="0x07" value="0x07" /> | `ecMul` | Not supported | Scalar multiplication (MUL) on the elliptic curve 'alt_bn128' <Unsupported /> |
-    | <Copy label="0x08" value="0x08" /> | `ecPairing` | Not supported | Bilinear function on groups on the elliptic curve 'alt_bn128' <Unsupported /> |
     | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
     | <Copy label="0x0a" value="0x0a" /> | `pointEvaluation` | Not supported | Verifies a KZG proof <Unsupported /> |
+    | <Copy label="0x100" value="0x0a" /> | `p256Verify` | Performs signature verifications in the secp256r1 elliptic curve | Not supported <Added /> |
 
 </Section>
 
@@ -184,8 +180,12 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | `eth_getUncleByBlockHashAndIndex` | Hash and hex-encoded integer | Not supported | Returns uncle block information for a given block and index <Unsupported /> |
-    | `eth_getUncleByBlockNumberAndIndex` | Two hex-encoded integers | Not supported | Returns uncle block information for a given block and index <Unsupported /> |
+    | `eth_blobBaseFee` | None | Not supported | Returns the expected base fee for blobs in the next block. <Unsupported /> |
+    | `eth_createAccessList` | Transaction object array | Not supported | Creates an EIP-2930 access list that you can include in a transaction. <Unsupported /> |
+    | `eth_getProof` | Address (to fetch storage values and proofs for), array of data (the keys in the account), integer (block number) | Not supported | Returns the account and storage values of the specified account including the Merkle-proof. <br /><br />**Note**<br />See `zks_getProof` as an alternative. <Unsupported /> |
+    | `eth_maxPriorityFeePerGas` | None | Not supported | Returns a fee per gas that is an estimate of how much you can pay as a priority fee, or 'tip', to get a transaction included in the current block. <Unsupported /> |
+    | `eth_sendTransaction` | Transaction object | Not supported | Creates new message call transaction or a contract creation, if the data field contains code, and signs it using the account specified in from. <Unsupported /> |
+    | `eth_signTransaction` | Transaction object array | Not supported | Signs a transaction that can be submitted to the network later using `eth_sendRawTransaction`. <Unsupported /> |
     | `eth_getBlockByNumber` | Hex-encoded integer | Returns information for a given block. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given block. <Modified /> |
     | `eth_getBlockByHash` | Hash | Returns information for a given block. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given block. <Modified /> |
     | `eth_getTransactionByHash` | Hash | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given transaction. <Modified /> |
@@ -193,31 +193,36 @@ links:
     | `eth_getTransactionByBlockNumberAndIndex` | Two hex-encoded integers | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given transaction. <Modified /> |
     | `eth_getTransactionReceipt` | Hash | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number, l1 timestamp, l1 batch TX index and L2toL1 logs. | Returns information for a given transaction. <Modified /> |
     | `zks_estimateFee` | Transaction request object | Returns the estimated fee for the transaction with added information for L1 calldata fee. | N/A <Added /> |
-    | `zks_estimateGasL1ToL2` | Call request object | Returns an estimate of the gas required for sending a L1 to L2 transaction. | N/A <Added /> |
-    | `zks_getAllAccountBalances` | Hex encoded address | Returns all balances for confirmed tokens given by an account address. | N/A <Added /> |
-    | `zks_getBlockDetails` | Integer | Returns additional zkSync-specific information about the L2 block.  | N/A <Added /> |
-    | `zks_getBridgeContracts` | None | Returns L1/L2 addresses of default bridges | N/A <Added /> |
+    | `zks_estimateGasL1ToL2` | Call request object | Returns an estimate of the gas required for sending a L1 to L2 transaction | N/A <Added /> |
+    | `zks_getAllAccountBalances` | Hex encoded address | Returns all balances for confirmed tokens given by an account address | N/A <Added /> |
+    | `zks_getBaseTokenL1Address` | None | Returns the L1 base token address  | N/A <Added /> |
+    | `zks_getBlockDetails` | Integer | Returns additional ZKsync-specific information about the L2 block, like commit, prove, and execution transactions  | N/A <Added /> |
+    | `zks_getBridgeContracts` | None | Returns L1/L2 addresses of the canonical bridge contracts | N/A <Added /> |
+    | `zks_getBridgeHubContract` | None | Returns the BridgeHub contract address | N/A <Added /> |
     | `zks_getBytecodeByHash` | Hash | Returns bytecode for a given hash stored in the KnownHashes registry | N/A <Added /> |
     | `zks_getConfirmedTokens` | Integer (the id from which to start returning information about tokens) and integer (number of tokens to be returned) | Returns [address, symbol, name, and decimal] information of all tokens within a range of ids given by parameters from and limit. | N/A <Added /> |
     | `zks_getL1BatchBlockRange` | Integer | Returns the range of blocks contained within a batch given a batch number | N/A <Added /> |
-    | `zks_getL1BatchDetails` | Integer | Returns information for a given batch | N/A <Added /> |
+    | `zks_getL1BatchDetails` | Integer | Returns information for a given L1 batch | N/A <Added /> |
+    | `zks_getL1GasPrice` | None | Returns current L1 gas price in hexadecimal format, representing the amount of wei per unit of gas | N/A <Added /> |
+    | `zks_getFeeParams` | None | Returns the current L2 fee model parameters  | N/A <Added /> |
+    | `zks_getProtocolVersion` | None | Returns protocol version information  | N/A <Added /> |
+    | `zks_getProof` | Address (to fetch storage values and proofs for), array of data (the keys in the account), integer (number of the L1 batch) | Returns an object containing the account details and proofs for storage keys  | N/A <Added /> |
     | `zks_getL2ToL1LogProof` | Bytes32 (hash of the L2 transaction) and integer (index of the l2 to l1 log in the transaction - optional) | Given a transaction hash and an index of the L2 to L1 log produced within the transaction, it returns the proof for the corresponding L2 to L1 log. | N/A <Added /> |
     | `zks_getL2ToL1MsgProof` | Integer (number of a block), address (sender of a message), bytes32 (keccak256 hash of the message) and integer (index in the block of the event that was emitted) | Given a block, a sender, a message, and an optional message log index in the block containing the L1->L2 message, it returns the proof for the message sent via the L1Messenger system contract.<br /><br />**Note**<br />The endpoint will be deprecated in favour of `zks_getL2ToL1LogProof` | N/A <Added /> |
-    | `zks_getMainContract` | None | Returns the address of the zkSync Era contract | N/A <Added /> |
-    | `zks_getRawBlockTransactions` | Integer | Returns data of transactions in a block | N/A <Added /> |
-    | `zks_getTestnetPaymaster` | None | Returns the address of the testnet paymaster (available on testnet and enables paying fees in ERC-20 compatible tokens) | N/A <Added /> |
-    | `zks_getTokenPrice` | Address | Returns the price of a given token in USD | N/A <Added /> |
-    | `zks_getTransactionDetails` | Hash | Returns data from a specific transaction given by the transaction hash. | N/A <Added /> |
+    | `zks_getMainContract` | None | Returns the address of the ZKsync Era contract | N/A <Added /> |
+    | `zks_getRawBlockTransactions` | Integer | Returns raw data of transactions in a block | N/A <Added /> |
+    | `zks_getTestnetPaymaster` | None | Returns the address of the testnet paymaster (available on testnet only, allows paying fees with any ERC-20 token) | N/A <Added /> |
+    | `zks_getTransactionDetails` | Hash | Returns additional ZKsync-specific data from a specific transaction given by the transaction hash. | N/A <Added /> |
     | `zks_L1BatchNumber` | None | Returns the latest L1 batch number | N/A <Added /> |
     | `zks_L1ChainId` | None | Returns the chain id of the underlying L1 | N/A <Added /> |
 
-    Additional information on the RPC endpoints can be found in [zkSync Era Docs](https://era.zksync.io/docs/api/api.html).
+    Additional information on the RPC endpoints can be found in [ZKsync Era Docs](https://docs.zksync.io/zksync-protocol/api).
 
 </Section>
 
 <Section title="Transaction Fees">
 
-    zkSync Era's fee model is similar to Ethereum’s where `gas` is charged for computational cost, cost of publishing data on-chain and storage effects. However, zkSync Era includes additional costs for publishing to L1 and for proof generation. The cost of posting data on L1 is captured by having dynamic gas costs for various OPCODEs such as `SSTORE`. This practically means that when executing `eth_estimateGas` the returned result will vary based on the Ethereum L1 base fee. Detailed information on the [Fee mechanism](https://era.zksync.io/docs/reference/concepts/transactions/fee-model.html).
+    ZKsync Era's fee model is similar to Ethereum’s where `gas` is charged for computational cost, cost of publishing data on-chain and storage effects. However, ZKsync Era includes additional costs for publishing to L1 and for proof generation. The cost of posting data on L1 is captured by having dynamic gas costs for various OPCODEs such as `SSTORE`. This practically means that when executing `eth_estimateGas` the returned result will vary based on the Ethereum L1 base fee. Detailed information on the [Fee mechanism](https://docs.zksync.io/zksync-protocol/rollup/fee-model).
 
 </Section>
 
@@ -227,17 +232,17 @@ links:
 
     Custom compilers must be used when developing Solidity and Vyper contracts on the rollup.
 
-    - [Solidity Compiler](https://github.com/matter-labs/zksolc-bin) - Supported versions are as old as `0.4.12` but it is recommended to use version `0.8`
-    - [Vyper Compiler](https://github.com/matter-labs/zkvyper-bin) - Only supported version is `0.3.3`
+    - [Solidity Compiler](https://github.com/matter-labs/zksolc-bin) - Supported versions are as old as `0.4.12` but it is recommended to use version `>0.8`
+    - [Vyper Compiler](https://github.com/matter-labs/zkvyper-bin) - Supported versions are `0.3.3`, `0.3.9`, `0.3.10` and `0.4.0`
 
     The compilers have hardhat plugin integrations for ease of development
 
-    - [hardhat-zksync-solc](https://era.zksync.io/docs/tools/hardhat/hardhat-zksync-solc.html)
-    - [hardhat-zksync-vyper](https://era.zksync.io/docs/tools/hardhat/hardhat-zksync-vyper.html)
+    - [hardhat-zksync](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync)
+    - [hardhat-zksync-vyper](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync-vyper)
 
     ###### Other
 
-    - [hardhat-zksync-toolbox](https://era.zksync.io/docs/tools/hardhat/plugins.html#hardhat-zksync-toolbox) is a hardhat plugin that bundles all zkSync related Hardhat plugins
-    - [foundry-zksync](https://github.com/matter-labs/foundry-zksync) provides Foundry functionality in Solidity for compiling, deploying, testing, and interacting with smart contracts on zkSync Era
+    - [hardhat-zksync](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync) is a hardhat plugin that bundles all ZKsync related Hardhat plugins
+    - [foundry-zksync](https://github.com/matter-labs/foundry-zksync) provides Foundry functionality in Solidity for compiling, deploying, testing, and interacting with smart contracts on ZKsync Era
 
 </Section>

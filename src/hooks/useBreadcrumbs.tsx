@@ -11,7 +11,7 @@ const normalizedRollupTitles: {[key: string]: string} = {
     'polygon-zkevm': 'Polygon zkEVM',
     'scroll': 'Scroll',
     'taiko': 'Taiko',
-    'zksync-era': 'zkSync Era'
+    'zksync-era': 'ZKsync Era'
 }
 
 const useBreadcrumbs = (): Breadcrumbs => {
