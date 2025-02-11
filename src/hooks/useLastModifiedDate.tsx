@@ -69,12 +69,12 @@ const useLastModifiedDate = (slug?: string): string => {
     useEffect(() => {
         const storedLastModifiedTsValue =
             getLastTimeModified(storageModifiedKey)
-        const stroredLastCheckedTsValue = getLastTimeChecked(storageCheckedKey)
+        const storedLastCheckedTsValue = getLastTimeChecked(storageCheckedKey)
 
         if (
             !storedLastModifiedTsValue ||
-            !stroredLastCheckedTsValue ||
-            getTime(add(new Date(stroredLastCheckedTsValue), { hours: 24 })) <
+            !storedLastCheckedTsValue ||
+            getTime(add(new Date(storedLastCheckedTsValue), { hours: 24 })) <
                 NOW_IN_MS
         ) {
             retrieveLastModifiedTs()
