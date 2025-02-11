@@ -47,7 +47,7 @@ const useLastModifiedDate = (slug?: string): string => {
         ? `${storageKeys.LAST_TIME_CHECKED}_${slug}`
         : storageKeys.LAST_TIME_CHECKED
 
-    const retreiveLastModifiedTs = async () => {
+    const retrieveLastModifiedTs = async () => {
         const url = `${source[slug ? 'dedicated' : 'main']}${
             slug ? `${slug}.mdx` : ''
         }`
@@ -69,15 +69,15 @@ const useLastModifiedDate = (slug?: string): string => {
     useEffect(() => {
         const storedLastModifiedTsValue =
             getLastTimeModified(storageModifiedKey)
-        const stroredLastCheckedTsValue = getLastTimeChecked(storageCheckedKey)
+        const storedLastCheckedTsValue = getLastTimeChecked(storageCheckedKey)
 
         if (
             !storedLastModifiedTsValue ||
-            !stroredLastCheckedTsValue ||
-            getTime(add(new Date(stroredLastCheckedTsValue), { hours: 24 })) <
+            !storedLastCheckedTsValue ||
+            getTime(add(new Date(storedLastCheckedTsValue), { hours: 24 })) <
                 NOW_IN_MS
         ) {
-            retreiveLastModifiedTs()
+            retrieveLastModifiedTs()
         } else {
             setLastModifiedTs(+new Date(storedLastModifiedTsValue))
         }
