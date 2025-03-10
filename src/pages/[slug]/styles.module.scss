@@ -1,4 +1,4 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .hero {
     display: flex;
@@ -19,7 +19,7 @@
     padding-bottom: 40px;
     display: flex;
     flex-direction: column;
-    @include desktop {
+    @include mixins.desktop {
         margin-left: 64px;
     }
 }
@@ -27,14 +27,14 @@
 .pageGrid {
     display: flex;
     flex-direction: column;
-    @include desktop {
+    @include mixins.desktop {
         flex-direction: row;
     }
 }
 
 .sidebar {
     display: none;
-    @include desktop {
+    @include mixins.desktop {
         max-width: 100%;
         width: 100%;
         display: flex;
@@ -48,7 +48,7 @@
 
 .sidebar_placeholder {
     display: none;
-    @include tablet {
+    @include mixins.tablet {
         display: block;
         width: 270px;
     }

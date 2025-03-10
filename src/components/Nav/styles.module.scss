@@ -1,4 +1,4 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .nav {
     display: flex;
@@ -9,7 +9,7 @@
     padding: 0 16px;
     max-width: 1920px;
     width: 100%;
-    @include tablet {
+    @include mixins.tablet {
         padding: 0 64px;
     }
 }

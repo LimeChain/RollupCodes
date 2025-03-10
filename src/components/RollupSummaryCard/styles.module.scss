@@ -1,4 +1,4 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .card {
     display: flex;
@@ -8,11 +8,11 @@
     border: 1px solid var( --border-color);
     background: var(--background);
     position: relative;
-    @include tablet {
+    @include mixins.tablet {
         flex: 1 1 48.5%;
         max-width: 49.5%;
     }
-    @include desktop {
+    @include mixins.desktop {
         flex: 1 1 31.5%;
         max-width: 32.5%;
     }

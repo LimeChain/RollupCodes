@@ -10,7 +10,6 @@ import UnsupportedIcon from '/public/images/unsupported-triangle-icon.svg'
 import ModifiedIcon from '/public/images/modified-triangle-icon.svg'
 import AddedIcon from '/public/images/added-triangle-icon.svg'
 import CopyIcon from '/public/images/copy-icon.svg'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ReferenceIcon from '/public/images/reference-icon.svg'
@@ -28,12 +27,12 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
             <QuestionMarkIcon />
             <TooltipComponent
                 id={`${id}-tooltip`}
+                opacity={1}
                 style={{
                     background: 'var(--opposite-background-color)',
                     color: 'var(--opposite-text-color)',
                     zIndex: 1,
                     borderRadius: 0,
-                    opacity: 1,
                     maxWidth: 200,
                     height: 'auto',
                     fontWeight: '400',
@@ -57,11 +56,12 @@ const Copy = ({ value, label }: { value: string; label: string }) => {
     return (
         <div className={styles.copy} title={value}>
             {label && label}
-            <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
-                <span className={styles.copyIcon}>
+                <span className={styles.copyIcon} onClick={() => {
+                    navigator.clipboard.writeText(value)
+                    setCopied(true)
+                }}>
                     {copied ? <CheckmarkIcon /> : <CopyIcon />}
                 </span>
-            </CopyToClipboard>
         </div>
     )
 }
