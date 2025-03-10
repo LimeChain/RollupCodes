@@ -1,4 +1,4 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .container {
     max-width: 1920px;
@@ -8,7 +8,7 @@
     flex: 1;
     flex-direction: column;
     padding: 0 16px;
-    @include tablet {
+    @include mixins.tablet {
         padding: 0 64px;
     }
 }

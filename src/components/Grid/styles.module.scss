@@ -1,4 +1,4 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .grid {
     display: flex;
@@ -7,7 +7,7 @@
     column-gap: 16px;
     padding-bottom: 64px;
     justify-content: flex-start;
-    @include tablet {
+    @include mixins.tablet {
         flex-direction: row;
         flex-wrap: wrap;
     }

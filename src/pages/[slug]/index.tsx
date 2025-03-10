@@ -8,7 +8,6 @@ import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import styles from './styles.module.scss'
 import { MDXRemote } from 'next-mdx-remote'
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import MDXShortcodes from '@components/MDXShortcodes'
 import remarkGfm from 'remark-gfm'
 import DropdownLinks from '@components/DropdownLinks'
@@ -206,7 +205,7 @@ export async function getStaticPaths(): Promise<StaticPathsResult> {
 
 export async function getStaticProps({
     params,
-}: Params): Promise<StaticPropsResult> {
+}: Path): Promise<StaticPropsResult> {
     const { slug } = params
 
     const contents = await getDocsContent()

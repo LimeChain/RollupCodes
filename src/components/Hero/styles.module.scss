@@ -1,4 +1,4 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .hero {
     display: flex;
@@ -19,7 +19,7 @@
         bottom: 0;
         left: 0;
     }
-    @include tablet {
+    @include mixins.tablet {
         max-width: 1920px - 128px;
     }
 }
@@ -35,7 +35,7 @@
     justify-content: center;
     transition: background .3s ease;
     padding: 0 16px;
-    @include tablet {
+    @include mixins.tablet {
         padding: 0 64px;
     }
 }

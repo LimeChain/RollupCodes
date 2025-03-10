@@ -1,8 +1,8 @@
-@import '@styles/mixins.scss';
+@use '@styles/mixins';
 
 .breadcrumbs {
     display: none;
-    @include tablet {
+    @include mixins.tablet {
         display: flex;
         flex-direction: row;
         align-items: center;
