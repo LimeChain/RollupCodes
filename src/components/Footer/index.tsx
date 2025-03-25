@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { Text } from '@utils/types'
 import Link from 'next/link'
 import PlusIcon from '/public/images/plus-icon.svg'
-import TwitterIcon from '/public/images/twitter-icon.svg'
+import XIcon from '/public/images/x-icon.svg'
 import EmailIcon from '/public/images/email-icon.svg'
 import LimeChainLogo from '/public/images/limechain-logo.svg'
 import GithubIcon from '/public/images/github-icon.svg'
@@ -32,11 +32,11 @@ const Footer = () => {
                 <div className={styles.pipe}>{'|'}</div>
                 <div className={styles.socials}>
                     <Link
-                        href={'https://twitter.com/LimeChainHQ'}
+                        href={'https://x.com/LimeChainHQ'}
                         target="_target"
                         className={styles.link}
                     >
-                        <TwitterIcon fill="var(--icon-color)" />
+                        <XIcon fill="var(--icon-color)" />
                     </Link>
                     <Link
                         href={'https://github.com/LimeChain/rollup-codes'}
