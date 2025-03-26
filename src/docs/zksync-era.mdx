@@ -25,7 +25,7 @@ links:
 
 <Section title="Overview">
 
-    ZKsync Era is a ZK-Rollup building its own zk-friendly and EVM-compatible virtual machine. It leverages a standard JSON RPC API and supports key EVM features such as smart contract composability.  In addition, it introduces novel functionalities such as native account abstraction. All contracts deployed on ZKsync Era have to be compiled with the rollup’s  custom-built compiler.
+    ZKsync Era is a ZK-Rollup building its own zk-friendly and EVM-compatible virtual machine. It leverages a standard JSON RPC API and supports key EVM features such as smart contract composability.  In addition, it introduces novel functionalities such as native account abstraction. Contracts on ZKsync Era can now be deployed using either the rollup’s custom-built compilers (zksolc, zkvyper) or standard Solidity and Vyper compilers, thanks to the introduction of the EVM Bytecode Emulator in protocol version 27 (April 2025).
 
     ###### Focus
 
@@ -96,7 +96,8 @@ links:
 
 <Section title="OPCODEs">
 
-    > ⚠️ Contracts deployed on ZKsync Era must be compiled with a custom compiler ([zksolc](https://github.com/matter-labs/zksolc-bin) or [zkvyper](https://github.com/matter-labs/zkvyper-bin)). The Rollup is not bytecode compatible and all smart contracts must be recompiled with the custom compiler prior to deployment on ZKsync Era.
+    > ⚠️ Contracts on ZKsync Era can now be deployed using either the custom compiler ([zksolc](https://github.com/matter-labs/zksolc-bin) or [zkvyper](https://github.com/matter-labs/zkvyper-bin)) **or** standard EVM bytecode, thanks to the EVM Bytecode Emulator.
+    > While native EraVM bytecode offers better performance and lower fees, developers can now deploy unmodified contracts compiled with standard Solidity or Vyper.
 
     <Legend />
 
@@ -142,7 +143,6 @@ links:
     | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | Not supported | Hash function <Unsupported /> |
-    | <Copy label="0x04" value="0x04" /> | `identity` | Not supported | Returns the input <Unsupported /> |
     | <Copy label="0x05" value="0x05" /> | `modexp` | Not supported | Arbitrary-precision exponentiation under modulo <Unsupported /> |
     | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
     | <Copy label="0x0a" value="0x0a" /> | `pointEvaluation` | Not supported | Verifies a KZG proof <Unsupported /> |
@@ -232,12 +232,17 @@ links:
 
     ###### Compilers
 
-    Custom compilers must be used when developing Solidity and Vyper contracts on the rollup.
+    Contracts on ZKsync Era can be developed using either the **custom ZKsync compilers or standard EVM compilers**, depending on the deployment target:
 
-    - [Solidity Compiler](https://github.com/matter-labs/zksolc-bin) - Supported versions are as old as `0.4.12` but it is recommended to use version `>0.8`
-    - [Vyper Compiler](https://github.com/matter-labs/zkvyper-bin) - Supported versions are `0.3.3`, `0.3.9`, `0.3.10` and `0.4.0`
+    - Use the **custom compilers** (`zksolc` / `zkvyper`) for deploying contracts as native EraVM bytecode, which offers better performance and lower fees. This requires plugins for Hardhat or a custom version of Foundry (details below).
+    - Use **standard Solidity or Vyper compilers** to deploy unmodified EVM bytecode via the EVM Bytecode Emulator, with broader tooling compatibility (Hardhat and Foundry work without plugins or modifications) but higher execution overhead.
 
-    The compilers have hardhat plugin integrations for ease of development
+    Available custom compilers:
+
+    - [zksolc Compiler](https://github.com/matter-labs/zksolc-bin) — supports Solidity versions from `0.4.12`, recommended `>=0.8`
+    - [zkvyper Compiler](https://github.com/matter-labs/zkvyper-bin) — supports Vyper `0.3.3`, `0.3.9`, `0.3.10`, `0.4.0`
+
+    The custom compilers have hardhat plugin integrations for ease of development
 
     - [hardhat-zksync](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync)
     - [hardhat-zksync-vyper](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync-vyper)
