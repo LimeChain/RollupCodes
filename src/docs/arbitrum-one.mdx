@@ -122,7 +122,13 @@ links:
 
 <Section title="Precompiled Contracts">
 
-    All Precompiled Contracts defined in the canonical Ethereum L1 implementation have the same behaviour on the Rollup.
+    <Legend />
+
+    The following Precompiled Contracts behave differently compared to the canonical Ethereum L1
+
+    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | <Copy label="0x100" value="0x100" /> | `p256Verify` | Performs signature verifications in the secp256r1 elliptic curve | Not supported <Added /> |
 
 </Section>
 
