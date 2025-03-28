@@ -121,10 +121,6 @@ links:
     | 5C | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
     | 5D | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
     | 5E | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
-    | 41 | COINBASE | `block.coinbase` | Returns the address of the L2 block proposer | Gets the block’s beneficiary address <Modified />  |
-    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
-    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
-    | 48 | BASEFEE | `block.basefee` | Returns the L2 base fee | Returns the base fee <Modified />  |
     
     All other OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of some OPCODEs is not verified by the circuits and its not part of the validity proofs.
 
