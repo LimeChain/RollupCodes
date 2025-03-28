@@ -107,8 +107,6 @@ links:
     | FF | SELFDESTRUCT | `selfdestruct` | Disabled. If the opcode is encountered, the transaction will be reverted. | Halts execution and sends all Ether balance to the specified address. Registers the account for later deletion if executed in the same transaction as the contract was created.<br /><br />Deprecated with [EIP-6059](https://eips.ethereum.org/EIPS/eip-6049) <Unsupported /> |
     | 40 | BLOCKHASH | `block.blockhash` | Returns `keccak(chain_id [concatenated with] block_number)` for the last 256 blocks. | Get the L1 block hash from block number <Modified /> |
     | 41 | COINBASE | `block.coinbase` | Returns the pre-deployed fee vault contract address `0x5300000000000000000000000000000000000005`. | Get the L1 block’s beneficiary address <Modified /> |
-    | 42 | TIMESTAMP | `block.timestamp` | Timestamp of the L2 block | Timestamp of the L1 block <Modified /> |
-    | 43 | NUMBER | `block.number` | L2 block number | Gets the L1 block number <Modified /> |
     | 44 | PREVRANDAO | `block.prevnrandao` | Returns 0. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
 
 </Section>
