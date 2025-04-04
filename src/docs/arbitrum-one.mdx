@@ -158,7 +158,7 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | `eth_syncing` | None | Returns object with sync status data or `FALSE`, when not syncing. The object contains rollup specific information on the sync state of the node such as the last seen or processed batch as-well as L1 state information and messages processed. <br /><br /> Specific list of the differences [here](https://developer.arbitrum.io/arbitrum-ethereum-differences#eth_syncing-rpc-method). | Returns object with sync status data or `FALSE`, when not syncing. <Modified /> |
+    | `eth_syncing` | None | Returns object with sync status data or `FALSE`, when not syncing. The object contains rollup specific information on the sync state of the node such as the last seen or processed batch as-well as L1 state information and messages processed. <br /><br /> Specific list of the differences [here](https://docs.arbitrum.io/arbitrum-ethereum-differences#eth_syncing-rpc-method). | Returns object with sync status data or `FALSE`, when not syncing. <Modified /> |
     | `eth_getBlockByHash` | Hash of a block | Returns information for a given block.<br /><br />Adds additional information such as l1 block number, send count and send root. | Returns information for a given block. <Modified /> |
     | `eth_getBlockByNumber` | Integer of a block number, or the string "earliest", "latest" or "pending” | Returns information for a given block.<br /><br />Adds additional information such as l1 block number, send count and send root. | Returns information for a given block. <Modified /> |
 
