@@ -42,13 +42,13 @@ links:
 
     <Parameter name="Gas Limit" value="30 million" tooltip="The gas limit that can be consumed by an L2 block" />
 
-    <Parameter name="Gas Target" value="5 million" tooltip="The EIP-1559 gas target for an L2 block" />
+    <Parameter name="Gas Target" value="15 million" tooltip="The EIP-1559 gas target for an L2 block" />
 
-    <Parameter name="Sequencing Frequency" value="0.5 - 2 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
+    <Parameter name="Sequencing Frequency" value="1 hour" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
 
     <Parameter name="Objective Finality" value="7 days" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x56315b90c40730925ec5485cf004d835058518A0" url="https://etherscan.io/address/0x56315b90c40730925ec5485cf004d835058518A0" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x43edb88c4b80fdd2adff2412a7bebf9df42cb40e" url="https://etherscan.io/address/0x43edb88c4b80fdd2adff2412a7bebf9df42cb40e" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network. The <code>DisputeGameFactory</code> contract creates a new <code>FaultDisputeGame</code> contract for every proposed state root change." />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
