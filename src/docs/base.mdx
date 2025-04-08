@@ -24,13 +24,12 @@ links:
 ---
 
 <Section title="Overview">
-   Base is an Optimistic Rollup utilizing OP Stack technology. The protocol features a centralised sequencer operated by the Base team. Fraud proofs have yet to be enabled on the platform.
+   Base is an Optimistic Rollup utilizing OP Stack technology. The protocol features a centralised sequencer operated by the Base team.
 
     ###### Focus
 
     - Contribute to the Research and Development of the Optimism SuperChain, the goal of which is to enable superior interoperability and aligned crypto-economic incentives for a shared sequencer set between all OP-based rollups.
     - Progressively decentralize the upgradeability of the Base and Optimism Mainnet smart contracts.
-    - Research and Develop fault prover technology that would secure OP Stack-based rollups.
 
     <Labels labels={['Optimistic Rollup', 'EVM', 'Mainnet']} title="Base" />
 
@@ -42,13 +41,13 @@ links:
 
     <Parameter name="Gas Limit" value="30 million" tooltip="The gas limit that can be consumed by an L2 block" />
 
-    <Parameter name="Gas Target" value="5 million" tooltip="The EIP-1559 gas target for an L2 block" />
+    <Parameter name="Gas Target" value="15 million" tooltip="The EIP-1559 gas target for an L2 block" />
 
-    <Parameter name="Sequencing Frequency" value="0.5 - 2 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
+    <Parameter name="Sequencing Frequency" value="~1 minute" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
 
     <Parameter name="Objective Finality" value="7 days" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
 
-    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x56315b90c40730925ec5485cf004d835058518A0" url="https://etherscan.io/address/0x56315b90c40730925ec5485cf004d835058518A0" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x43edb88c4b80fdd2adff2412a7bebf9df42cb40e" url="https://etherscan.io/address/0x43edb88c4b80fdd2adff2412a7bebf9df42cb40e" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network. The <code>DisputeGameFactory</code> contract creates a new <code>FaultDisputeGame</code> contract for every proposed state root change." />
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
@@ -74,7 +73,7 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of sending a message from Ethereum to the L2. Base executes the message with a system address on behalf of the L1 sender. L2 gas is paid by the sender of the message on L1.',
-                    value: '~43 000 L1 gas',
+                    value: '~500 000 L1 gas',
                 },
             ],
         },
@@ -88,8 +87,8 @@ links:
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Base. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
-                    value: '600 000 L1 gas',
+                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Base. It is paid by the EOA that initiates the 2 transaction on L1: prove and finalize. The gas cost does not include the cost from the logic triggered by the message.',
+                    value: '~550 000 L1 gas',
                 },
             ],
         },
@@ -172,9 +171,8 @@ links:
 
 <Section title="Tools">
 
-    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry, thirdweb and truffle.
+    Existing EVM-based tooling is supported such as ethers, viem, ethers-rs, hardhat, foundry and truffle.
 
-    - [@eth-optimism/sdk](https://www.npmjs.com/package/@eth-optimism/sdk) is an npm library providing a set of tools for interacting with Base in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
-    - [thirdweb SDK](https://docs.base.org/tools/thirdweb-sdk) is a library that enables developers to build web3 applications and interact with any EVM-compatible blockchain.
+    [viem/op-stack](https://viem.sh/op-stack) provides first-class support for chains implemented on the OP Stack.
 
 </Section>

@@ -21,7 +21,7 @@ const Tooltip = ({ tooltip }: { tooltip: string }) => {
     return (
         <span
             data-tooltip-id={`${id}-tooltip`}
-            data-tooltip-content={tooltip}
+            data-tooltip-html={tooltip}
             className={styles.tooltip}
         >
             <QuestionMarkIcon />
