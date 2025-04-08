@@ -73,7 +73,7 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of sending a message from Ethereum to the L2. Optimism executes the message with a system address on behalf of the L1 sender. L2 gas is paid by the sender of the message on L1.',
-                    value: '~38 000 L1 gas',
+                    value: '~500 000 L1 gas',
                 },
             ],
         },
@@ -87,8 +87,8 @@ links:
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
-                    value: '600 000 L1 gas',
+                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Optimism. It is paid by the EOA that initiates the 2 transaction on L1: prove and finalize. The gas cost does not include the cost from the logic triggered by the message.',
+                    value: '~550 000 L1 gas',
                 },
             ],
         },
@@ -177,8 +177,8 @@ links:
 
 <Section title="Tools">
 
-    Existing EVM-based tooling is supported such as ethers, web3.js, ethers-rs, hardhat, foundry and truffle.
+    Existing EVM-based tooling is supported such as ethers, viem, ethers-rs, hardhat, foundry and truffle.
 
-    [@eth-optimism/sdk](https://www.npmjs.com/package/@eth-optimism/sdk) is an npm library providing a set of tools for interacting with Optimism in regards to L1 ←→ L2 messaging and computing L2 transaction fees.
+    [viem/op-stack](https://viem.sh/op-stack) provides first-class support for chains implemented on the OP Stack.
 
 </Section>
