@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import ReferenceIcon from '/public/images/reference-icon.svg'
 import CheckmarkIcon from '/public/images/checkmark-icon.svg'
-import { solidityEquivalent, systemContractUrl } from '@utils/chain-spec-info'
+import { solidityEquivalent } from '@utils/chain-spec-info'
 
 const Tooltip = ({ tooltip }: { tooltip: string }) => {
     const id = Math.random()
@@ -252,23 +252,16 @@ const getStatus = (data: ChainSpecElement) => {
     }
 }
 
-const sortTableData = (type: string) => {
-    if (type === "opcodes") {
-        // Sort by opcode number
-        return function ([opcode1]: [string, ChainSpecElement], [opcode2]: [string, ChainSpecElement]) {
-            return parseInt(opcode1, 16) - parseInt(opcode2, 16)
-        }
-    } else {
-        // Sort by status first: Unsupported > Modified > Added
-        // Sort alphabetically after that
-        return function ([address1, data1]: [string, ChainSpecElement], [address2, data2]: [string, ChainSpecElement]) {
-            const status1 = getElementStatus(data1)
-            const status2 = getElementStatus(data2)
-            if (status1 === status2) {
-                return parseInt(address1, 16) - parseInt(address2, 16)
-            } else {
-                return status1 - status2
-            }
+const sortTableData = () => {
+    // Sort by status first: Unsupported > Modified > Added
+    // Sort alphabetically after that
+    return function ([address1, data1]: [string, ChainSpecElement], [address2, data2]: [string, ChainSpecElement]) {
+        const status1 = getElementStatus(data1)
+        const status2 = getElementStatus(data2)
+        if (status1 === status2) {
+            return parseInt(address1, 16) - parseInt(address2, 16)
+        } else {
+            return status1 - status2
         }
     }
 }
@@ -277,17 +270,16 @@ const shortAddress = (address: string) => {
     if (address.length < 6) {
         return address
     } else {
-        return address.slice(0, 5) + "..." + address.slice(-2)
+        return address.slice(0, 5) + "..." + address.slice(-3)
     }
 }
 
-const displayTableElementName = (type: string, name: string) => {
+const displayTableElementName = (type: string, name: string, url?: string) => {
     if (type === "opcodes") {
         return name
     } else if (type === "precompiles") {
         return (<code>{name}</code>)
     } else {
-        const url = systemContractUrl(name)
         return url ? Reference({ url, label: name }) : name
     }
 }
@@ -337,12 +329,12 @@ const Table = ({
                     </thead>
                     <tbody>
                         {filteredData
-                            .sort(sortTableData(type))
+                            .sort(sortTableData())
                             .map(([id, element]) => {
                                 return (
                                     <tr key={id}>
                                         <td align='left'>{type === "opcodes" ? id : Copy({ value: id, label: shortAddress(id) })}</td>
-                                        <td align='left'>{displayTableElementName(type, element.name)}</td>
+                                        <td align='left'>{displayTableElementName(type, element.name, element.url)}</td>
                                         {type === "opcodes" ? displaySolidityEquivalent(element.name) : ""}
                                         <td align='left'>{element.description || "N/A"}</td>
                                         <td align='left'>{element.ethDescription || "N/A"} {getStatus(element)}</td>

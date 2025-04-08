@@ -8,15 +8,16 @@ interface ILabels {
 
 const rollupsFirstColors: Record<string, string> = {
     arbitrum_one: '#F59762',
-    optimism: '#F59762',
     base: '#F59762',
     blast: '#F59762',
-    polygon_zkevm: '#7A8FFF',
-    taiko: '#F59762',
-    linea: '#7A8FFF',
-    scroll: '#7A8FFF',
-    zksync_era: '#7A8FFF',
+    ink: '#F59762',
     kakarot: '#7A8FFF',
+    linea: '#7A8FFF',
+    optimism: '#F59762',
+    polygon_zkevm: '#7A8FFF',
+    scroll: '#7A8FFF',
+    taiko: '#F59762',
+    zksync_era: '#7A8FFF',
 }
 
 const getRollupFirstColor = (value: string): string =>
