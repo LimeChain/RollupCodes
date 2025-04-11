@@ -18,15 +18,6 @@ const solidityEquivalents: {[key: string]: string} = {
   "SELFDESTRUCT": "selfdestruct(address)",  // ff
 }
 
-// TODO: it's possible to have 2 contracts with the same name on different networks. Maybe pass the network as a param as well? 
-const systemContractUrls: {[key: string]: string} = {
-  "BeaconRootsStorage": "https://eips.ethereum.org/EIPS/eip-4788",
-}
-
 export const solidityEquivalent = (opcode: string): string => {
   return solidityEquivalents[opcode]
-}
-
-export const systemContractUrl = (contract: string): string => {
-  return systemContractUrls[contract]
 }

@@ -122,7 +122,8 @@ export type ChainSpecElementsMap = {
 export type ChainSpecElement = {
     name: string,
     description?: string,
-    ethDescription?: string
+    ethDescription?: string,
+    url?: string
 }
 
 export enum ChainSpecElementStatus {
