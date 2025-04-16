@@ -1,6 +1,6 @@
 ---
 title: Base
-subtitle: Base is an Optimistic Rollup utilizing the OP Stack technology. The protocol features a centralised sequencer operated by the Base team. Fraud proofs have yet to be enabled on the platform.
+subtitle: Base is an Optimistic Rollup utilizing the OP Stack technology. The protocol features a centralised sequencer operated by the Base team.
 labels:
     - Optimistic Rollup
     - EVM
@@ -157,7 +157,9 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | `eth_newPendingTransactionFilter` | None | Not supported  | Creates a filter in the node to notify when new pending transactions arrive. <Unsupported /> |
+    | `eth_getTransactionReceipt` | `hash` | Returns information for a given transaction. <br /><br />Adds additional information related to L1 calldata fees. | Returns information for a given transaction. <Modified /> |
+    | `optimism_outputAtBlock` | Integer block number or string one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A <Added /> |
+    | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised L1 state, as well as unsafe, safe and finalized L2 state | N/A <Added /> |
 
 </Section>
 
