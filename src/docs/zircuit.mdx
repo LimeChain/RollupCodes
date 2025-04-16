@@ -116,6 +116,7 @@ links:
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
     | `eth_getProof` | `address`, `storageKeys` | Returns the account and storage values of the specified account including the Merkle-proof. <br /><br />Adds а `poseidonCodeHash`. | Returns the account and storage values of the specified account including the Merkle-proof. <Modified /> |
+    | `eth_getTransactionReceipt` | `hash` | Returns information for a given transaction. <br /><br />Adds additional information related to L1 calldata fees. | Returns information for a given transaction. <Modified /> |
     | `eth_getTransactionReceipt` | hash | Returns information for a given transaction. <br /><br />Adds additional information related to L1 calldata fees. | Returns information for a given transaction. <Modified /> |
 
 </Section>
