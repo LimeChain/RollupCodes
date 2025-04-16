@@ -18,8 +18,6 @@ const { serverRuntimeConfig } = getConfig()
 
 export default function Home({ docs }: IHomeProps) {
     const { isMobile } = useScreenModes()
-    // Sorts the "Mainnet" rollups before the "Testnet" ones
-    docs.sort((_, b) => b.labels.includes("Mainnet") ? 0 : -1)
     return (
         <Layout loading={docs?.length === 0}>
             <Typography
@@ -88,7 +86,6 @@ const getDocsMetadata = async () => {
                 `public/images/${fileName.replace('.mdx', '')}-dark-logo.svg`
             )
 
-
             docs.push({
                 title: matterResult?.data?.title,
                 // Light logo will be used as default if there is ONLY one
@@ -104,15 +101,21 @@ const getDocsMetadata = async () => {
         })
     )
 
-    const sortedAlphabetically = docs.sort(function (a, b) {
-        if (a.title < b.title) {
-            return -1
-        }
-        if (a.title > b.title) {
-            return 1
-        }
-        return 0
-    })
+    const sorted = docs
+        // Sort alphabetically
+        .sort((a, b) => {
+            const aTitle = a.title.toLowerCase()
+            const bTitle = b.title.toLowerCase()
+            if (aTitle < bTitle) {
+                return -1
+            }
+            if (aTitle > bTitle) {
+                return 1
+            }
+            return 0
+        })
+        // Sort the "Mainnet" rollups before the "Testnet" ones
+        .sort((_, b) => (b.labels.includes('Mainnet') ? 0 : -1))
 
-    return sortedAlphabetically
+    return sorted
 }

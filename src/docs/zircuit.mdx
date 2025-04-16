@@ -1,0 +1,137 @@
+---
+title: Zircuit
+subtitle: Zircuit is an EVM-compatible zero-knowledge rollup with a unique hybrid architecture that combines the battle-tested OP stack infrastructure with zero-knowledge proofs
+labels:
+    - ZK-Rollup
+    - EVM
+    - Mainnet
+links:
+    website:
+        url: https://www.zircuit.com
+        name: zircuit.com
+    docs:
+        url: https://docs.zircuit.com
+        name: Docs
+    l2beat:
+        url: https://l2beat.com/scaling/projects/zircuit
+        name: L2BEAT
+    github:
+        url: https://github.com/zircuit-labs
+        name: Github
+    x:
+        url: https://x.com/ZircuitL2
+        name: ZircuitL2
+---
+
+<Section title="Overview">
+   Zircuit is an EVM-compatible zero-knowledge rollup with a unique hybrid architecture that combines the battle-tested OP stack infrastructure with zero-knowledge proofs
+
+    ###### Focus
+
+    - Protect users at the sequencer level by monitoring the mempool for malicious transactions and preventing their inclusion into a block
+    - Make the zero-knowledge technology be as cheap and fast as possible 
+
+    <Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="Zircuit" />
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block time" value="2 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future" />
+
+    <Parameter name="Gas Limit" value="10 million" tooltip="The gas limit that can be consumed by an L2 block" />
+
+    <Parameter name="Gas Target" value="3 million" tooltip="The EIP-1559 gas target for an L2 block" />
+
+    <Parameter name="Sequencing Frequency" value="~15 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
+
+    <Parameter name="Objective Finality" value="2-5 hours" tooltip="The time it takes for the L2 to reach objective finality. Objective Finality is the state after which actors following only the L1 can conclude that a given state is finalised" />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x92ef6af472b39f1b363da45e35530c24619245a4" url="https://etherscan.io/address/0x92ef6af472b39f1b363da45e35530c24619245a4" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network." />
+
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing and zkTrie (sparse binary Merkle Patricia Trie + Poseidon Hashing)" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={[<Reference key="0" label="geth (Go)" url="https://github.com/zircuit-labs/l2-geth-public" />]} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+    - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions
+    - **Type 1** - User Transactions. Represent legacy transactions post [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718)
+    - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Optimism protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~5 seconds',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of sending a message from Ethereum to the L2. Zircuit executes the message with a system address on behalf of the L1 sender. L2 gas is paid by the sender of the message on L1.',
+                    value: '~340 000 L1 gas',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a Zircuit block and sequenced to L1.',
+                    value: '5-8 hours',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Zircuit. It is paid by the EOA that initiates the 2 transaction on L1: prove and finalize. The gas cost does not include the cost from the logic triggered by the message.',
+                    value: '~260 000 L1 gas',
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+    <Table data={opcodes} type="opcodes" />
+</Section>
+
+<Section title="Precompiled Contracts">
+    <Table data={precompiles} type="precompiles" />
+</Section>
+
+<Section title="System Contracts">
+    <Table data={system_contracts} type="system_contracts" />
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_getProof` | `address`, `storageKeys` | Returns the account and storage values of the specified account including the Merkle-proof. <br /><br />Adds а `poseidonCodeHash`. | Returns the account and storage values of the specified account including the Merkle-proof. <Modified /> |
+    | `eth_getTransactionReceipt` | hash | Returns information for a given transaction. <br /><br />Adds additional information related to L1 calldata fees. | Returns information for a given transaction. <Modified /> |
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    Zircuit charges an additional L1 data fee. You can use [viem/op-stack](https://viem.sh/op-stack)
+    for wrapping the RPC ethers provider and get access to the L1 and L2 gas
+    costs information.
+
+</Section>
+
+<Section title="Tools">
+
+    Existing EVM-based tooling is supported such as ethers, viem, ethers-rs, hardhat, foundry and truffle.
+
+    [viem/op-stack](https://viem.sh/op-stack) provides first-class support for chains implemented on the OP Stack.
+
+</Section>
