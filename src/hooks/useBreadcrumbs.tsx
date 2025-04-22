@@ -6,11 +6,15 @@ const normalizedRollupTitles: {[key: string]: string} = {
     'arbitrum-one': 'Arbitrum One',
     'base': 'Base',
     'blast': 'Blast',
+    'ink': 'Ink',
+    'kakarot': 'Kakarot',
     'linea': 'Linea',
     'optimism': 'Optimism',
     'polygon-zkevm': 'Polygon zkEVM',
     'scroll': 'Scroll',
     'taiko': 'Taiko',
+    'world-chain': 'World Chain',
+    'zircuit': 'Zircuit',
     'zksync-era': 'ZKsync Era'
 }
 
