@@ -1,6 +1,6 @@
 ---
 title: Base
-subtitle: Base is an Optimistic Rollup utilizing the OP Stack technology. The protocol features a centralised sequencer operated by the Base team. Fraud proofs have yet to be enabled on the platform.
+subtitle: Base is an Optimistic Rollup utilizing the OP Stack technology. The protocol features a centralised sequencer operated by the Base team.
 labels:
     - Optimistic Rollup
     - EVM
@@ -39,9 +39,9 @@ links:
 
     <Parameter name="Block time" value="2 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future" />
 
-    <Parameter name="Gas Limit" value="30 million" tooltip="The gas limit that can be consumed by an L2 block" />
+    <Parameter name="Gas Limit" value="120 million" tooltip="The gas limit that can be consumed by an L2 block" />
 
-    <Parameter name="Gas Target" value="15 million" tooltip="The EIP-1559 gas target for an L2 block" />
+    <Parameter name="Gas Target" value="60 million" tooltip="The EIP-1559 gas target for an L2 block" />
 
     <Parameter name="Sequencing Frequency" value="~1 minute" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the amount of calldata that must be posted on L1" />
 
@@ -157,7 +157,9 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | `eth_newPendingTransactionFilter` | None | Not supported  | Creates a filter in the node to notify when new pending transactions arrive. <Unsupported /> |
+    | `eth_getTransactionReceipt` | `hash` | Returns information for a given transaction. <br /><br />Adds additional information related to L1 calldata fees. | Returns information for a given transaction. <Modified /> |
+    | `optimism_outputAtBlock` | Integer block number or string one of `safe`, `latest` or `pending` | Returns the requested `l2OutputRoot` containing `version` and `l2OutputRoot` | N/A <Added /> |
+    | `optimism_syncStatus` | None | Returns information on node’s current, head, safe and finalised L1 state, as well as unsafe, safe and finalized L2 state | N/A <Added /> |
 
 </Section>
 
