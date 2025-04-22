@@ -46,7 +46,7 @@ links:
 
     <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0xa13BAF47339d63B743e7Da8741db5456DAc1E556" url="https://etherscan.io/address/0xa13baf47339d63b743e7da8741db5456dac1e556" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
 
-    <Parameter name="State Trie" value="zkTrie (sparse binary Merkle Patricia Trie + Poseidon Hashing)" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+    <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
     <Parameter name="Node Implementations" value={[<Reference key="0" label="l2geth(Go)" url="https://github.com/scroll-tech/go-ethereum" />]} tooltip="The different client implementations of the Rollup" />
 
