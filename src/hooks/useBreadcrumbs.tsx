@@ -12,6 +12,7 @@ const normalizedRollupTitles: {[key: string]: string} = {
     'optimism': 'Optimism',
     'polygon-zkevm': 'Polygon zkEVM',
     'scroll': 'Scroll',
+    'soneium': 'Soneium',
     'taiko': 'Taiko',
     'world-chain': 'World Chain',
     'zircuit': 'Zircuit',

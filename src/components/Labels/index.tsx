@@ -16,6 +16,7 @@ const rollupsFirstColors: Record<string, string> = {
     optimism: '#F59762',
     polygon_zkevm: '#7A8FFF',
     scroll: '#7A8FFF',
+    soneium: '#F59762',
     taiko: '#F59762',
     world_chain: '#F59762',
     zircuit: '#7A8FFF',
