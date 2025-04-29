@@ -7,6 +7,7 @@ interface ILabels {
 }
 
 const rollupsFirstColors: Record<string, string> = {
+    abstract: '#7A8FFF',
     arbitrum_one: '#F59762',
     base: '#F59762',
     blast: '#F59762',

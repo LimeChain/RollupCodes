@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 
 const normalizedRollupTitles: {[key: string]: string} = {
+    'abstract': 'Abstract',
     'arbitrum-one': 'Arbitrum One',
     'base': 'Base',
     'blast': 'Blast',
