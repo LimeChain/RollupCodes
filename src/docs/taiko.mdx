@@ -111,38 +111,15 @@ links:
 </Section>
 
 <Section title="OPCODEs">
-
-    <Legend />
-
-    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
-    | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
-    | 5C | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
-    | 5D | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
-    | 5E | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
-    
-    All other OPCODEs defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of some OPCODEs is not verified by the circuits and its not part of the validity proofs.
-
+    <Table data={opcodes} type="opcodes" />
 </Section>
 
 <Section title="Precompiled Contracts">
-
-    > ⚠️ All Precompiled Contacts defined in the canonical Ethereum L1 implementation have the same behaviour on the rollup, however, the execution of those Precompiles is currently not covered by the circuits and therefore not present in the Validity proof
-
+    <Table data={precompiles} type="precompiles" />
 </Section>
 
 <Section title="System Contracts">
-
-    <Legend />
-
-    The following system contracts behave differently compared to the canonical Ethereum L1.
-
-    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :--- | :--- | :--- |
-    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
-    | <Copy value="0x1670000000000000000000000000000000010001" label="0x167...001" /> | <Reference label="TaikoL2" url="https://github.com/taikoxyz/taiko-mono/blob/main/packages/protocol/contracts/layer2/based/TaikoL2.sol" /> | Used to create anchor transaction tracking latest synced L1 block hash and block height. | N/A <Added />
-
+    <Table data={system_contracts} type="system_contracts" />
 </Section>
 
 <Section title="RPC-API">

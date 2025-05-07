@@ -96,55 +96,15 @@ links:
 </Section>
 
 <Section title="OPCODEs">
-
-    <Legend />
-
-    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
-
-    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
-    | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
-    | FF | SELFDESTRUCT | `selfdestruct` | Disabled. If the opcode is encountered, the transaction will be reverted. | Halts execution and sends all Ether balance to the specified address. Registers the account for later deletion if executed in the same transaction as the contract was created.<br /><br />Deprecated with [EIP-6059](https://eips.ethereum.org/EIPS/eip-6049) <Unsupported /> |
-    | 40 | BLOCKHASH | `block.blockhash` | Returns `keccak(chain_id [concatenated with] block_number)` for the last 256 blocks. | Get the L1 block hash from block number <Modified /> |
-    | 41 | COINBASE | `block.coinbase` | Returns the pre-deployed fee vault contract address `0x5300000000000000000000000000000000000005`. | Get the L1 block’s beneficiary address <Modified /> |
-    | 44 | PREVRANDAO | `block.prevnrandao` | Returns 0. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
-
+    <Table data={opcodes} type="opcodes" />
 </Section>
 
 <Section title="Precompiled Contracts">
-
-    <Legend />
-
-    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :----- | :--------------- | :-------------------- |
-    | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | Not supported | Hash function <Unsupported /> |
-    | <Copy label="0x05" value="0x05" /> | `modexp` | Supports only inputs of size less than or equal to 32 bytes (i.e. `u256`). | Arbitrary-precision exponentiation under modulo <Modified /> |
-    | <Copy label="0x08" value="0x08" /> | `ecPairing` | The number of points(sets, pairs) is limited to 4. | Bilinear function on groups on the elliptic curve 'alt_bn128' <Modified /> |
-    | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
-    | <Copy label="0x0a" value="0x0a" /> | `pointEvaluation` | Not supported | Verifies a KZG proof <Unsupported /> |
-    | <Copy label="0x100" value="0x100" /> | `p256Verify` | Performs signature verifications in the secp256r1 elliptic curve | Not supported <Added /> |
-
+    <Table data={precompiles} type="precompiles" />
 </Section>
 
 <Section title="System Contracts">
-
-    <Legend />
-
-    The following system contracts behave differently compared to the canonical Ethereum L1.
-
-    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :--- | :--- | :--- |
-    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
-    | <Copy value="0xa13BAF47339d63B743e7Da8741db5456DAc1E556" label="0xa13...56" /> | <Reference label="L1 Rollup (Scroll Chain)" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L1/rollup/ScrollChain.sol" /> | The main contract of the Scroll Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks. | N/A <Added /> |
-    | <Copy value="0x8432728A257646449245558B8b7Dbe51A16c7a4D" label="0x843...4D" /> | <Reference label="L1 System Config" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L1/system-contract/SystemConfig.sol" /> | Manages important system configuration parameters. | N/A <Added /> |
-    | <Copy value="0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367" label="0x677...67" /> | <Reference label="L1 Messenger" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L1/L1ScrollMessenger.sol" /> | Provides functionality for sending messages from L1 to L2 and claiming L2 to L1 messages. | N/A <Added /> |
-    | <Copy value="0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a" label="0x569...8a" /> | <Reference label="L1 Message Queue (V2)" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L1/rollup/L1MessageQueueV2.sol" /> | L1 message queue on Ethereum, holds all L1 to L2 messages (after the Euclid upgrade phase-2). | N/A <Added /> |
-    | <Copy value="0x5300000000000000000000000000000000000000" label="0x530...00" /> | <Reference label="L2 Message Queue" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L2/predeploys/L2MessageQueue.sol" /> | L2 message queue on Scroll, holds all L2 to L1 messages. | N/A <Added /> |
-    | <Copy value="0x5300000000000000000000000000000000000002" label="0x530...02" /> | <Reference label="L1 Gas Price Oracle" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L2/predeploys/L1GasPriceOracle.sol" /> | L1 gas price oracle on Scroll. | N/A <Added /> |
-    | <Copy value="0x5300000000000000000000000000000000000005" label="0x530...05" /> | <Reference label="L2 Fee Vault" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L2/predeploys/L2TxFeeVault.sol" /> | L2 Fee Vault on Scroll. | N/A <Added /> |
-    | <Copy value="0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC" label="0x781...bC" /> | <Reference label="L2 Messenger" url="https://github.com/scroll-tech/scroll-contracts/blob/main/src/L2/L2ScrollMessenger.sol" /> | Provides functionality for sending messages from L2 to L1 and relaying L1 to L2 messages. | N/A <Added /> |
-
+    <Table data={system_contracts} type="system_contracts" />
 </Section>
 
 <Section title="RPC-API">

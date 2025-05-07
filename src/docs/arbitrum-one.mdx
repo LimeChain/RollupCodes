@@ -104,50 +104,15 @@ links:
 </Section>
 
 <Section title="OPCODEs">
-
-    <Legend />
-
-    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
-
-    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
-    | 33 | CALLER | `msg.sender` | Same behaviour as on Ethereum for L2 to L2 transactions <br /><br /> Returns the L2 address alias of the L1 contract that triggered the message for L1-to-L2 "retryable ticket" transactions. See [retryable ticket address aliasing](https://developer.arbitrum.io/arbos/l1-to-l2-messaging#address-aliasing) for more. | Returns caller address <Modified /> |
-    | 40 | BLOCKHASH | `blockhash(x)` | Returns a cryptographically insecure, pseudo-random hash for `x` within the range `block.number - 256 <= x < block.number`. <br /><br /> If `x` is outside of this range, `blockhash(x)` will return 0. This includes `blockhash(block.number)`, which always returns `0` just like on Ethereum. <br /><br /> The hashes returned do not come from L1. | Returns the hash of one of the 256 most recent complete blocks <Modified /> |
-    | 41 | COINBASE | `block.coinbase` | Returns the designated internal address `0xA4b000000000000000000073657175656e636572` if the message was posted by a sequencer. If it's a delayed message, it returns the address of the delayed message's poster | Returns the L1 block’s beneficiary address <Modified /> |
-    | 43 | NUMBER | `block.number` | Returns an "estimate" of the L1 block number at which the Sequencer received the transaction (see [Block Numbers and Time](https://developer.arbitrum.io/time)) | Returns the L1 block number <Modified /> |
-    | 44 | PREVRANDAO | `block.difficulty` and `block.prevrandao` | Returns the constant `1` | Returns the output of the randomness beacon provided by the beacon chain <Modified /> |
-
+    <Table data={opcodes} type="opcodes" />
 </Section>
 
 <Section title="Precompiled Contracts">
-
-    <Legend />
-
-    The following Precompiled Contracts behave differently compared to the canonical Ethereum L1
-
-    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :----- | :--------------- | :-------------------- |
-    | <Copy label="0x100" value="0x100" /> | `p256Verify` | Performs signature verifications in the secp256r1 elliptic curve | Not supported <Added /> |
-
+    <Table data={precompiles} type="precompiles" />
 </Section>
 
 <Section title="System Contracts">
-
-    <Legend />
-
-    The following system contracts behave differently compared to the canonical Ethereum L1.
-
-    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :--- | :--- | :--- |
-    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
-    | <Copy value="0x6d" label="0x6d" /> | <Reference label="ArbAggregator" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbAggregator.go" /> | Provides aggregators and their user's methods for configuring how they participate in L1 aggregation. Arbitrum One's default aggregator is the Sequencer, which a user will prefer unless `SetPreferredAggregator` is invoked to change it.| N/A <Added /> |
-    | <Copy value="0x6c" label="0x6c" /> | <Reference label="ArbGasInfo" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbGasInfo.go" /> | Provides data for gas costs in wei and ArbGas, estimates for L1 basefee, the L1 pricer reward rate and recipient as-well as information on the chain speed limit, pool size and transaction gas limit.| N/A <Added /> |
-    | <Copy value="0x6e" label="0x6e" /> | <Reference label="ArbRetryableTx" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbRetryableTx.go" /> | Provides methods for managing retryables (cross domain messages). [Retryable documentation](https://developer.arbitrum.io/arbos/l1-to-l2-messaging).| N/A <Added /> |
-    | <Copy value="0x64" label="0x64" /> | <Reference label="ArbSys" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbSys.go" /> | Provides system-level functionality for getting L2 block number, hash, checking if a call is top-level, sending cross-domain messages as-well as sending ETH to L1.| N/A <Added /> |
-    | <Copy value="0x65" label="0x65" /> | <Reference label="ArbInfo" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbInfo.go" /> | Provides the ability to lookup account's balance and contract's deployed code.| N/A <Added /> |
-    | <Copy value="0x6b" label="0x6b" /> | <Reference label="ArbOwnerPublic" url="https://github.com/OffchainLabs/nitro/blob/master/precompiles/ArbOwnerPublic.go" /> | Provides non-owners with info about the current chain owners.| N/A <Added /> |
-
+    <Table data={system_contracts} type="system_contracts" />
 </Section>
 
 <Section title="RPC-API">
