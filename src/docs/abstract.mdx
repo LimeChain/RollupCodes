@@ -1,0 +1,186 @@
+---
+title: Abstract
+subtitle: Abstract is an EVM compatible ZK-Rollup that is built on top of the ZK stack. The protocol features a centralised sequencer operated by the Abstract team
+labels:
+    - ZK-Rollup
+    - EVM
+    - Mainnet
+links:
+    website:
+        url: https://www.abs.xyz
+        name: abs.xyz
+    docs:
+        url: https://docs.abs.xyz
+        name: Docs
+    l2beat:
+        url: https://l2beat.com/scaling/projects/abstract
+        name: L2BEAT
+    github:
+        url: https://github.com/Abstract-Foundation
+        name: Github
+    x:
+        url: https://x.com/abstractchain
+        name: abstractchain
+---
+
+<Section title="Overview">
+
+    Abstract is an EVM compatible ZK-Rollup that is built on top of the ZK stack. The protocol features a centralised sequencer operated by the Abstract team
+
+    ###### Focus
+
+    - Securely power consumer-facing blockchain applications
+    - Onboard users in a seamless and secure way with the Abstract Global Wallet
+
+    <Labels labels={['ZK-Rollup', 'EVM', 'Mainnet']} title="Abstract" />
+
+</Section>
+
+<Section title="General">
+
+    <Parameter name="Block Time" value="2 seconds" tooltip="The rate at which the rollup produces blocks. Keep in mind that the value is subject to change in the future" />
+
+    <Parameter name="Gas Limit" value="2^50" tooltip="The gas limit returned by the RPC API for L2 blocks" />
+
+    <Parameter name="Sequencing Frequency" value="15 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1." />
+
+    <Parameter name="Objective Finality" value="1 hour" tooltip="The time it takes for validity proof to be generated and submitted which makes an L2 transaction final." />
+
+    <Parameter name="Rollup’s State Contract on L1" value={<Reference label="0x2edc71e9991a962c7fe172212d1aa9e50480fbb9" url="https://etherscan.io/address/0x2edc71e9991a962c7fe172212d1aa9e50480fbb9" />} tooltip="The contract used for sequencing, proving and storing the state of the L2 network" />
+
+    <Parameter name="State Trie" value="Sparse Merkle Tree + Blake2 Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
+
+    <Parameter name="Node Implementations" value={<Reference label="zksync-era (Rust)" url="https://github.com/matter-labs/zksync-era/tree/main/core" />} tooltip="The different client implementations of the Rollup" />
+
+    <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
+
+    - **Type 0** - User Transactions. Represent [pre-EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) transactions.
+    - **Type 2** - User Transactions. Represent [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transactions.
+    - **Type 113** - User Transactions. Represent custom [EIP-712](https://docs.zksync.io/zksync-protocol/rollup/transaction-lifecycle#eip-712-0x71) transactions that enable Account Abstraction on the protocol level.
+    ___
+
+    <MultiRowParameters title="Messaging" tooltip="The Rollup provides native communication with L1. Anyone is able to transmit arbitrary messages and the Abstract protocol will provide proof of the data transfer on the destination chain" data={[
+        {
+            title: 'L1 → L2',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
+                    value: '~15 minutes',
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of purely sending a message from Ethereum to Abstract, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
+                    value: 'No added cost',
+                },
+            ],
+        },
+        {
+            title: 'L2 → L1',
+            rows: [
+                {
+                    label: 'Latency',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a Abstract block and sequenced to L1.',
+                    value: "1 hours",
+                },
+                {
+                    label: 'Cost',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Abstract',
+                    value: '10 000 L1 gas',
+                },
+            ],
+        },
+    ]} />
+
+</Section>
+
+<Section title="OPCODEs">
+    <Table data={opcodes} type="opcodes" />
+</Section>
+
+<Section title="Precompiled Contracts">
+    <Table data={precompiles} type="precompiles" />
+</Section>
+
+<Section title="System Contracts">
+    <Table data={system_contracts} type="system_contracts" />
+</Section>
+
+<Section title="RPC-API">
+
+    <Legend />
+
+    The following endpoints behave differently compared to the canonical Ethereum L1 implementation of the JSON RPC API.
+
+
+    | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
+    | :----- | :----- | :--------------- | :-------------------- |
+    | `eth_blobBaseFee` | None | Not supported | Returns the expected base fee for blobs in the next block. <Unsupported /> |
+    | `eth_createAccessList` | Transaction object array | Not supported | Creates an EIP-2930 access list that you can include in a transaction. <Unsupported /> |
+    | `eth_getProof` | Address (to fetch storage values and proofs for), array of data (the keys in the account), integer (block number) | Not supported | Returns the account and storage values of the specified account including the Merkle-proof. <br /><br />**Note**<br />See `zks_getProof` as an alternative. <Unsupported /> |
+    | `eth_maxPriorityFeePerGas` | None | Not supported | Returns a fee per gas that is an estimate of how much you can pay as a priority fee, or 'tip', to get a transaction included in the current block. <Unsupported /> |
+    | `eth_sendTransaction` | Transaction object | Not supported | Creates new message call transaction or a contract creation, if the data field contains code, and signs it using the account specified in from. <Unsupported /> |
+    | `eth_signTransaction` | Transaction object array | Not supported | Signs a transaction that can be submitted to the network later using `eth_sendRawTransaction`. <Unsupported /> |
+    | `eth_getBlockByNumber` | Hex-encoded integer | Returns information for a given block. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given block. <Modified /> |
+    | `eth_getBlockByHash` | Hash | Returns information for a given block. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given block. <Modified /> |
+    | `eth_getTransactionByHash` | Hash | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given transaction. <Modified /> |
+    | `eth_getTransactionByBlockHashAndIndex` | Hash and hex-encoded integer | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given transaction. <Modified /> |
+    | `eth_getTransactionByBlockNumberAndIndex` | Two hex-encoded integers | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number and timestamp. | Returns information for a given transaction. <Modified /> |
+    | `eth_getTransactionReceipt` | Hash | Returns information for a given transaction. <br /><br />Adds additional information such as l1 batch number, l1 timestamp, l1 batch TX index and L2toL1 logs. | Returns information for a given transaction. <Modified /> |
+    | `zks_estimateFee` | Transaction request object | Returns the estimated fee for the transaction with added information for L1 calldata fee. | N/A <Added /> |
+    | `zks_estimateGasL1ToL2` | Call request object | Returns an estimate of the gas required for sending a L1 to L2 transaction | N/A <Added /> |
+    | `zks_getAllAccountBalances` | Hex encoded address | Returns all balances for confirmed tokens given by an account address | N/A <Added /> |
+    | `zks_getBaseTokenL1Address` | None | Returns the L1 base token address  | N/A <Added /> |
+    | `zks_getBlockDetails` | Integer | Returns additional ZKsync-specific information about the L2 block, like commit, prove, and execution transactions  | N/A <Added /> |
+    | `zks_getBridgeContracts` | None | Returns L1/L2 addresses of the canonical bridge contracts | N/A <Added /> |
+    | `zks_getBridgeHubContract` | None | Returns the BridgeHub contract address | N/A <Added /> |
+    | `zks_getBytecodeByHash` | Hash | Returns bytecode for a given hash stored in the KnownHashes registry | N/A <Added /> |
+    | `zks_getConfirmedTokens` | Integer (the id from which to start returning information about tokens) and integer (number of tokens to be returned) | Returns [address, symbol, name, and decimal] information of all tokens within a range of ids given by parameters from and limit. | N/A <Added /> |
+    | `zks_getL1BatchBlockRange` | Integer | Returns the range of blocks contained within a batch given a batch number | N/A <Added /> |
+    | `zks_getL1BatchDetails` | Integer | Returns information for a given L1 batch | N/A <Added /> |
+    | `zks_getL1GasPrice` | None | Returns current L1 gas price in hexadecimal format, representing the amount of wei per unit of gas | N/A <Added /> |
+    | `zks_getFeeParams` | None | Returns the current L2 fee model parameters  | N/A <Added /> |
+    | `zks_getProtocolVersion` | None | Returns protocol version information  | N/A <Added /> |
+    | `zks_getProof` | Address (to fetch storage values and proofs for), array of data (the keys in the account), integer (number of the L1 batch) | Returns an object containing the account details and proofs for storage keys  | N/A <Added /> |
+    | `zks_getL2ToL1LogProof` | Bytes32 (hash of the L2 transaction) and integer (index of the l2 to l1 log in the transaction - optional) | Given a transaction hash and an index of the L2 to L1 log produced within the transaction, it returns the proof for the corresponding L2 to L1 log. | N/A <Added /> |
+    | `zks_getL2ToL1MsgProof` | Integer (number of a block), address (sender of a message), bytes32 (keccak256 hash of the message) and integer (index in the block of the event that was emitted) | Given a block, a sender, a message, and an optional message log index in the block containing the L1->L2 message, it returns the proof for the message sent via the L1Messenger system contract.<br /><br />**Note**<br />The endpoint will be deprecated in favour of `zks_getL2ToL1LogProof` | N/A <Added /> |
+    | `zks_getMainContract` | None | Returns the address of the Abstract contract | N/A <Added /> |
+    | `zks_getRawBlockTransactions` | Integer | Returns raw data of transactions in a block | N/A <Added /> |
+    | `zks_getTestnetPaymaster` | None | Returns the address of the testnet paymaster (available on testnet only, allows paying fees with any ERC-20 token) | N/A <Added /> |
+    | `zks_getTransactionDetails` | Hash | Returns additional ZKsync-specific data from a specific transaction given by the transaction hash. | N/A <Added /> |
+    | `zks_L1BatchNumber` | None | Returns the latest L1 batch number | N/A <Added /> |
+    | `zks_L1ChainId` | None | Returns the chain id of the underlying L1 | N/A <Added /> |
+
+</Section>
+
+<Section title="Transaction Fees">
+
+    Abstract's fee model is similar to Ethereum’s where `gas` is charged for computational cost, cost of publishing data on-chain and storage effects. However, Abstract includes additional costs for publishing to L1 and for proof generation. The cost of posting data on L1 is captured by having dynamic gas costs for various OPCODEs such as `SSTORE`. This practically means that when executing `eth_estimateGas` the returned result will vary based on the Ethereum L1 base fee. Detailed information on the [Fee mechanism](https://docs.zksync.io/zksync-protocol/rollup/fee-model).
+
+</Section>
+
+<Section title="Tools">
+
+    ###### Compilers
+
+    Contracts on Abstract can be developed using either the **custom ZKsync compilers or standard EVM compilers**, depending on the deployment target:
+
+    - Use the **custom compilers** (`zksolc` / `zkvyper`) for deploying contracts as native EraVM bytecode, which offers better performance and lower fees. This requires plugins for Hardhat or a custom version of Foundry (details below).
+    - Use **standard Solidity or Vyper compilers** to deploy unmodified EVM bytecode via the EVM Bytecode Emulator, with broader tooling compatibility (Hardhat and Foundry work without plugins or modifications) but higher execution overhead.
+
+    Available custom compilers:
+
+    - [zksolc Compiler](https://github.com/matter-labs/zksolc-bin) — supports Solidity versions from `0.4.12`, recommended `>=0.8`
+    - [zkvyper Compiler](https://github.com/matter-labs/zkvyper-bin) — supports Vyper `0.3.3`, `0.3.9`, `0.3.10`, `0.4.0`
+
+    The custom compilers have hardhat plugin integrations for ease of development
+
+    - [hardhat-zksync](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync)
+    - [hardhat-zksync-vyper](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync-vyper)
+
+    ###### Other
+
+    - [hardhat-zksync](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync) is a hardhat plugin that bundles all ZKsync related Hardhat plugins
+    - [foundry-zksync](https://github.com/matter-labs/foundry-zksync) provides Foundry functionality in Solidity for compiling, deploying, testing, and interacting with smart contracts on Abstract
+
+</Section>

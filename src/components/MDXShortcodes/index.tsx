@@ -270,7 +270,7 @@ const shortAddress = (address: string) => {
     if (address.length < 6) {
         return address
     } else {
-        return address.slice(0, 5) + "..." + address.slice(-3)
+        return address.slice(0, 5) + "..." + address.slice(-4)
     }
 }
 
@@ -336,7 +336,7 @@ const Table = ({
                                         <td align='left'>{type === "opcodes" ? id : Copy({ value: id, label: shortAddress(id) })}</td>
                                         <td align='left'>{displayTableElementName(type, element.name, element.url)}</td>
                                         {type === "opcodes" ? displaySolidityEquivalent(element.name) : ""}
-                                        <td align='left'>{element.description || "N/A"}</td>
+                                        <td style={{whiteSpace: 'pre-line'}} align='left'>{element.description || "N/A"}</td>
                                         <td align='left'>{element.ethDescription || "N/A"} {getStatus(element)}</td>
                                     </tr>
                                 )
