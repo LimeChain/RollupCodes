@@ -105,43 +105,15 @@ Linea is a ZK-Rollup that targets EVM compatibility. As it’s a product of Cons
 </Section>
 
 <Section title="OPCODEs">
-
-    <Legend />
-
-    Linea uses the London version of the EVM.
-
-    The following table encapsulates EVM OPCODE differences of the Rollup compared to the canonical Ethereum L1 implementation.
-
-    | Opcode | Name | Solidity Equivalent | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :----- | :--- | :-------------------| :--------------- | :-------------------- |
-    | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
-    | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
-    | 5C | TLOAD | `tload(key)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Fetches 32-byte word from the transient storage.  <Unsupported /> |
-    | 5D | TSTORE | `tstore(key, value)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Saves the value at the given address in the transient storage.  <Unsupported /> |
-    | 5E | MCOPY | `mcopy()` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Copies the memory from source to destination.  <Unsupported /> |
-    | 5F | PUSH0 |  | Not supported yet! <br /><br /> Solidity version `0.8.20` or higher can only be used with an evm version lower than the default `shanghai`. <br /><br /> Versions up to `0.8.19` (included) are fully compatible | Places value 0 on the stack <Unsupported /> |
-    | 44 | PREVRANDAO | `block.difficulty` and `block.prevrandao` | Returns a fixed number "2" | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
-
+    <Table data={opcodes} type="opcodes" />
 </Section>
 
 <Section title="Precompiled Contracts">
-
-    > ⚠️ All Precompiled Contacts defined in the canonical Ethereum L1 implementation (until London hard fork) have the same behaviour on the Rollup, however, the execution of those Precompiles is currently not covered by the circuits and therefore not present in the Validity proof
-
+    <Table data={precompiles} type="precompiles" />
 </Section>
 
 <Section title="System Contracts">
-
-    <Legend />
-
-    The following system contracts behave differently compared to the canonical Ethereum L1.
-
-    | Address | Name | Rollup Behaviour | Ethereum L1 Behaviour |
-    | :--- | :--- | :--- | :--- |
-    | <Copy value="0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02" label="0x000...c02" /> | <Reference label="BeaconRootsStorage" url="https://eips.ethereum.org/EIPS/eip-4788" /> | Not supported | The contract receives a timestamp and returns the beacon root associated with it <Unsupported /> |
-    | <Copy value="0xd19d4B5d358258f05D7B411E21A1460D11B0876F" label="0xd19...6F" /> | <Reference label="ZkEvmV2" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/ZkEvmV2.sol" /> | The main contract of the Linea zkEVM Rollup. Contains the L2 state roots. It handles sequencing and finalisation of L2 blocks and provides messaging functionality between L1 and L2. Provides functionality for sending and receiving messages between domains (Ethereum and Linea). | N/A <Added /> |
-    | <Copy value="0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec" label="0x508...ec" /> | <Reference label="L2 Message Service" url="https://github.com/Consensys/linea-contracts/blob/main/contracts/messageService/l2/L2MessageService.sol" /> | Provides functionality for sending and receiving messages between domains (Ethereum and Linea zkEVM). | N/A <Added /> |
-
+    <Table data={system_contracts} type="system_contracts" />
 </Section>
 
 <Section title="RPC-API">
