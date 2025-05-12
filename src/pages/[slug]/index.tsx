@@ -153,7 +153,7 @@ const getDocsContent = async (): Promise<DocsContent> => {
     return docs
 }
 
-const getChainSpec = async (network: string): Promise<CustomChainSpec> => {
+const getChainSpec = (network: string): CustomChainSpec => {
     const folder = 'chain-specs/specifications/'
 
     const customChainSpec: CustomChainSpec = {
@@ -165,17 +165,17 @@ const getChainSpec = async (network: string): Promise<CustomChainSpec> => {
     try {
         const fileContents = fs.readFileSync(`${folder}${network}.json`, 'utf8')
         const chainSpec = JSON.parse(fileContents)
-        await Promise.all(chainSpec.forks.map(async (fork: CustomChainSpec) => {
-            Object.entries(fork.opcodes).forEach(([opcode, data]) => {
+        chainSpec.forks.map((fork: CustomChainSpec) => {
+            Object.entries(fork.opcodes || {}).forEach(([opcode, data]) => {
                 customChainSpec.opcodes[opcode] = data;
             })
-            Object.entries(fork.precompiles).forEach(([precompile, data]) => {
+            Object.entries(fork.precompiles || {}).forEach(([precompile, data]) => {
                 customChainSpec.precompiles[precompile] = data;
             })
-            Object.entries(fork.system_contracts).forEach(([system_contract, data]) => {
+            Object.entries(fork.system_contracts || {}).forEach(([system_contract, data]) => {
                 customChainSpec.system_contracts[system_contract] = data;
             })
-        }))
+        })
     } catch (e) {}
 
     return customChainSpec
@@ -210,7 +210,9 @@ export async function getStaticProps({
 
     const contents = await getDocsContent()
     const content = contents[slug]
-    const [chainSpec, ethChainSpec] = await Promise.all([getChainSpec(slug), getChainSpec('ethereum')])
+
+    const chainSpec = getChainSpec(slug)
+    const ethChainSpec = getChainSpec('ethereum')
 
     // Merge the specifications
     Object.entries(ethChainSpec.opcodes).forEach(([op, data]) => {
@@ -227,7 +229,7 @@ export async function getStaticProps({
     })
     Object.entries(ethChainSpec.system_contracts).forEach(([address, data]) => {
         if (!chainSpec.system_contracts[address]) {
-            chainSpec.system_contracts[address] = { name: data.name }
+            chainSpec.system_contracts[address] = { name: data.name, url: data.url }
         }
         chainSpec.system_contracts[address].ethDescription = data.description
     })
