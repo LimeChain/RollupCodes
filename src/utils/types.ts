@@ -109,6 +109,10 @@ export interface ICrumb {
 
 export type Breadcrumbs = ICrumb[]
 
+export type ExecutionEnvironmentsMap = {
+    [env: string]: CustomChainSpec
+}
+
 export type CustomChainSpec = {
     opcodes: ChainSpecElementsMap,
     precompiles: ChainSpecElementsMap,

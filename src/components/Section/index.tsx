@@ -12,11 +12,12 @@ import LinkIcon from '/public/images/link-icon.svg'
 
 interface ISection {
     title: string
+    initialExpanded: boolean
     children: React.ReactNode
 }
 
-const Section = ({ title, children }: ISection) => {
-    const [isExpanded, setExpanded] = useState<boolean>(true)
+const Section = ({ title, initialExpanded=true, children }: ISection) => {
+    const [isExpanded, setExpanded] = useState<boolean>(initialExpanded)
     const { theme } = useTheme()
     const ref = useRef<any>(0)
 

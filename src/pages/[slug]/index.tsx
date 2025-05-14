@@ -1,6 +1,6 @@
 import Avatar from '@components/Avatar'
 import Layout from '@components/Layout'
-import { AvatarSize, IDocMeta, Text, CustomChainSpec } from '@utils/types'
+import { AvatarSize, IDocMeta, Text, CustomChainSpec, ExecutionEnvironmentsMap } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
 import getConfig from 'next/config'
@@ -40,7 +40,7 @@ type Content = {
 type StaticPropsResult = {
     props: {
         content: Content,
-        chainSpec: CustomChainSpec
+        chainSpecs: ExecutionEnvironmentsMap
     }
 }
 
@@ -48,14 +48,16 @@ type DocsContent = Record<string, Content>
 
 interface IContent {
     content: Content,
-    chainSpec: CustomChainSpec
+    chainSpecs: ExecutionEnvironmentsMap
 }
 
-export default function Details({ content, chainSpec }: IContent) {
+export default function Details({ content, chainSpecs }: IContent) {
     const router = useRouter()
     const [additionalPaddingTop, setAdditionalPaddingTop] = useState<
         number | undefined
     >(0)
+
+    const isSingleChainSpec = Object.keys(chainSpecs).length === 1
 
     const lastModifiedDate = useLastModifiedDate(content?.meta?.slug)
 
@@ -100,7 +102,7 @@ export default function Details({ content, chainSpec }: IContent) {
                     <MDXRemote
                         {...content?.mdxContent}
                         components={MDXShortcodes}
-                        scope={chainSpec}
+                        scope={isSingleChainSpec ? chainSpecs["evm"] : chainSpecs}
                     />
                 </div>
             </div>
@@ -153,32 +155,42 @@ const getDocsContent = async (): Promise<DocsContent> => {
     return docs
 }
 
-const getChainSpec = (network: string): CustomChainSpec => {
+const getChainSpecs = (network: string): ExecutionEnvironmentsMap => {
     const folder = 'chain-specs/specifications/'
 
-    const customChainSpec: CustomChainSpec = {
-        opcodes: {},
-        precompiles: {},
-        system_contracts: {}
-    }
+    const customChainSpecs: ExecutionEnvironmentsMap = {}
 
     try {
-        const fileContents = fs.readFileSync(`${folder}${network}.json`, 'utf8')
-        const chainSpec = JSON.parse(fileContents)
-        chainSpec.forks.map((fork: CustomChainSpec) => {
-            Object.entries(fork.opcodes || {}).forEach(([opcode, data]) => {
-                customChainSpec.opcodes[opcode] = data;
+        const files = fs.readdirSync(folder).filter(file => file.startsWith(network))
+
+        files.forEach(file => {
+            const fileContents = fs.readFileSync(`${folder}${file}`, 'utf8')
+            const executionEnvironment = file.split('.')[0].split('|')[1] || "evm"
+            const chainSpec = JSON.parse(fileContents)
+
+            const customChainSpec: CustomChainSpec = {
+                opcodes: {},
+                precompiles: {},
+                system_contracts: {}
+            }
+
+            chainSpec.forks.map((fork: CustomChainSpec) => {
+                Object.entries(fork.opcodes || {}).forEach(([opcode, data]) => {
+                    customChainSpec.opcodes[opcode] = data;
+                })
+                Object.entries(fork.precompiles || {}).forEach(([precompile, data]) => {
+                    customChainSpec.precompiles[precompile] = data;
+                })
+                Object.entries(fork.system_contracts || {}).forEach(([system_contract, data]) => {
+                    customChainSpec.system_contracts[system_contract] = data;
+                })
             })
-            Object.entries(fork.precompiles || {}).forEach(([precompile, data]) => {
-                customChainSpec.precompiles[precompile] = data;
-            })
-            Object.entries(fork.system_contracts || {}).forEach(([system_contract, data]) => {
-                customChainSpec.system_contracts[system_contract] = data;
-            })
+
+            customChainSpecs[executionEnvironment] = customChainSpec
         })
     } catch (e) {}
 
-    return customChainSpec
+    return customChainSpecs
 }
 
 const getDocsPaths = (): Paths => {
@@ -211,28 +223,30 @@ export async function getStaticProps({
     const contents = await getDocsContent()
     const content = contents[slug]
 
-    const chainSpec = getChainSpec(slug)
-    const ethChainSpec = getChainSpec('ethereum')
+    const chainSpecs = getChainSpecs(slug)
+    const ethChainSpec = getChainSpecs('ethereum')['evm']
 
-    // Merge the specifications
-    Object.entries(ethChainSpec.opcodes).forEach(([op, data]) => {
-        if (!chainSpec.opcodes[op]) {
-            chainSpec.opcodes[op] = { name: data.name }
-        }
-        chainSpec.opcodes[op].ethDescription = data.description
-    })
-    Object.entries(ethChainSpec.precompiles).forEach(([address, data]) => {
-        if (!chainSpec.precompiles[address]) {
-            chainSpec.precompiles[address] = { name: data.name }
-        }
-        chainSpec.precompiles[address].ethDescription = data.description
-    })
-    Object.entries(ethChainSpec.system_contracts).forEach(([address, data]) => {
-        if (!chainSpec.system_contracts[address]) {
-            chainSpec.system_contracts[address] = { name: data.name, url: data.url }
-        }
-        chainSpec.system_contracts[address].ethDescription = data.description
+    Object.entries(chainSpecs).forEach(([_, chainSpec]) => {
+        // Merge the specifications
+        Object.entries(ethChainSpec.opcodes).forEach(([op, data]) => {
+            if (!chainSpec.opcodes[op]) {
+                chainSpec.opcodes[op] = { name: data.name }
+            }
+            chainSpec.opcodes[op].ethDescription = data.description
+        })
+        Object.entries(ethChainSpec.precompiles).forEach(([address, data]) => {
+            if (!chainSpec.precompiles[address]) {
+                chainSpec.precompiles[address] = { name: data.name }
+            }
+            chainSpec.precompiles[address].ethDescription = data.description
+        })
+        Object.entries(ethChainSpec.system_contracts).forEach(([address, data]) => {
+            if (!chainSpec.system_contracts[address]) {
+                chainSpec.system_contracts[address] = { name: data.name, url: data.url }
+            }
+            chainSpec.system_contracts[address].ethDescription = data.description
+        })
     })
 
-    return { props: { content, chainSpec } }
+    return { props: { content, chainSpecs } }
 }

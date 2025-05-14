@@ -94,19 +94,26 @@ links:
 
 </Section>
 
-<Section title="OPCODEs">
+<Section title="OPCODEs (compiler)" initialExpanded={false}>
     > ⚠️ Contracts on ZKsync Era can now be deployed using either the custom compiler ([zksolc](https://github.com/matter-labs/zksolc-bin) or [zkvyper](https://github.com/matter-labs/zkvyper-bin)) **or** standard EVM bytecode, thanks to the EVM Bytecode Emulator.
     > While native EraVM bytecode offers better performance and lower fees, developers can now deploy unmodified contracts compiled with standard Solidity or Vyper.
 
-    <Table data={opcodes} type="opcodes" />
+    <Table data={eravm.opcodes} type="opcodes" />
+</Section>
+
+<Section title="OPCODEs (interpreter)" initialExpanded={false}>
+    > ⚠️ Contracts on ZKsync Era can now be deployed using either the custom compiler ([zksolc](https://github.com/matter-labs/zksolc-bin) or [zkvyper](https://github.com/matter-labs/zkvyper-bin)) **or** standard EVM bytecode, thanks to the EVM Bytecode Emulator.
+    > While native EraVM bytecode offers better performance and lower fees, developers can now deploy unmodified contracts compiled with standard Solidity or Vyper.
+
+    <Table data={evm.opcodes} executionEnv="evm" type="opcodes" />
 </Section>
 
 <Section title="Precompiled Contracts">
-    <Table data={precompiles} type="precompiles" />
+    <Table data={eravm.precompiles} type="precompiles" />
 </Section>
 
 <Section title="System Contracts">
-    <Table data={system_contracts} type="system_contracts" />
+    <Table data={eravm.system_contracts} type="system_contracts" />
 </Section>
 
 <Section title="RPC-API">
