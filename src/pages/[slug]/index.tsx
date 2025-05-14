@@ -165,8 +165,11 @@ const getChainSpecs = (network: string): ExecutionEnvironmentsMap => {
 
         files.forEach(file => {
             const fileContents = fs.readFileSync(`${folder}${file}`, 'utf8')
-            const executionEnvironment = file.split('.')[0].split('|')[1] || "evm"
             const chainSpec = JSON.parse(fileContents)
+
+            // Chainspec files are named <network>[_<execEnv>].json
+            // Set the environment to "evm" if it isn't specified
+            const executionEnvironment = file.split('.')[0].split('_')[1] || "evm"
 
             const customChainSpec: CustomChainSpec = {
                 opcodes: {},

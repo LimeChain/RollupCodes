@@ -1,4 +1,4 @@
 [submodule "chain-specs"]
 	path = chain-specs
 	url = https://github.com/LimeChain/chain-specs
-	branch = feat(zk-stack)/evm-execution-environment
+	branch = main
