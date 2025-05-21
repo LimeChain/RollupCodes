@@ -75,12 +75,17 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
-                    value: '~6-9 minutes',
+                    value: '~30 minutes',
                 },
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Ethereum to Arbitrum, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
-                    value: 'No added cost',
+                    value: '55 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered.',
+                    value: 'Automatic'
                 },
             ],
         },
@@ -95,7 +100,12 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Arbitrum',
-                    value: '60 000 L1 gas',
+                    value: '65 000 L2 gas + 90 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'How the message on the target chain is delivered.',
+                    value: 'Manual'
                 },
             ],
         },
