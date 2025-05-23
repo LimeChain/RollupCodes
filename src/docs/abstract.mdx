@@ -71,11 +71,11 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Ethereum to Abstract, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
-                    value: '210 000 L1 gas + 260 000 gas',
+                    value: '210 000 L1 gas + 260 000 L2 gas',
                 },
                 {
                     label: 'Delivery method',
-                    tooltip: 'How the message on the target chain is delivered.',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
                     value: 'Manual'
                 },
             ],
@@ -95,7 +95,7 @@ links:
                 },
                 {
                     label: 'Delivery method',
-                    tooltip: 'How the message on the target chain is delivered.',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
                     value: 'Manual'
                 },
             ],
