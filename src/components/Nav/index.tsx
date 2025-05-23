@@ -6,6 +6,7 @@ import Link from 'next/link'
 import useScrollTo from '@hooks/useScrollTo'
 import classNames from 'classnames'
 import Breadcrumbs from '@components/Breadcrumbs'
+import MCPBanner from '@components/MCPBanner'
 
 const Nav = () => {
     const scrolled = useScrollTo()
@@ -16,6 +17,7 @@ const Nav = () => {
                 [styles.bg]: scrolled,
             })}
         >
+            <MCPBanner />
             <div className={styles.nav} id="nav">
                 <Link href="/">
                     <Typography

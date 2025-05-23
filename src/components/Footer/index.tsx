@@ -97,6 +97,21 @@ const Footer = () => {
                     </Typography>
                     <PlusIcon fill="var(--icon-color)" />
                 </Link>
+                <div className={styles.pipe}>{'|'}</div>
+                <Link
+                    href="https://github.com/LimeChain/rollup-codes-mcp"
+                    target="_blank"
+                    className={styles.defaultButton}
+                >
+                    <Typography
+                        variant={Text.BODY2}
+                        fontWeight={'700'}
+                        marginRight={4}
+                    >
+                        Get MCP
+                    </Typography>
+                    <PlusIcon fill="var(--icon-color)" />
+                </Link>
             </div>
         </div>
     )
