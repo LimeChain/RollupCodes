@@ -10,7 +10,7 @@
     --neutral40: #949494;
     --neutral30: #C3C3C3;
     --neutral20: #E1E1E1;
-    --neutral10: #F1F1F1; 
+    --neutral10: #F1F1F1;
     --neutral5: #F6F6F6;
     --neutral: #ffffff;
 
@@ -58,6 +58,7 @@
     --dropdown-body-background-color: var(--neutral80);
     --dropdown-item-hover-color: var(--neutral70);
     --nav-bg: rgba(0, 0, 0, .6);
+    --mcp-banner-bg: var(--neutral70);
 
     // Sibebar
     --sidebar-item-color: var(--neutral50);
@@ -85,6 +86,7 @@
     --dropdown-body-background-color: var(--neutral10);
     --dropdown-item-hover-color: var(--neutral20);
     --nav-bg: rgba(241, 241, 241, .6);
+    --mcp-banner-bg: var(--neutral100);
 
     // Sibebar
     --sidebar-item-color: var(--neutral40);
@@ -112,9 +114,6 @@ body {
     max-width: 100vw;
     font-size: 14px;
     color: var(--text-color);
-}
-
-body {
     background: var(--background);
 }
 
@@ -143,7 +142,7 @@ a {
     z-index: -1;
     top: 0;
     left: 0;
-    max-width: 100vw;
+    max-width: 100%;
     opacity: .5;
 }
 
@@ -152,7 +151,7 @@ a {
     z-index: -1;
     bottom: 0;
     right: 0;
-    max-width: 100vw;
+    max-width: 100%;
     opacity: .5;
 }
 
@@ -193,7 +192,7 @@ a {
         margin-bottom: 24px;
         color: var(--text-color);
     }
-    
+
     h3 {
         font-size: 32px;
         font-family: var(--font-chakra-petch);
@@ -202,7 +201,7 @@ a {
         margin-bottom: 16px;
         color: var(--text-color);
     }
-    
+
     h4 {
         font-size: 24px;
         font-family: var(--font-chakra-petch);
@@ -211,7 +210,7 @@ a {
         margin-bottom: 16px;
         color: var(--text-color);
     }
-    
+
     h5 {
         font-size: 18px;
         line-height: 158%;
@@ -220,7 +219,7 @@ a {
         margin-bottom: 8px;
         color: var(--text-color);
     }
-    
+
     h6 {
         font-size: 14px;
         line-height: 146%;
@@ -243,12 +242,12 @@ a {
         padding-left: 20px;
         margin-bottom: 24px;
     }
-    
+
     ol {
         padding-left: 20px;
         margin-bottom: 24px;
     }
-    
+
     li {
         font-size: 14px;
         line-height: 146%;

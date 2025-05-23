@@ -20,7 +20,6 @@ interface ILayout {
 const Layout = ({ children, loading, paddingTop }: ILayout) => {
     const { theme } = useTheme()
     const isDarkTheme = ThemeMode[ThemeMode.DARK].toLowerCase() === theme
-
     const [mounted, setMounted] = useState(false)
     // useEffect only runs on the client, so now we can safely show the UI
     useEffect(() => {
@@ -51,7 +50,7 @@ const Layout = ({ children, loading, paddingTop }: ILayout) => {
                 <div
                     className={styles.content}
                     style={{
-                        paddingTop: `${64 + (paddingTop ? paddingTop : 0)}px`,
+                        paddingTop: `${128 + (paddingTop ? paddingTop : 0)}px`,
                     }}
                 >
                     {loading ? <Loading /> : children}

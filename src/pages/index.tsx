@@ -9,6 +9,7 @@ import matter from 'gray-matter'
 import getConfig from 'next/config'
 import Feedback from '@components/Feedback'
 import useScreenModes from '@hooks/useScreenModes'
+import MCPSection from '@components/MCPSection'
 
 interface IHomeProps {
     docs: IDocMeta[]
@@ -18,6 +19,7 @@ const { serverRuntimeConfig } = getConfig()
 
 export default function Home({ docs }: IHomeProps) {
     const { isMobile } = useScreenModes()
+
     return (
         <Layout loading={docs?.length === 0}>
             <Typography
@@ -58,6 +60,7 @@ export default function Home({ docs }: IHomeProps) {
                     <RollupSummaryCard key={`rollup-${index}`} {...docMeta} />
                 ))}
             </Grid>
+            <MCPSection />
             <Feedback />
         </Layout>
     )
