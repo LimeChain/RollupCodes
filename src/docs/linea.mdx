@@ -71,12 +71,12 @@ Linea is a ZK-Rollup that targets EVM compatibility. As it’s a product of Cons
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Ethereum to Linea. In case of automaitic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Linea.',
-                    value: '~66 000 L1 gas + ~71 000 L2 gas (in case of manual delivery)'
+                    value: '45 000 L1 gas'
                 },
                 {
                     label: 'Delivery method',
-                    tooltip: 'How the message on the target chain is delivered. In both automatic and manual delivery, users are waiting for a central unit to add the message hashes on the target chain (~17 minutes). In case of manual delivery users need to claim the message themselves as opposed to automatic',
-                    value: 'Both manual and automatic delivery are supported'
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Automatic'
                 },
             ]
         },
@@ -91,11 +91,11 @@ Linea is a ZK-Rollup that targets EVM compatibility. As it’s a product of Cons
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of executing a message on Ethereum after being sent from Linea. The fee for the prover is paid by the sender on L2.',
-                    value: '~73 000 L2 gas'
+                    value: '60 000 L2 gas + 40 L1 gas'
                 },
                 {
                     label: 'Delivery method',
-                    tooltip: 'How the smart contract on the target chain is called.',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
                     value: 'Manual'
                 },
             ],

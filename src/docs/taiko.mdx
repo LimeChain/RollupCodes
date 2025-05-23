@@ -77,11 +77,11 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Ethereum to Тaiko. In case of automatic claiming on L2 Senders on L1 pay an additional ETH fee determined by market conditions on Taiko.',
-                    value: '~110 000 L1 gas + ~440 000 L2 gas (in case of manual delivery)',
+                    value: '50 000 L1 gas + 550 000 L2 gas (in case of manual delivery)',
                 },
                 {
                     label: 'Delivery method',
-                    tooltip: 'How the message on the target chain is delivered. In case of manual delivery users need to claim the message themselves by presenting merkle inclusion proof',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
                     value: 'Both manual and automatic delivery are supported'
                 },
             ],
@@ -97,11 +97,11 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Taiko to Ethereum. In case of automaitic claiming on L1 Senders on L2 pay an additional ETH fee determined by market conditions on Ethereum.',
-                    value: '~129 000 L2 gas + ~440 000 L1 gas (in case of manual delivery)',
+                    value: '70 000 L2 gas + 550 000 L1 gas (in case of manual delivery)',
                 },
                 {
                     label: 'Delivery method',
-                    tooltip: 'How the message on the target chain is delivered. In both automatic and manual delivery, users are waiting for a prover to generate validity proof for the target chain (max 90 minutes). In case of manual delivery users need to claim the message themselves as opposed to automatic',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
                     value: 'Both manual and automatic delivery are supported'
                 },
             ],

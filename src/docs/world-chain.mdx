@@ -75,6 +75,11 @@ links:
                     tooltip: 'The gas cost of sending a message from Ethereum to the L2. World Chain executes the message with a system address on behalf of the L1 sender. L2 gas is paid by the sender of the message on L1.',
                     value: '~500 000 L1 gas',
                 },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Automatic'
+                },
             ],
         },
         {
@@ -82,13 +87,18 @@ links:
             rows: [
                 {
                     label: 'Latency',
-                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in an World Chain block and sequenced to L1.',
+                    tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a World Chain block and sequenced to L1.',
                     value: '7 days',
                 },
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from World Chain. It is paid by the EOA that initiates the 2 transaction on L1: prove and finalize. The gas cost does not include the cost from the logic triggered by the message.',
-                    value: '~550 000 L1 gas',
+                    value: '70K L2 gas + 470K L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Manual'
                 },
             ],
         },

@@ -67,12 +67,17 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on the Rollup after it is included in the Ethereum block.',
-                    value: '~6-8 minutes',
+                    value: '~15 minutes',
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The L2 gas cost for proving and executing a message from Ethereum on Polygon zkEVM',
-                    value: '95000 L2 gas',
+                    tooltip: 'The gas cost for proving and executing a message from Ethereum on Polygon zkEVM',
+                    value: '220 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Automatic'
                 },
             ],
         },
@@ -86,8 +91,13 @@ links:
                 },
                 {
                     label: 'Cost',
-                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Polygon zkEVM)',
-                    value: ' 95000 L1 gas',
+                    tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from Polygon zkEVM',
+                    value: ' 100 000 L2 gas + 60 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Manual'
                 },
             ],
         },

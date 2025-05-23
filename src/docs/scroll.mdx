@@ -72,7 +72,12 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of sending a message from Ethereum to the L2. Scroll executes the message with a system address on behalf of the L1 sender. There is an additional ETH fee automatically calculated by an L2 gas price oracle to cover gas on the target chain.',
-                    value: '~139 000 L1 gas',
+                    value: '~130 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Automatic'
                 },
             ],
         },
@@ -87,7 +92,12 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely proving and triggering the execution of the message on Ethereum after being sent from Scroll. It is paid by the EOA that initiates the claim TX on L1. The gas cost does not include the cost from the logic triggered by the message.',
-                    value: '~220 000 L2 gas + ~123 000 L1 gas',
+                    value: '125 000 L2 gas + 60 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Manual'
                 },
             ],
         },

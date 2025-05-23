@@ -71,7 +71,12 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of purely sending a message from Ethereum to ZKsync Era, excluding the actual execution that is scheduled to take place on the L2. Senders on L1 pay for the execution of the message on L2. The payment is equivalent to a normal L2 transaction.',
-                    value: 'No added cost',
+                    value: '210 000 L1 gas + 260 000 L2 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Manual'
                 },
             ],
         },
@@ -86,7 +91,12 @@ links:
                 {
                     label: 'Cost',
                     tooltip: 'The gas cost of proving and executing a message on Ethereum after being sent from ZKsync Era',
-                    value: '10 000 L1 gas',
+                    value: '110 000 L2 gas + 140 000 L1 gas',
+                },
+                {
+                    label: 'Delivery method',
+                    tooltip: 'Whether the Rollup itself automatically delivers the message or the user of the messaging protocol has to manually deliver it.',
+                    value: 'Manual'
                 },
             ],
         },
