@@ -7,8 +7,10 @@
     align-items: center;
     border: 1px solid var(--border-color);
     margin: 50px 0;
+    background: radial-gradient(85% 60% at 0% 0%, #C8F236 0%, transparent 100%);
 
     @include mixins.desktop {
+        background: radial-gradient(33.85% 156.08% at 0% 0%, #C8F236 0%, transparent 100%);
         flex-direction: row;
         height: 288px;
         margin: 36px 0 100px;
