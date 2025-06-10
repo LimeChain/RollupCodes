@@ -9,6 +9,7 @@
     padding: 0 16px;
     max-width: 1920px;
     width: 100%;
+    align-self: center;
     @include mixins.tablet {
         padding: 0 64px;
     }
