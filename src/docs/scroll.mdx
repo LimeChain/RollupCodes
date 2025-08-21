@@ -1,6 +1,6 @@
 ---
 title: Scroll
-subtitle: Scroll is a ZK-Rollup that targets bytecode-level compatibility with the Ethereum Virtual Machine. The protocol features a centralised sequencer operated by the protocol team. The zkEVM circuits are based on Ethereum Foundation's Privacy and Scaling Group research work on ZK-EVMs.
+subtitle: Scroll is a ZK-Rollup that targets bytecode-level compatibility with the Ethereum Virtual Machine. The protocol features a centralised sequencer operated by the protocol team. The ZK provers are built using OpenVM.
 labels:
     - ZK-Rollup
     - EVM
@@ -24,7 +24,7 @@ links:
 ---
 
 <Section title="Overview">
-    Scroll is a ZK-Rollup that targets bytecode-level compatibility with the Ethereum Virtual Machine. The protocol features a centralised sequencer operated by the protocol team. The zkEVM circuits are based on Ethereum Foundation's Privacy and Scaling Group research work on zkEVMs.
+    Scroll is a ZK-Rollup that targets bytecode-level compatibility with the Ethereum Virtual Machine. The protocol features a centralised sequencer operated by the protocol team. The ZK provers are built using OpenVM.
     
     ###### Focus
 
@@ -36,9 +36,9 @@ links:
 
 <Section title="General">
 
-    <Parameter name="Block time" value="Irregular* with a target of 3 seconds" tooltip="The rate at which the rollup produces blocks." />
+    <Parameter name="Block time" value="Irregular* with a target of 1 seconds" tooltip="The rate at which the rollup produces blocks." />
 
-    <Parameter name="Gas Limit" value="10 million" tooltip="The gas limit that can be consumed by an L2 block" />
+    <Parameter name="Gas Limit" value="20 million" tooltip="The gas limit that can be consumed by an L2 block" />
 
     <Parameter name="Sequencing Frequency" value="2 - 45 minutes" tooltip="The frequency at which the rollup posts L2 transactions on Ethereum L1. The time varies based on the load of the network. Batches are created and posted once sufficient computation and calldata is produced. The protocol enforces a maximum delay at which batches are posted even though the targets for computation and calldata are not reached. " />
 
@@ -48,7 +48,7 @@ links:
 
     <Parameter name="State Trie" value="Merkle Patricia Trie + Keccak Hashing" tooltip="The data structure used to represent the state of the Rollup along with the hashing algorithm used to compute the root of the trie" />
 
-    <Parameter name="Node Implementations" value={[<Reference key="0" label="l2geth(Go)" url="https://github.com/scroll-tech/go-ethereum" />]} tooltip="The different client implementations of the Rollup" />
+    <Parameter name="Node Implementations" value={[<Reference key="0" label="l2geth (Go)" url="https://github.com/scroll-tech/go-ethereum" />, <Reference key="1" label="scroll-reth (Rust)" url="https://github.com/scroll-tech/reth" />]} tooltip="The different client implementations of the Rollup" />
 
     <Parameter name="Transaction Types" tooltip="The types of transactions supported on the Rollup" />
 
@@ -81,7 +81,7 @@ links:
                 {
                     label: 'Latency',
                     tooltip: 'The time it takes for a message to be made available on Ethereum after being included in a Scroll block and sequenced to L1.',
-                    value: '~30 minutes',
+                    value: '30 - 300 minutes',
                 },
                 {
                     label: 'Cost',
@@ -105,7 +105,6 @@ links:
     | 49 | BLOBHASH | `blobhash(index)` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns versioned hash of the `index`-th blob associated with the current transaction.  <Unsupported /> |
     | 4A | BLOBBASEFEE | `block.blobbasefee` | Unsupported. If the opcode is encountered, the transaction will be reverted. | Returns current block’s blob base fee.  <Unsupported /> |
     | FF | SELFDESTRUCT | `selfdestruct` | Disabled. If the opcode is encountered, the transaction will be reverted. | Halts execution and sends all Ether balance to the specified address. Registers the account for later deletion if executed in the same transaction as the contract was created.<br /><br />Deprecated with [EIP-6059](https://eips.ethereum.org/EIPS/eip-6049) <Unsupported /> |
-    | 40 | BLOCKHASH | `block.blockhash` | Returns `keccak(chain_id [concatenated with] block_number)` for the last 256 blocks. | Get the L1 block hash from block number <Modified /> |
     | 41 | COINBASE | `block.coinbase` | Returns the pre-deployed fee vault contract address `0x5300000000000000000000000000000000000005`. | Get the L1 block’s beneficiary address <Modified /> |
     | 44 | PREVRANDAO | `block.prevnrandao` | Returns 0. | Get the output of the randomness beacon provided by the beacon chain <Modified /> |
 
@@ -119,7 +118,6 @@ links:
     | :----- | :----- | :--------------- | :-------------------- |
     | <Copy label="0x03" value="0x03" /> | `RIPEMD-160` | Not supported | Hash function <Unsupported /> |
     | <Copy label="0x05" value="0x05" /> | `modexp` | Supports only inputs of size less than or equal to 32 bytes (i.e. `u256`). | Arbitrary-precision exponentiation under modulo <Modified /> |
-    | <Copy label="0x08" value="0x08" /> | `ecPairing` | The number of points(sets, pairs) is limited to 4. | Bilinear function on groups on the elliptic curve 'alt_bn128' <Modified /> |
     | <Copy label="0x09" value="0x09" /> | `blake2f` | Not supported | Compression function F used in the BLAKE2 cryptographic hashing algorithm <Unsupported /> |
     | <Copy label="0x0a" value="0x0a" /> | `pointEvaluation` | Not supported | Verifies a KZG proof <Unsupported /> |
     | <Copy label="0x100" value="0x100" /> | `p256Verify` | Performs signature verifications in the secp256r1 elliptic curve | Not supported <Added /> |
@@ -151,20 +149,17 @@ links:
 
     | Method | Params | Rollup Behaviour | Ethereum L1 Behaviour |
     | :----- | :----- | :--------------- | :-------------------- |
-    | `scroll_getBlockTraceByNumberOrHash`| Block number of Hash | Returns execution trace for the block. | N/A <Added /> |
     | `scroll_getL1MessageByIndex` | Integer | Queries an L1 message by its index in the local database. | N/A <Added /> |
-    | `scroll_getFirstQueueIndexNotInL2Block` | Block hash | Returns the first L1 message queue index that is not included in the chain up to and including the provided block | N/A <Added /> |
-    | `scroll_getBlockByHash` | Hash, Flag `fullTx` (boolean) | Returns information about L2 block | N/A <Added /> |
-    | `scroll_getBlockByNumber` | Integer, Flag `fullTx` (boolean) | Returns  information about L2 block. | N/A <Added /> |
-    | `scroll_getSkippedTransaction` | Transaction hash | Returns transaction not included in verification by hash | N/A <Added /> |
-    | `scroll_getSkippedTransactionHashes` | From block, To block | Returns a list of transactions not included in verification | N/A <Added /> |
     
 </Section>
 
 <Section title="Transaction Fees">
 
-    Transaction fees are paid in Ether. Developers must set gasPrice high enough so that the sequencer would include the transaction in a batch. Information on the gas price can be retrieved from the JSON RPC endpoint.
-    The L1 calldata fee (aka L1 data fee) is deducted directly from the sender’s balance before a transaction’s execution, not paid for using gas. If you need to, you can use the predeployed [L1GasOracle](https://scrollscan.com/address/0x5300000000000000000000000000000000000002) to get an estimate of the L1 fee that will be applied for a given transaction.
+    Scroll uses a two-dimensional fee model.
+
+    Execution fee is charged in gas, similar to Ethereum. The L2 base fee is governed by the mechanism described in EIP-1559 (congestion pricing), with an added proving fee component. Developers must set gas price (priority fee) high enough so that the sequencer would include the transaction in an L2 block. Information on the gas price can be retrieved from the JSON RPC endpoint.
+
+    The rollup fee (previously L1 data fee) is deducted directly from the sender’s balance before a transaction’s execution, not paid for using gas. This fee component aims to cover Data Availability and Finalization costs incurred by the sequencer. The fee formula from the Feynman upgrade is: `compression_penalty(tx) * size(tx) * (exec_scalar * l1_base_fee + blob_scalar * l1_blob_base_fee)`. Developers can use the [L1GasOracle](https://scrollscan.com/address/0x5300000000000000000000000000000000000002) predeployed contract to estimate the rollup fee.
 
 </Section>
 
