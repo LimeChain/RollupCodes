@@ -135,8 +135,9 @@ links:
 
     Execution fee is charged in gas, similar to Ethereum. The L2 base fee is governed by the mechanism described in EIP-1559 (congestion pricing), with an added proving fee component. Developers must set gas price (priority fee) high enough so that the sequencer would include the transaction in an L2 block. Information on the gas price can be retrieved from the JSON RPC endpoint.
 
-    The rollup fee (previously L1 data fee) is deducted directly from the sender’s balance before a transaction’s execution, not paid for using gas. This fee component aims to cover Data Availability and Finalization costs incurred by the sequencer. The fee formula from the Feynman upgrade is: `compression_penalty(tx) * size(tx) * (exec_scalar * l1_base_fee + blob_scalar * l1_blob_base_fee)`. Developers can use the [L1GasOracle](https://scrollscan.com/address/0x5300000000000000000000000000000000000002) predeployed contract to estimate the rollup fee.
+    The rollup fee (previously L1 data fee) is deducted directly from the sender’s balance before a transaction’s execution, not paid for using gas. Galileo replaces the previous step-function penalty model with pricing based on the transaction's compressed size and applies a quadratic penalty for large, poorly compressible transactions. Developers can use the [L1GasOracle](https://scrollscan.com/address/0x5300000000000000000000000000000000000002) predeployed contract to estimate the rollup fee.
 
+    Galileo rollup fee formula is `galileo_l1_fee(tx) = fee_per_byte * compressed_size(tx) * (1 + blob_utilization_penalty(tx))`
 </Section>
 
 <Section title="Tools">
