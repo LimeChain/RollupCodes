@@ -3,7 +3,6 @@ import Layout from '@components/Layout'
 import { AvatarSize, IDocMeta, Text, CustomChainSpec, ExecutionEnvironmentsMap } from '@utils/types'
 import { join } from 'path'
 import fs from 'fs'
-import getConfig from 'next/config'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import styles from './styles.module.scss'
@@ -17,7 +16,6 @@ import Feedback from '@components/Feedback'
 import Hero from '@components/Hero'
 import Typography from '@components/Typography'
 import useLastModifiedDate from '@hooks/useLastModifiedDate'
-const { serverRuntimeConfig } = getConfig()
 
 type Path = { params: { slug: string } }
 
@@ -113,7 +111,7 @@ export default function Details({ content, chainSpecs }: IContent) {
 
 const getDocsContent = async (): Promise<DocsContent> => {
     const folder = 'src/docs/'
-    const path = join(serverRuntimeConfig.APP_ROOT, folder)
+    const path = join(process.cwd(), folder)
     const files = fs.readdirSync(path)
     const markdownDocs = files.filter((file) => file.endsWith('.mdx'))
 
@@ -198,7 +196,7 @@ const getChainSpecs = (network: string): ExecutionEnvironmentsMap => {
 
 const getDocsPaths = (): Paths => {
     const folder = 'src/docs/'
-    const path = join(serverRuntimeConfig.APP_ROOT, folder)
+    const path = join(process.cwd(), folder)
     const files = fs.readdirSync(path)
     const markdownDocs = files.filter((file) => file.endsWith('.mdx'))
 

@@ -6,20 +6,17 @@ import Grid from '@components/Grid'
 import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
-import getConfig from 'next/config'
 import Feedback from '@components/Feedback'
 import useScreenModes from '@hooks/useScreenModes'
 import MCPSection from '@components/MCPSection'
+import {InfoBanner} from '@components/InfoBanner/InfoBanner'
 
 interface IHomeProps {
     docs: IDocMeta[]
 }
 
-const { serverRuntimeConfig } = getConfig()
-
 export default function Home({ docs }: IHomeProps) {
     const { isMobile } = useScreenModes()
-
     return (
         <Layout loading={docs?.length === 0}>
             <Typography
@@ -55,6 +52,7 @@ export default function Home({ docs }: IHomeProps) {
                 A comprehensive tool for <b>developers</b> to compare and do
                 in-depth analysis of the expanding Ethereum ecosystem
             </Typography>
+            <InfoBanner className="w-full max-w-[1328px]"/>
             <Grid>
                 {docs?.map((docMeta: IDocMeta, index: number) => (
                     <RollupSummaryCard key={`rollup-${index}`} {...docMeta} />
@@ -73,7 +71,7 @@ export const getStaticProps = async () => {
 
 const getDocsMetadata = async () => {
     const folder = 'src/docs/'
-    const path = join(serverRuntimeConfig.APP_ROOT, folder)
+    const path = join(process.cwd(), folder)
     const files = fs.readdirSync(path)
     const markdownDocs = files.filter((file) => file.endsWith('.mdx'))
 
