@@ -1,0 +1,194 @@
+{
+  "schema_version": "1.0",
+  "network": "world-chain",
+  "chain_id": 480,
+  "last_updated": "2026-01-09",
+
+  "network_display": {
+    "name": "World Chain",
+    "slug": "world-chain",
+    "icon": "world-chain-logo.svg",
+    "color": "#000000",
+    "l2_chain_id": 480,
+    "l1_chain_id": 1,
+    "l1_network_name": "Ethereum",
+    "rpc_url": "https://worldchain-mainnet.g.alchemy.com/public",
+    "explorer_url": "https://worldscan.org"
+  },
+
+  "supported_asset": {
+    "symbol": "ETH",
+    "name": "Ethereum",
+    "decimals": 18,
+    "is_native": true,
+    "l2_address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "l1_address": "0x0000000000000000000000000000000000000000"
+  },
+
+  "bridge_contracts": {
+    "l2_bridge": {
+      "address": "0x4200000000000000000000000000000000000010",
+      "name": "L2StandardBridge",
+      "explorer_url": "https://worldscan.org/address/0x4200000000000000000000000000000000000010"
+    },
+    "l1_portal": {
+      "address": "0xd5ec14a83B7d95BE1eEc2Cf27bAa79d7f8B9380E",
+      "name": "OptimismPortal",
+      "explorer_url": "https://etherscan.io/address/0xd5ec14a83B7d95BE1eEc2Cf27bAa79d7f8B9380E"
+    }
+  },
+
+  "withdrawal_flow": {
+    "total_estimated_time": "7 days",
+    "challenge_period_days": 7,
+    "steps": [
+      {
+        "id": "initiate",
+        "order": 1,
+        "name": "Initiate Withdrawal",
+        "description": "Submit withdrawal transaction on L2",
+        "network": "l2",
+        "contract_address": "0x4200000000000000000000000000000000000010",
+        "contract_name": "L2StandardBridge",
+        "method": "withdraw",
+        "user_action_required": "sign_transaction",
+        "estimated_time": "~2 minutes",
+        "estimated_gas": "~70000 L2 gas",
+        "ui_button_text": "Initiate Withdrawal",
+        "ui_status_messages": {
+          "pending": "Waiting for transaction confirmation...",
+          "success": "Withdrawal initiated successfully!",
+          "error": "Failed to initiate withdrawal. Please try again."
+        }
+      },
+      {
+        "id": "wait_state_root",
+        "order": 2,
+        "name": "Wait for State Root Proposal",
+        "description": "L2 state must be proposed to L1",
+        "network": "l1",
+        "user_action_required": "wait",
+        "estimated_time": "~1 hour",
+        "ui_status_messages": {
+          "pending": "Waiting for state root proposal...",
+          "success": "State root proposed!",
+          "info": "This happens automatically, no action needed."
+        }
+      },
+      {
+        "id": "prove",
+        "order": 3,
+        "name": "Prove Withdrawal",
+        "description": "Submit merkle proof to L1",
+        "network": "l1",
+        "contract_address": "0xd5ec14a83B7d95BE1eEc2Cf27bAa79d7f8B9380E",
+        "contract_name": "OptimismPortal",
+        "method": "proveWithdrawalTransaction",
+        "user_action_required": "sign_transaction",
+        "estimated_time": "~5 minutes",
+        "estimated_gas": "~250000 L1 gas",
+        "ui_button_text": "Prove Withdrawal",
+        "ui_status_messages": {
+          "pending": "Submitting proof...",
+          "success": "Proof submitted successfully!",
+          "error": "Failed to prove withdrawal. Please try again."
+        }
+      },
+      {
+        "id": "wait_challenge",
+        "order": 4,
+        "name": "Challenge Period",
+        "description": "7 day security window",
+        "network": "l1",
+        "user_action_required": "wait",
+        "estimated_time": "7 days",
+        "ui_status_messages": {
+          "pending": "Challenge period in progress...",
+          "success": "Challenge period completed!",
+          "info": "Remaining time: {time_remaining}"
+        }
+      },
+      {
+        "id": "finalize",
+        "order": 5,
+        "name": "Finalize Withdrawal",
+        "description": "Receive funds on L1",
+        "network": "l1",
+        "contract_address": "0xd5ec14a83B7d95BE1eEc2Cf27bAa79d7f8B9380E",
+        "contract_name": "OptimismPortal",
+        "method": "finalizeWithdrawalTransaction",
+        "user_action_required": "sign_transaction",
+        "estimated_time": "~3 minutes",
+        "estimated_gas": "~220000 L1 gas",
+        "ui_button_text": "Finalize Withdrawal",
+        "ui_status_messages": {
+          "pending": "Finalizing withdrawal...",
+          "success": "Withdrawal complete! Funds received on L1.",
+          "error": "Failed to finalize withdrawal. Please try again."
+        }
+      }
+    ]
+  },
+
+  "validation": {
+    "min_withdrawal_amount_eth": "0.001",
+    "max_withdrawal_amount_eth": null,
+    "requires_wallet_connection": true,
+    "supported_wallets": ["metamask", "walletconnect"],
+    "destination_network": {
+      "fixed": true,
+      "chain_id": 1,
+      "name": "Ethereum"
+    }
+  },
+
+  "ui_text": {
+    "page_title": "Exit Hatch",
+    "page_description": "The Exit Hatch is your guaranteed safety mechanism. Initiate a direct, forced withdrawal from any supported L2 back to the Ethereum Mainnet, ensuring you retain full control over your assets.",
+    "connect_wallet_prompt": "Connect your wallet below to begin. Always keep your private keys or seed phrase safe and secure",
+    "tabs": {
+      "new_withdrawal": "New Withdrawal",
+      "pending": "Pending"
+    },
+    "form_labels": {
+      "from": "From",
+      "to": "To",
+      "amount": "Amount",
+      "to_address": "To Address",
+      "balance_label": "Balance:",
+      "max_button": "MAX"
+    },
+    "button_states": {
+      "connect_wallet": "Connect Wallet",
+      "select_network": "Select Network",
+      "enter_amount": "Enter Amount",
+      "move_funds": "Move Funds"
+    },
+    "transaction_modal": {
+      "title": "Transaction Details",
+      "withdrawal_amount_label": "Withdrawal Amount",
+      "source_network_label": "Source Network (L2)",
+      "recipient_network_label": "Recipient Network (L1)",
+      "estimated_time_label": "Estimated Time to Completion",
+      "confirm_button": "Confirm Transaction",
+      "cancel_button": "Cancel"
+    },
+    "notifications": {
+      "connecting_wallet": "Connecting to {wallet_name}",
+      "wallet_connected": "Wallet connected successfully",
+      "transaction_pending": "Transaction pending...",
+      "transaction_confirmed": "Transaction confirmed!"
+    }
+  },
+
+  "documentation_urls": [
+    {
+      "label": "Withdrawal Guide",
+      "url": "https://docs.world.org"
+    },
+    {
+      "label": "Bridge Contracts",
+      "url": "https://docs.world.org"
+    }
+  ]
+}
