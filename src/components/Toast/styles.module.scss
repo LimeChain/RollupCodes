@@ -1,0 +1,146 @@
+// Base toast styles (shared)
+%toastBase {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: var(--dropdown-body-background-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 300px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+
+    &.success {
+        border-left: 4px solid var(--success50);
+    }
+
+    &.error {
+        border-left: 4px solid var(--error50);
+    }
+
+    &.info {
+        border-left: 4px solid var(--neutral40);
+    }
+}
+
+// Fixed position toast (standalone)
+.toast {
+    @extend %toastBase;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 50;
+}
+
+// Toast inside a container (not fixed)
+.toastInContainer {
+    @extend %toastBase;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+
+    path {
+        stroke: var(--success50);
+    }
+}
+
+.iconText {
+    font-size: 16px;
+    font-weight: 600;
+
+    .error & {
+        color: var(--error50);
+    }
+
+    .info & {
+        color: var(--neutral40);
+    }
+}
+
+.content {
+    flex: 1;
+    padding-top: 2px;
+}
+
+.message {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.description {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--neutral50);
+    line-height: 1.5;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+            stroke: var(--text-color);
+        }
+    }
+}
+
+.actionButton {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    color: var(--accent-color);
+    text-align: left;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

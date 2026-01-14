@@ -1,0 +1,119 @@
+@use '@styles/mixins';
+
+.bannerDesktop {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--border-color);
+    padding: 32px 64px;
+    height: 288px;
+    position: relative;
+    overflow: hidden;
+    background: var(--background);
+
+    @include mixins.tablet {
+        display: flex;
+    }
+}
+
+.bannerMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    background: var(--background);
+
+    @include mixins.tablet {
+        display: none;
+    }
+}
+
+.radialGlow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 350px;
+    height: 350px;
+    pointer-events: none;
+}
+
+.radialGlowSmall {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    pointer-events: none;
+}
+
+.leftContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 572px;
+    z-index: 10;
+}
+
+.mobileContent {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+    z-index: 10;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.title {
+    font-family: var(--font-chakra-petch);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.3;
+    letter-spacing: 1.6px;
+    color: var(--text-color);
+}
+
+.description {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--text-color);
+    font-weight: 400;
+}
+
+.buttonDesktop {
+    width: 308px;
+}
+
+.buttonMobile {
+    width: 100%;
+}
+
+.imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 290px;
+    height: 256px;
+    z-index: 10;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.safeImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
