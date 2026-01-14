@@ -136,14 +136,11 @@ export interface NetworkFilterOption {
 export function getNetworkFilterOptions(includeTestnets: boolean = false): NetworkFilterOption[] {
     const networks = includeTestnets ? EXIT_HATCH_NETWORKS : getMainnetNetworks()
 
-    return [
-        { id: 'all', name: 'All Networks', icon: '🌐' },
-        ...networks.map(n => ({
-            id: n.id,
-            name: n.name,
-            icon: n.icon,
-        })),
-    ]
+    return networks.map(n => ({
+        id: n.id,
+        name: n.name,
+        icon: n.icon,
+    }))
 }
 
 /**
