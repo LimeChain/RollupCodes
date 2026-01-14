@@ -1,0 +1,150 @@
+.backendStatus {
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 2px solid;
+
+    &[data-status='online'] {
+        background: #f0fdf4;
+        border-color: #22c55e;
+        color: #166534;
+
+        .indicator {
+            color: #22c55e;
+        }
+    }
+
+    &[data-status='offline'] {
+        background: #fef2f2;
+        border-color: #ef4444;
+        color: #991b1b;
+
+        .indicator {
+            color: #ef4444;
+        }
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.indicator {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.detailsButton {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px 8px;
+    color: inherit;
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.details {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.description {
+    margin: 0 0 16px 0;
+    line-height: 1.6;
+
+    a {
+        color: #2563eb;
+        text-decoration: underline;
+
+        &:hover {
+            color: #1d4ed8;
+        }
+    }
+}
+
+.instructions {
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+
+    strong {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    ol {
+        margin: 8px 0;
+        padding-left: 20px;
+
+        li {
+            margin-bottom: 4px;
+        }
+    }
+
+    code {
+        padding: 2px 6px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+    }
+}
+
+.note {
+    margin: 8px 0 0 0;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.retryButton {
+    padding: 8px 16px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #b91c1c;
+    }
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+    .backendStatus {
+        &[data-status='online'] {
+            background: #064e3b;
+            border-color: #22c55e;
+            color: #d1fae5;
+        }
+
+        &[data-status='offline'] {
+            background: #7f1d1d;
+            border-color: #ef4444;
+            color: #fecaca;
+        }
+    }
+
+    .instructions {
+        background: rgba(255, 255, 255, 0.1);
+
+        code {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    }
+}
