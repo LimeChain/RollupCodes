@@ -1,0 +1,24 @@
+{
+  "name": "exit-hatch-backend",
+  "version": "1.0.0",
+  "description": "Backend service for Optimism Exit Hatch proof generation",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@arbitrum/sdk": "^4.0.0",
+    "@eth-optimism/sdk": "^3.2.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.5.0",
+    "viem": "^2.45.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
