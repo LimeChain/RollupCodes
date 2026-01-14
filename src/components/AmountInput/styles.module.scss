@@ -1,0 +1,107 @@
+.amountInput {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    padding: 16px;
+    padding-right: 120px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+    background: var(--dropdown-body-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+        color: var(--neutral40);
+    }
+
+    &:focus:not(.error) {
+        border-color: var(--text-color);
+    }
+
+    &.error {
+        border-color: var(--error50);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.controls {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.symbol {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    padding-right: 12px;
+    border-right: 1px solid var(--border-color);
+}
+
+.maxButton {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--opposite-text-color);
+    background: var(--opposite-background-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+        opacity: 0.8;
+    }
+
+    &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+}
+
+.balanceRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.balanceLabel {
+    font-size: 14px;
+    color: var(--neutral40);
+}
+
+.balanceValue {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.errorMessage {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--error50);
+    background: var(--error10);
+    border-radius: 4px;
+}
