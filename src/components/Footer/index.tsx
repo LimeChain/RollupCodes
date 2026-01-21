@@ -1,120 +1,263 @@
-import Typography from '@components/Typography'
+import classNames from 'classnames'
+import { useTheme } from 'next-themes'
+import { Mail } from 'lucide-react'
+import RollupCodesLogo from '../../../public/images/RollupCodes-LimeChain-Logo.svg'
+import RollupCodesLogoDark from '../../../public/images/RollupCodes-LimeChain-Logo-Dark.svg'
+import GithubIcon from '../../../public/images/github-icon.svg'
+import XIcon from '../../../public/images/x-icon.svg'
 import styles from './styles.module.scss'
-import { Text } from '@utils/types'
-import Link from 'next/link'
-import PlusIcon from '/public/images/plus-icon.svg'
-import XIcon from '/public/images/x-icon.svg'
-import EmailIcon from '/public/images/email-icon.svg'
-import LimeChainLogo from '/public/images/limechain-logo.svg'
-import GithubIcon from '/public/images/github-icon.svg'
-import useLastModifiedDate from '@hooks/useLastModifiedDate'
 
-const Footer = () => {
-    const lastModifiedDate = useLastModifiedDate()
-
-    return (
-        <div className={styles.footer}>
-            <div className={styles.group}>
-                <Link
-                    href="https://limechain.tech/"
-                    target="_target"
-                    className={styles.defaultButton}
-                >
-                    <Typography
-                        variant={Text.BODY2}
-                        fontWeight={'400'}
-                        marginRight={5}
-                    >
-                        Made by
-                    </Typography>
-                    <LimeChainLogo fill="var(--icon-color)" />
-                </Link>
-                <div className={styles.pipe}>{'|'}</div>
-                <div className={styles.socials}>
-                    <Link
-                        href={'https://x.com/LimeChainHQ'}
-                        target="_target"
-                        className={styles.link}
-                    >
-                        <XIcon fill="var(--icon-color)" />
-                    </Link>
-                    <Link
-                        href={'https://github.com/LimeChain/rollup-codes'}
-                        target="_target"
-                        className={styles.link}
-                    >
-                        <GithubIcon fill="var(--icon-color)" />
-                    </Link>
-                    <Link
-                        href={'mailto:rollup.codes@limechain.tech'}
-                        target="_target"
-                        className={styles.link}
-                    >
-                        <EmailIcon fill="var(--icon-color)" />
-                    </Link>
-                </div>
-                {lastModifiedDate && (
-                    <>
-                        <div className={styles.pipe}>{'|'}</div>
-                        <Typography
-                            variant={Text.BODY2}
-                            fontWeight="400"
-                            color={'var(--neutral50)'}
-                        >
-                            Last Updated {lastModifiedDate}
-                        </Typography>
-                    </>
-                )}
-            </div>
-            <div className={styles.group}>
-                <Link href="/privacy-policy">
-                    <Typography variant={Text.BODY2} fontWeight="400">
-                        Privacy Policy
-                    </Typography>
-                </Link>
-                <div className={styles.pipe}>{'|'}</div>
-                <Link
-                    href="https://github.com/LimeChain/rollup-codes/blob/main/LICENSE"
-                    target="_blank"
-                    className={styles.defaultButton}
-                >
-                    <Typography variant={Text.BODY2} fontWeight="400">
-                        Open-sourced under MIT license
-                    </Typography>
-                </Link>
-                <div className={styles.pipe}>{'|'}</div>
-                <Link
-                    href="https://github.com/LimeChain/rollup-codes"
-                    target="_blank"
-                    className={styles.defaultButton}
-                >
-                    <Typography
-                        variant={Text.BODY2}
-                        fontWeight={'700'}
-                        marginRight={4}
-                    >
-                        Contribute on Github
-                    </Typography>
-                    <PlusIcon fill="var(--icon-color)" />
-                </Link>
-                <div className={styles.pipe}>{'|'}</div>
-                <Link
-                    href="https://github.com/LimeChain/rollup-codes-mcp"
-                    target="_blank"
-                    className={styles.defaultButton}
-                >
-                    <Typography
-                        variant={Text.BODY2}
-                        fontWeight={'700'}
-                        marginRight={4}
-                    >
-                        Get MCP
-                    </Typography>
-                    <PlusIcon fill="var(--icon-color)" />
-                </Link>
-            </div>
-        </div>
-    )
+function Separator() {
+    return <div className={styles.separator} />
 }
 
-export default Footer
+interface FooterProps {
+    className?: string
+}
+
+export function Footer({ className }: FooterProps) {
+    const { theme, setTheme } = useTheme()
+    const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
+
+    return (
+        <footer
+            className={classNames(styles.footer, className)}
+            role="contentinfo"
+            aria-label="Site footer"
+        >
+            {/* Desktop Layout */}
+            <nav
+                className={styles.desktopNav}
+                aria-label="Footer navigation"
+            >
+                {/* Left Section */}
+                <div className={styles.leftSection}>
+                    {/* Made by */}
+                    <div className={styles.madeBy}>
+                        <span className={styles.madeByText}>Made by</span>
+                        {theme === 'light' ? (
+                            <RollupCodesLogoDark />
+                        ) : (
+                            <RollupCodesLogo />
+                        )}
+                    </div>
+
+                    <Separator />
+
+                    {/* Theme Toggle */}
+                    <div className={styles.themeToggle}>
+                        <button
+                            onClick={toggleTheme}
+                            className={styles.themeButton}
+                            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+                            aria-pressed={theme === 'dark'}
+                        >
+                            <div className={styles.toggleTrack}>
+                                <div
+                                    className={classNames(
+                                        styles.toggleIndicator,
+                                        theme === 'dark'
+                                            ? styles.toggleIndicatorDark
+                                            : styles.toggleIndicatorLight
+                                    )}
+                                    aria-hidden="true"
+                                />
+                            </div>
+                        </button>
+                        <span className={styles.themeText} aria-live="polite">
+                            {theme === 'light' ? 'Dark Theme' : 'Light Theme'}
+                        </span>
+                    </div>
+                </div>
+
+                {/* Right Section */}
+                <div className={styles.rightSection}>
+                    {/* Social Icons */}
+                    <div
+                        className={styles.socialIcons}
+                        role="list"
+                        aria-label="Social media links"
+                    >
+                        <a
+                            href="https://twitter.com/limechain"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.socialLink}
+                            aria-label="Follow us on Twitter (opens in new window)"
+                            role="listitem"
+                        >
+                            <XIcon aria-hidden="true" />
+                        </a>
+                        <a
+                            href="https://github.com/LimeChain/rollup-codes"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.socialLink}
+                            aria-label="View source code on GitHub (opens in new window)"
+                            role="listitem"
+                        >
+                            <GithubIcon aria-hidden="true" />
+                        </a>
+                        <a
+                            href="mailto:contact@limechain.tech"
+                            className={styles.socialLink}
+                            aria-label="Contact us via email"
+                            role="listitem"
+                        >
+                            <Mail aria-hidden="true" />
+                        </a>
+                    </div>
+
+                    <Separator />
+
+                    {/* Links */}
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.navLink}
+                    >
+                        Contribute on Github
+                    </a>
+
+                    <Separator />
+
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes-mcp"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.navLink}
+                    >
+                        Get MCP
+                    </a>
+
+                    <Separator />
+
+                    <a href="#" className={styles.navLink}>
+                        Privacy Policy
+                    </a>
+
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes/blob/main/LICENSE"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.navLink}
+                    >
+                        Open-sourced under MIT license
+                    </a>
+                </div>
+            </nav>
+
+            {/* Mobile Layout */}
+            <nav
+                className={styles.mobileNav}
+                aria-label="Footer navigation"
+            >
+                {/* Made by */}
+                <div className={styles.madeBy}>
+                    <span className={styles.madeByText}>Made by</span>
+                    {theme === 'light' ? (
+                        <RollupCodesLogoDark />
+                    ) : (
+                        <RollupCodesLogo />
+                    )}
+                </div>
+
+                {/* Theme Toggle */}
+                <div className={styles.themeToggle}>
+                    <button
+                        onClick={toggleTheme}
+                        className={styles.themeButton}
+                        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+                        aria-pressed={theme === 'dark'}
+                    >
+                        <div className={styles.toggleTrack}>
+                            <div
+                                className={classNames(
+                                    styles.toggleIndicator,
+                                    theme === 'dark'
+                                        ? styles.toggleIndicatorDark
+                                        : styles.toggleIndicatorLight
+                                )}
+                                aria-hidden="true"
+                            />
+                        </div>
+                    </button>
+                    <span className={styles.themeText} aria-live="polite">
+                        {theme === 'light' ? 'Dark Theme' : 'Light Theme'}
+                    </span>
+                </div>
+
+                {/* Social Icons */}
+                <div
+                    className={styles.socialIcons}
+                    role="list"
+                    aria-label="Social media links"
+                >
+                    <a
+                        href="https://twitter.com/limechain"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.socialLink}
+                        aria-label="Follow us on Twitter (opens in new window)"
+                        role="listitem"
+                    >
+                        <XIcon aria-hidden="true" />
+                    </a>
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.socialLink}
+                        aria-label="View source code on GitHub (opens in new window)"
+                        role="listitem"
+                    >
+                        <GithubIcon aria-hidden="true" />
+                    </a>
+                    <a
+                        href="mailto:contact@limechain.tech"
+                        className={styles.socialLink}
+                        aria-label="Contact us via email"
+                        role="listitem"
+                    >
+                        <Mail aria-hidden="true" />
+                    </a>
+                </div>
+
+                {/* Divider */}
+                <div className={styles.divider} />
+
+                {/* Links */}
+                <div className={styles.mobileLinks}>
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.navLink}
+                    >
+                        Contribute on Github
+                    </a>
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes-mcp"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.navLink}
+                    >
+                        Get MCP
+                    </a>
+                    <a href="#" className={styles.navLink}>
+                        Privacy Policy
+                    </a>
+                    <a
+                        href="https://github.com/LimeChain/rollup-codes/blob/main/LICENSE"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.navLink}
+                    >
+                        Open-sourced under MIT license
+                    </a>
+                </div>
+            </nav>
+        </footer>
+    )
+}

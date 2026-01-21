@@ -2,13 +2,13 @@ import { useMemo, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import Typography from '@components/Typography'
 import { Headings, ThemeMode } from '@utils/types'
-import PlusGradientIcon from '/public/images/plus-gradient-icon.svg'
-import MinusGradientIcon from '/public/images/minus-gradient-icon.svg'
-import PlusGrayIcon from '/public/images/plus-gray-icon.svg'
-import MinusGrayIcon from '/public/images/minus-gray-icon.svg'
+import PlusGradientIcon from '../../../public/images/plus-gradient-icon.svg'
+import MinusGradientIcon from '../../../public/images/minus-gradient-icon.svg'
+import PlusGrayIcon from '../../../public/images/plus-gray-icon.svg'
+import MinusGrayIcon from '../../../public/images/minus-gray-icon.svg'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import LinkIcon from '/public/images/link-icon.svg'
+import LinkIcon from '../../../public/images/link-icon.svg'
 
 interface ISection {
     title: string

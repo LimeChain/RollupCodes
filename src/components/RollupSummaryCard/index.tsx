@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { IDocMeta, Text } from '@utils/types'
 import Link from 'next/link'
 import Avatar from '@components/Avatar'
-import ArrowIcon from '/public/images/arrow-icon.svg'
+import ArrowIcon from '../../../public/images/arrow-icon.svg'
 import Labels from '@components/Labels'
 
 const RollupSummaryCard = ({

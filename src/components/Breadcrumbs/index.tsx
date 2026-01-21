@@ -2,7 +2,7 @@ import useBreadcrumbs from '@hooks/useBreadcrumbs'
 import { ICrumb, Text, ThemeMode } from '@utils/types'
 import Link from 'next/link'
 import styles from './styles.module.scss'
-import ChevronRightIcon from 'public/images/chevron-right-icon.svg'
+import ChevronRightIcon from '../../../public/images/chevron-right-icon.svg'
 import Typography from '@components/Typography'
 import { useTheme } from 'next-themes'
 

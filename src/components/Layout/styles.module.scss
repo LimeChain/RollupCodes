@@ -2,4 +2,6 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    min-height: calc(100vh - 128px);
+    padding-bottom: 80px;
 }
