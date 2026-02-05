@@ -37,7 +37,8 @@ export interface WithdrawalProofData {
  */
 export async function isWithdrawalReadyToProve(
     l2TransactionHash: string,
-    l2ChainId: number
+    l2ChainId: number,
+    l1ChainId?: number
 ): Promise<{ ready: boolean; timeRemaining?: string; error?: string; blockNumber?: number }> {
     try {
         // Get withdrawal message to extract block number
@@ -52,8 +53,11 @@ export async function isWithdrawalReadyToProve(
 
         const blockNumber = messageResult.message.blockNumber
 
+        // Determine L1 chain ID if not provided (default mapping)
+        const resolvedL1ChainId = l1ChainId || (l2ChainId === 11155420 ? 11155111 : 1)
+
         // Check if state root has been published for this block
-        const stateRootResult = await checkStateRootPublished(blockNumber, l2ChainId)
+        const stateRootResult = await checkStateRootPublished(blockNumber, l2ChainId, resolvedL1ChainId)
 
         if (stateRootResult.published) {
             return {
@@ -98,12 +102,10 @@ export async function isWithdrawalReadyToProve(
  */
 export async function generateWithdrawalProof(
     l2TransactionHash: string,
-    l2ChainId: number
+    l2ChainId: number,
+    l1ChainId?: number
 ): Promise<{ success: boolean; proofData?: WithdrawalProofData; error?: string }> {
     try {
-        console.log('🔍 Generating proof for transaction:', l2TransactionHash)
-        console.log('📋 Step 1: Fetching withdrawal message from L2...')
-
         // Get withdrawal message
         const messageResult = await getWithdrawalMessage(l2TransactionHash, l2ChainId)
 
@@ -114,13 +116,14 @@ export async function generateWithdrawalProof(
             }
         }
 
-        console.log('✅ Withdrawal message found')
-        console.log('📋 Step 2: Checking state root publication...')
+        // Determine L1 chain ID if not provided (default mapping)
+        const resolvedL1ChainId = l1ChainId || (l2ChainId === 11155420 ? 11155111 : 1)
 
         // Check state root
         const stateRootResult = await checkStateRootPublished(
             messageResult.message.blockNumber,
-            l2ChainId
+            l2ChainId,
+            resolvedL1ChainId
         )
 
         if (!stateRootResult.published) {
@@ -130,58 +133,24 @@ export async function generateWithdrawalProof(
             }
         }
 
-        console.log('✅ State root published')
-        console.log('📋 Step 3: Generating merkle proof...')
-
-        // Determine L1 chain ID based on L2 chain ID
-        const l1ChainId = l2ChainId === 11155420 ? 11155111 : 1
-
         // Try Method 1: Backend service (uses Optimism SDK with ethers v5)
-        console.log('📋 Attempting proof generation via backend service...')
-        const backendResult = await generateProofWithBackend(l2TransactionHash, l2ChainId, l1ChainId)
+        const backendResult = await generateProofWithBackend(l2TransactionHash, l2ChainId, resolvedL1ChainId)
 
         if (backendResult.success && backendResult.proofData) {
-            console.log('✅ Proof generated successfully via backend!')
             return backendResult
         }
-
-        console.log('⚠️  Backend not available, trying Blockscout API...')
 
         // Try Method 2: Blockscout API (public API fallback)
         const blockscoutResult = await generateProofViaBlockscout(l2TransactionHash, l2ChainId)
 
         if (blockscoutResult.success && blockscoutResult.proofData) {
-            console.log('✅ Proof generated successfully via Blockscout!')
             return blockscoutResult
         }
-
-        console.log('❌ Both backend and Blockscout API unavailable')
 
         // Return helpful error with instructions
         return {
             success: false,
-            error: `✅ Withdrawal initiated successfully!
-❌ Backend service unavailable.
-
-📋 Transaction Details:
-- L2 Transaction: ${l2TransactionHash}
-- Block: ${messageResult.message.blockNumber}
-- Status: Ready to prove (state root published)
-
-🔧 To enable proof generation:
-
-Option 1 - Start Backend Service (Recommended):
-1. cd server
-2. npm install
-3. cp .env.example .env
-4. npm start
-5. Backend will run on http://localhost:3001
-
-Option 2 - Use Official Optimism Bridge:
-Visit https://app.optimism.io/bridge to complete the withdrawal
-
-Backend error: ${backendResult.error}
-Blockscout error: ${blockscoutResult.error || 'API not available'}`
+            error: `Backend service unavailable. Transaction ${l2TransactionHash} is ready to prove. Start the backend server or use the official Optimism Bridge at https://app.optimism.io/bridge`
         }
     } catch (error: any) {
         console.error('Error generating proof:', error)
@@ -207,8 +176,6 @@ export async function submitProof(
             return { success: false, error: 'MetaMask not installed' }
         }
 
-        console.log('📋 Submitting proof to OptimismPortal...')
-
         // Check if on correct L1 network
         const provider = new BrowserProvider(window.ethereum)
         const network = await provider.getNetwork()
@@ -229,25 +196,6 @@ export async function submitProof(
             signer
         )
 
-        console.log('✅ Connected to OptimismPortal:', l1PortalAddress)
-        console.log('📋 Estimating gas...')
-
-        // Estimate gas for the transaction
-        try {
-            const gasEstimate = await portal.proveWithdrawalTransaction.estimateGas(
-                proofData.withdrawalTransaction,
-                proofData.l2OutputIndex,
-                proofData.outputRootProof,
-                proofData.withdrawalProof
-            )
-
-            console.log('✅ Gas estimate:', gasEstimate.toString())
-        } catch (estimateError) {
-            console.error('Gas estimation failed:', estimateError)
-        }
-
-        console.log('📋 Sending transaction...')
-
         // Call proveWithdrawalTransaction
         const tx = await portal.proveWithdrawalTransaction(
             proofData.withdrawalTransaction,
@@ -256,21 +204,15 @@ export async function submitProof(
             proofData.withdrawalProof
         )
 
-        console.log('⏳ Transaction sent:', tx.hash)
-        console.log('📋 Waiting for confirmation...')
-
         // Wait for confirmation
         const receipt = await tx.wait()
-
-        console.log('✅ Proof submitted successfully!')
-        console.log('📋 Transaction hash:', receipt.hash)
 
         return {
             success: true,
             transactionHash: receipt.hash
         }
     } catch (error: any) {
-        console.error('❌ Error submitting proof:', error)
+        console.error('Error submitting proof:', error)
 
         let errorMessage = 'Failed to submit proof'
 
@@ -304,8 +246,6 @@ export async function isChallengePeriodCompleteOnChain(
         // TODO: Query OptimismPortal.provenWithdrawals(withdrawalHash)
         // Check if timestamp + FINALIZATION_PERIOD has passed
 
-        console.log('Checking challenge period for:', withdrawalHash)
-
         return {
             complete: false,
             error: 'Challenge period check not yet implemented'
@@ -335,8 +275,6 @@ export async function finalizeWithdrawalOnL1(
             return { success: false, error: 'MetaMask not installed' }
         }
 
-        console.log('📋 Finalizing withdrawal on L1...')
-
         // Check if on correct L1 network
         const provider = new BrowserProvider(window.ethereum)
         const network = await provider.getNetwork()
@@ -357,43 +295,20 @@ export async function finalizeWithdrawalOnL1(
             signer
         )
 
-        console.log('✅ Connected to OptimismPortal:', l1PortalAddress)
-        console.log('📋 Estimating gas...')
-
-        // Estimate gas for the transaction
-        try {
-            const gasEstimate = await portal.finalizeWithdrawalTransaction.estimateGas(
-                withdrawalTransaction
-            )
-
-            console.log('✅ Gas estimate:', gasEstimate.toString())
-        } catch (estimateError) {
-            console.error('Gas estimation failed:', estimateError)
-        }
-
-        console.log('📋 Sending finalization transaction...')
-
         // Call finalizeWithdrawalTransaction
         const tx = await portal.finalizeWithdrawalTransaction(
             withdrawalTransaction
         )
 
-        console.log('⏳ Transaction sent:', tx.hash)
-        console.log('📋 Waiting for confirmation...')
-
         // Wait for confirmation
         const receipt = await tx.wait()
-
-        console.log('✅ Withdrawal finalized successfully!')
-        console.log('🎉 Funds have been received on L1!')
-        console.log('📋 Transaction hash:', receipt.hash)
 
         return {
             success: true,
             transactionHash: receipt.hash
         }
     } catch (error: any) {
-        console.error('❌ Error finalizing withdrawal:', error)
+        console.error('Error finalizing withdrawal:', error)
 
         let errorMessage = 'Failed to finalize withdrawal'
 

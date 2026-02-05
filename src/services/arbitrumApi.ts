@@ -46,8 +46,6 @@ export async function getArbitrumWithdrawalMessage(
             return { success: false, error: `Unsupported Arbitrum chain ID: ${l2ChainId}` }
         }
 
-        console.log('🔍 Fetching Arbitrum withdrawal message for tx:', txHash)
-
         // Fetch transaction receipt
         const response = await fetch(rpcUrl, {
             method: 'POST',
@@ -108,15 +106,13 @@ export async function getArbitrumWithdrawalMessage(
             data: '0x'
         }
 
-        console.log('✅ Found Arbitrum withdrawal message:', message)
-
         return {
             success: true,
             message
         }
 
     } catch (error: any) {
-        console.error('❌ Error fetching Arbitrum withdrawal message:', error)
+        console.error('Error fetching Arbitrum withdrawal message:', error)
         return {
             success: false,
             error: error.message || 'Failed to fetch withdrawal message'
@@ -152,12 +148,6 @@ export async function checkChallengePeriodPassed(
         const currentBlock = parseInt(data.result, 16)
         const blocksSinceWithdrawal = currentBlock - l2BlockNumber
 
-        console.log('📊 Challenge period check:', {
-            currentBlock,
-            withdrawalBlock: l2BlockNumber,
-            blocksSince: blocksSinceWithdrawal
-        })
-
         // Arbitrum challenge period: 7 days
         // Assuming ~13 second block time on Arbitrum: 7 days * 24 hours * 60 min * 60 sec / 13 = ~46,523 blocks
         const blocksRequired = 46523
@@ -177,7 +167,7 @@ export async function checkChallengePeriodPassed(
         }
 
     } catch (error: any) {
-        console.error('❌ Error checking challenge period:', error)
+        console.error('Error checking challenge period:', error)
         return {
             passed: false,
             error: error.message || 'Failed to check challenge period'
@@ -195,8 +185,6 @@ export async function getOutboxProofData(
     l1ChainId: number = 1
 ): Promise<{ success: boolean; proofData?: OutboxProofData; error?: string }> {
     try {
-        console.log('🔍 Fetching outbox proof data for tx:', txHash)
-
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'
 
         // Call backend to generate proof
@@ -232,7 +220,7 @@ export async function getOutboxProofData(
         }
 
     } catch (error: any) {
-        console.error('❌ Error fetching outbox proof:', error)
+        console.error('Error fetching outbox proof:', error)
         return {
             success: false,
             error: error.message || 'Failed to fetch outbox proof data'
@@ -268,7 +256,7 @@ export async function isArbitrumWithdrawalReadyToExecute(
         return { ready: true }
 
     } catch (error: any) {
-        console.error('❌ Error checking withdrawal readiness:', error)
+        console.error('Error checking withdrawal readiness:', error)
         return {
             ready: false,
             error: error.message || 'Failed to check withdrawal readiness'

@@ -50,7 +50,7 @@
         "network": "l2",
         "contract_address": "0x0000000000000000000000000000000000000064",
         "contract_name": "ArbSys",
-        "method": "sendTxToL1",
+        "method": "withdrawEth",
         "user_action_required": "sign_transaction",
         "estimated_time": "~2 minutes",
         "estimated_gas": "~65000 L2 gas",

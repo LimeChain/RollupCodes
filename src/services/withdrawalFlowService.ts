@@ -19,10 +19,14 @@ export async function executeProveWithdrawal(
     withdrawal: StoredWithdrawal
 ): Promise<{ success: boolean; transactionHash?: string; error?: string }> {
     try {
+        // Get L1 chain ID from withdrawal data
+        const l1ChainId = withdrawal.targetChainId || withdrawal.destinationChainId || 1
+
         // Step 1: Check if ready to prove
         const readiness = await isWithdrawalReadyToProve(
             withdrawal.transactionHash,
-            withdrawal.sourceChainId
+            withdrawal.sourceChainId,
+            l1ChainId
         )
 
         if (!readiness.ready) {
@@ -33,7 +37,7 @@ export async function executeProveWithdrawal(
         }
 
         // Step 2: Switch to L1 network
-        const switchResult = await switchToNetwork(123)
+        const switchResult = await switchToNetwork(l1ChainId)
         if (!switchResult.success) {
             return {
                 success: false,
@@ -47,7 +51,8 @@ export async function executeProveWithdrawal(
         // Step 3: Generate proof
         const proofResult = await generateWithdrawalProof(
             withdrawal.transactionHash,
-            withdrawal.sourceChainId
+            withdrawal.sourceChainId,
+            l1ChainId
         )
 
         if (!proofResult.success || !proofResult.proofData) {
@@ -60,8 +65,8 @@ export async function executeProveWithdrawal(
         // Step 4: Submit proof to L1
         const submitResult = await submitProof(
             proofResult.proofData,
-            "l1PortalAddress",
-            123
+            withdrawal.l1PortalAddress || '',
+            l1ChainId
         )
 
         if (submitResult.success && submitResult.transactionHash) {
@@ -110,8 +115,11 @@ export async function executeFinalizeWithdrawal(
             }
         }
 
+        // Get L1 chain ID from withdrawal data
+        const l1ChainId = withdrawal.targetChainId || withdrawal.destinationChainId || 1
+
         // Step 2: Switch to L1 network
-        const switchResult = await switchToNetwork(123)
+        const switchResult = await switchToNetwork(l1ChainId)
         if (!switchResult.success) {
             return {
                 success: false,
@@ -128,14 +136,14 @@ export async function executeFinalizeWithdrawal(
         const finalizeResult = await finalizeWithdrawalOnL1(
             {
                 nonce: BigInt(0),
-                sender: "fromAddress",
+                sender: withdrawal.fromAddress || '',
                 target: withdrawal.toAddress,
                 value: BigInt(0),
                 gasLimit: BigInt(200000),
                 data: '0x'
             },
-            "l1PortalAddress",
-            123
+            withdrawal.l1PortalAddress || '',
+            l1ChainId
         )
 
         if (finalizeResult.success && finalizeResult.transactionHash) {
@@ -173,29 +181,26 @@ export async function checkAndUpdateWithdrawalStatus(
     withdrawal: StoredWithdrawal
 ): Promise<StoredWithdrawal> {
     try {
-        console.log('🔍 Checking withdrawal status for:', withdrawal.transactionHash)
-        console.log('📋 Current status:', withdrawal.status)
+        // Get L1 chain ID from withdrawal data
+        const l1ChainId = withdrawal.targetChainId || withdrawal.destinationChainId || 1
 
         switch (withdrawal.status) {
             case 'initiated':
             case 'waiting_state_root':
                 // Check if ready to prove
-                console.log('📋 Checking if ready to prove...')
                 const readiness = await isWithdrawalReadyToProve(
                     withdrawal.transactionHash,
-                    withdrawal.sourceChainId
+                    withdrawal.sourceChainId,
+                    l1ChainId
                 )
-                console.log('📋 Readiness result:', readiness)
 
                 if (readiness.ready) {
-                    console.log('✅ Withdrawal is ready to prove! Updating status...')
                     updateWithdrawalStatus(withdrawal.id, 'ready_to_prove', {
                         stateRootPublishedAt: Date.now(),
                         currentStep: 3
                     })
                     return { ...withdrawal, status: 'ready_to_prove', currentStep: 3 }
                 } else {
-                    console.log('⏳ Not ready yet:', readiness.timeRemaining || readiness.error)
                     if (withdrawal.status === 'initiated') {
                         updateWithdrawalStatus(withdrawal.id, 'waiting_state_root', {
                             currentStep: 2
@@ -261,8 +266,6 @@ export async function checkAndUpdateWithdrawalStatusUniversal(
 ): Promise<StoredWithdrawal> {
     const rollupType = withdrawal.rollupType || 'optimism'
 
-    console.log(`🔍 Checking ${rollupType} withdrawal status for:`, withdrawal.transactionHash)
-
     switch (rollupType) {
         case 'arbitrum':
             return await checkAndUpdateArbitrumWithdrawalStatus(withdrawal)
@@ -283,16 +286,20 @@ export async function executeWithdrawalStep(
 ): Promise<{ success: boolean; transactionHash?: string; error?: string }> {
     const rollupType = withdrawal.rollupType || 'optimism'
 
-    console.log(`🎯 Executing ${rollupType} withdrawal step:`, stepId)
-
     switch (rollupType) {
         case 'arbitrum':
             if (stepId === 'finalize' || stepId === 'execute') {
+                if (!withdrawal.outboxAddress) {
+                    return {
+                        success: false,
+                        error: 'Outbox address not configured for this withdrawal'
+                    }
+                }
                 return await executeArbitrumWithdrawalOnL1(
                     withdrawal.id,
                     withdrawal.transactionHash,
                     withdrawal.sourceChainId,
-                    withdrawal.outboxAddress || '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'
+                    withdrawal.outboxAddress
                 )
             }
             return {

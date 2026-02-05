@@ -42,8 +42,6 @@ export async function initiateArbitrumWithdrawalFlow(
     l1ChainId: number
 ): Promise<{ success: boolean; withdrawalId?: string; error?: string }> {
     try {
-        console.log('📤 Starting Arbitrum withdrawal flow...')
-
         // Initiate withdrawal
         const result = await initiateArbitrumWithdrawal({
             amount,
@@ -75,11 +73,6 @@ export async function initiateArbitrumWithdrawalFlow(
 
         saveWithdrawal(withdrawal)
 
-        console.log('✅ Arbitrum withdrawal initiated:', {
-            withdrawalId,
-            transactionHash: result.transactionHash
-        })
-
         // Update status to waiting_challenge after a brief delay
         setTimeout(() => {
             updateWithdrawalStatus(withdrawalId, 'waiting_challenge' as any, {
@@ -93,7 +86,7 @@ export async function initiateArbitrumWithdrawalFlow(
         }
 
     } catch (error: any) {
-        console.error('❌ Error in Arbitrum withdrawal flow:', error)
+        console.error('Error in Arbitrum withdrawal flow:', error)
         return {
             success: false,
             error: error.message || 'Failed to initiate withdrawal flow'
@@ -111,8 +104,6 @@ export async function executeArbitrumWithdrawalOnL1(
     outboxAddress: string
 ): Promise<{ success: boolean; transactionHash?: string; error?: string }> {
     try {
-        console.log('📥 Executing Arbitrum withdrawal on L1...')
-
         // Check if ready to execute
         const readinessCheck = await isArbitrumWithdrawalReadyToExecute(txHash, l2ChainId)
 
@@ -163,18 +154,13 @@ export async function executeArbitrumWithdrawalOnL1(
             finalTransactionHash: result.transactionHash
         })
 
-        console.log('✅ Arbitrum withdrawal completed on L1:', {
-            withdrawalId,
-            transactionHash: result.transactionHash
-        })
-
         return {
             success: true,
             transactionHash: result.transactionHash
         }
 
     } catch (error: any) {
-        console.error('❌ Error executing Arbitrum withdrawal:', error)
+        console.error('Error executing Arbitrum withdrawal:', error)
         updateWithdrawalStatus(withdrawalId, 'failed' as any)
         return {
             success: false,
@@ -189,9 +175,6 @@ export async function executeArbitrumWithdrawalOnL1(
 export async function checkAndUpdateArbitrumWithdrawalStatus(
     withdrawal: StoredWithdrawal
 ): Promise<StoredWithdrawal> {
-    console.log('🔍 Checking Arbitrum withdrawal status for:', withdrawal.transactionHash)
-    console.log('📋 Current status:', withdrawal.status)
-
     try {
         switch (withdrawal.status) {
             case 'initiated':
@@ -203,7 +186,6 @@ export async function checkAndUpdateArbitrumWithdrawalStatus(
                 )
 
                 if (readiness.ready) {
-                    console.log('✅ Challenge period complete! Ready to execute on L1')
                     updateWithdrawalStatus(withdrawal.id, 'ready_to_execute' as any, {
                         challengePassedAt: Date.now(),
                         currentStep: 3
@@ -213,27 +195,19 @@ export async function checkAndUpdateArbitrumWithdrawalStatus(
                         status: 'ready_to_execute' as any,
                         currentStep: 3
                     }
-                } else {
-                    console.log('⏳ Still in challenge period:', readiness.error)
                 }
                 break
 
             case 'ready_to_execute':
-                console.log('✅ Withdrawal is ready to execute on L1')
-                break
-
             case 'completed':
-                console.log('✅ Withdrawal already completed')
+                // No action needed
                 break
-
-            default:
-                console.log('ℹ️ Status:', withdrawal.status)
         }
 
         return withdrawal
 
     } catch (error: any) {
-        console.error('❌ Error checking Arbitrum withdrawal status:', error)
+        console.error('Error checking Arbitrum withdrawal status:', error)
         return withdrawal
     }
 }

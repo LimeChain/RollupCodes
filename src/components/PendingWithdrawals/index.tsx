@@ -85,7 +85,6 @@ const PendingWithdrawals = ({ walletAddress, currentNetwork }: PendingWithdrawal
                 }
             }
         } catch (error: any) {
-            console.error('Error executing step:', error)
             addToast(error.message || 'Failed to execute step', 'error')
         } finally {
             setExecutingStep(null)
@@ -128,33 +127,17 @@ const PendingWithdrawals = ({ walletAddress, currentNetwork }: PendingWithdrawal
                 <button
                     className={styles.refreshButton}
                     onClick={async () => {
-                        console.log('=== REFRESH STATUS CLICKED ===')
-                        console.log('Number of withdrawals to check:', networkWithdrawals.length)
-
                         addToast('Checking withdrawal statuses...', 'info')
                         let hasUpdates = false
 
                         for (const withdrawal of networkWithdrawals) {
-                            console.log('\n--- Checking withdrawal ---')
-                            console.log('ID:', withdrawal.id)
-                            console.log('TX Hash:', withdrawal.transactionHash)
-                            console.log('Status:', withdrawal.status)
-
                             if (['initiated', 'waiting_state_root', 'proven', 'waiting_challenge'].includes(withdrawal.status)) {
                                 const updated = await checkAndUpdateWithdrawalStatus(withdrawal)
-                                console.log('Updated status:', updated.status)
-
                                 if (updated.status !== withdrawal.status) {
-                                    console.log('✅ Status changed from', withdrawal.status, 'to', updated.status)
                                     hasUpdates = true
-                                } else {
-                                    console.log('⏸️  Status unchanged:', withdrawal.status)
                                 }
                             }
                         }
-
-                        console.log('\n=== REFRESHING UI ===')
-                        console.log('Has updates:', hasUpdates)
 
                         // Always refresh to reload from localStorage
                         refresh()
@@ -164,12 +147,10 @@ const PendingWithdrawals = ({ walletAddress, currentNetwork }: PendingWithdrawal
                         } else {
                             addToast('No status changes', 'info')
                         }
-
-                        console.log('=== REFRESH COMPLETE ===\n')
                     }}
                     type="button"
                 >
-                    🔄 Refresh Status
+                    Refresh Status
                 </button>
             </div>
 
