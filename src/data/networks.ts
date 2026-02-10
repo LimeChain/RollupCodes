@@ -15,6 +15,25 @@ import worldChainConfig from './exit-hatch/world-chain.json'
 
 export type RollupType = 'optimism' | 'arbitrum'
 
+export interface DocumentationUrl {
+    label: string
+    url: string
+}
+
+export interface WithdrawalStep {
+    id: string
+    order: number
+    name: string
+    description: string
+    network: 'l1' | 'l2'
+    contractAddress?: string
+    contractName?: string
+    method?: string
+    userActionRequired: 'sign_transaction' | 'wait'
+    estimatedTime: string
+    estimatedGas?: string
+}
+
 export interface ExitHatchNetwork {
     id: string
     name: string
@@ -33,6 +52,10 @@ export interface ExitHatchNetwork {
     outboxAddress?: string
     // Testnet flag
     isTestnet: boolean
+    // Documentation URLs
+    documentationUrls: DocumentationUrl[]
+    // Withdrawal flow steps
+    withdrawalSteps: WithdrawalStep[]
 }
 
 /**
@@ -59,6 +82,22 @@ function parseNetworkConfig(config: any, isTestnet: boolean = false): ExitHatchN
         arbSysAddress: isArbitrum ? config.bridge_contracts.l2_bridge.address : undefined,
         outboxAddress: isArbitrum ? config.bridge_contracts.l1_outbox?.address : undefined,
         isTestnet,
+        // Documentation URLs
+        documentationUrls: config.documentation_urls || [],
+        // Withdrawal flow steps
+        withdrawalSteps: (config.withdrawal_flow?.steps || []).map((step: any) => ({
+            id: step.id,
+            order: step.order,
+            name: step.name,
+            description: step.description,
+            network: step.network,
+            contractAddress: step.contract_address,
+            contractName: step.contract_name,
+            method: step.method,
+            userActionRequired: step.user_action_required,
+            estimatedTime: step.estimated_time,
+            estimatedGas: step.estimated_gas,
+        })),
     }
 }
 
@@ -90,6 +129,47 @@ export const EXIT_HATCH_NETWORKS: ExitHatchNetwork[] = [
         arbSysAddress: '0x0000000000000000000000000000000000000064',
         outboxAddress: '0x65f07C7D521164a4d5DaC6eB8Fac8DA067A3B78F',
         isTestnet: true,
+        documentationUrls: [
+            { label: 'Withdrawal Guide', url: 'https://docs.arbitrum.io/how-arbitrum-works/arbos/l2-l1-messaging' },
+            { label: 'ArbSys Documentation', url: 'https://docs.arbitrum.io/build-decentralized-apps/precompiles/reference#arbsys' },
+        ],
+        withdrawalSteps: [
+            {
+                id: 'initiate',
+                order: 1,
+                name: 'Initiate Withdrawal',
+                description: 'Call ArbSys to send ETH to L1',
+                network: 'l2',
+                contractAddress: '0x0000000000000000000000000000000000000064',
+                contractName: 'ArbSys',
+                method: 'withdrawEth',
+                userActionRequired: 'sign_transaction',
+                estimatedTime: '~2 minutes',
+                estimatedGas: '~65000 L2 gas',
+            },
+            {
+                id: 'wait_challenge',
+                order: 2,
+                name: 'Challenge Period',
+                description: '7 day security window',
+                network: 'l1',
+                userActionRequired: 'wait',
+                estimatedTime: '7 days',
+            },
+            {
+                id: 'finalize',
+                order: 3,
+                name: 'Execute Withdrawal',
+                description: 'Execute withdrawal on L1 Outbox',
+                network: 'l1',
+                contractAddress: '0x65f07C7D521164a4d5DaC6eB8Fac8DA067A3B78F',
+                contractName: 'Outbox',
+                method: 'executeTransaction',
+                userActionRequired: 'sign_transaction',
+                estimatedTime: '~3 minutes',
+                estimatedGas: '~90000 L1 gas',
+            },
+        ],
     },
 ]
 
@@ -128,6 +208,8 @@ export interface NetworkFilterOption {
     id: string
     name: string
     icon: string
+    documentationUrls?: DocumentationUrl[]
+    withdrawalSteps?: WithdrawalStep[]
 }
 
 /**
@@ -153,5 +235,7 @@ export function getNetworkDisplayOptions(includeTestnets: boolean = false): Netw
         id: n.id,
         name: n.name,
         icon: n.icon,
+        documentationUrls: n.documentationUrls,
+        withdrawalSteps: n.withdrawalSteps,
     }))
 }

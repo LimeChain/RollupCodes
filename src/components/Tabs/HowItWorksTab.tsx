@@ -1,8 +1,43 @@
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react'
 import { useState, useRef, useEffect, useMemo } from 'react'
 import classNames from 'classnames'
-import { getNetworkDisplayOptions } from '@data/networks'
+import { getNetworkDisplayOptions, WithdrawalStep } from '@data/networks'
 import styles from './styles.module.scss'
+
+/**
+ * Generate a detailed description for a withdrawal step based on its data
+ */
+function generateStepDescription(step: WithdrawalStep, networkName: string): string {
+    switch (step.id) {
+        case 'initiate':
+            if (step.contractName === 'ArbSys') {
+                // Arbitrum flow
+                return `To initiate the withdrawal, submit a transaction on ${networkName} (L2) by clicking "Initiate Withdrawal" and signing the request in your wallet. This calls the ${step.method} method on the ${step.contractName} contract (address ${step.contractAddress}). The transaction requires approximately ${step.estimatedGas} and takes ${step.estimatedTime} to confirm.`
+            }
+            // OP Stack flow
+            return `To initiate the withdrawal, submit a transaction on ${networkName} (L2) by clicking "Initiate Withdrawal" and signing the request in your wallet. This calls the ${step.method} method on the ${step.contractName} contract (address ${step.contractAddress}). The transaction requires approximately ${step.estimatedGas} and takes ${step.estimatedTime} to confirm.`
+
+        case 'wait_state_root':
+            return `After initiation, the process enters an automatic waiting phase where the L2 state is proposed to L1. This step requires no user action and takes approximately ${step.estimatedTime} to complete. The status will update from "Waiting for state root proposal" to "State root proposed" when complete.`
+
+        case 'prove':
+            return `Once the state root is proposed, click "Prove Withdrawal" and sign a transaction on L1 to submit a merkle proof. This targets the ${step.contractName} contract (address ${step.contractAddress}) using the ${step.method} method. The transaction costs approximately ${step.estimatedGas} and takes about ${step.estimatedTime} to confirm.`
+
+        case 'wait_challenge':
+            return `The withdrawal enters a mandatory 7-day security window known as the Challenge Period on L1. This is a passive waiting period where no user action is required. The interface will track the remaining time until the challenge period is completed.`
+
+        case 'finalize':
+            if (step.contractName === 'Outbox') {
+                // Arbitrum flow
+                return `To complete the withdrawal and receive funds on L1, click "Execute Withdrawal" and sign the final transaction. This calls the ${step.method} method on the ${step.contractName} contract (address ${step.contractAddress}). The transaction takes approximately ${step.estimatedTime} and costs about ${step.estimatedGas}.`
+            }
+            // OP Stack flow
+            return `To complete the withdrawal and receive funds on L1, click "Finalize Withdrawal" and sign the final transaction. This calls the ${step.method} method on the ${step.contractName} contract (address ${step.contractAddress}). The transaction takes approximately ${step.estimatedTime} and costs about ${step.estimatedGas}.`
+
+        default:
+            return step.description
+    }
+}
 
 interface HowItWorksTabProps {
     isConnected: boolean
@@ -17,38 +52,15 @@ export function HowItWorksTab({ isConnected }: HowItWorksTabProps) {
     const [expandedSteps, setExpandedSteps] = useState<Set<number>>(new Set())
     const networkRef = useRef<HTMLDivElement>(null)
 
-    const steps = [
-        {
-            id: 1,
-            title: 'Initiate Withdrawal',
-            description:
-                'To initiate the withdrawal, the user submits a transaction on the Layer 2 (L2) network by clicking "Initiate Withdrawal" and signing the request in their wallet. This action calls the Withdraw method on the L2StandardBridge contract (address 0x4200...0010) and typically requires about 70,000 L2 gas and roughly two minutes to confirm. During this period, the interface updates with status messages to indicate whether the transaction is pending ("Waiting for transaction confirmation..."), successfully initiated, or if it failed and needs to be retried.',
-        },
-        {
-            id: 2,
-            title: 'Wait for State Root Proposal',
-            description:
-                'After initiation, the process enters an automatic waiting phase where the Layer 2 state is proposed to Layer 1. This step requires no user action and takes approximately one hour to complete, during which the status transitions from "Waiting for state root proposal" to "State root proposed".',
-        },
-        {
-            id: 3,
-            title: 'Prove Withdrawal',
-            description:
-                'Once the state root is proposed, the user must actively click "Prove Withdrawal" and sign a transaction on Layer 1 to submit a merkle proof. This interaction targets the OptimismPortal contract (address 0x0Ec6...Db6Cb) using the proveWithdrawalTransaction method, typically costing around 250,000 L1 gas and taking about five minutes to confirm.',
-        },
-        {
-            id: 4,
-            title: 'Challenge Period',
-            description:
-                'Following the proof submission, the withdrawal enters a mandatory 7-day security window known as the Challenge Period on Layer 1. This acts as a passive waiting period where no user action is required; the interface simply tracks the remaining time until the status updates to "Challenge period completed".',
-        },
-        {
-            id: 5,
-            title: 'Finalize Withdrawal',
-            description:
-                'To conclude the process and receive funds on Layer 1, the user must click "Finalize Withdrawal" and sign a final transaction. This calls the finalizeWithdrawalTransaction method on the OptimismPortal contract, which takes approximately three minutes and costs roughly 220,000 L1 gas to complete the transfer.',
-        },
-    ]
+    // Generate steps from the selected network's withdrawal flow
+    const steps = useMemo(() => {
+        const withdrawalSteps = selectedNetwork.withdrawalSteps || []
+        return withdrawalSteps.map((step) => ({
+            id: step.order,
+            title: step.name,
+            description: generateStepDescription(step, selectedNetwork.name),
+        }))
+    }, [selectedNetwork])
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -165,32 +177,22 @@ export function HowItWorksTab({ isConnected }: HowItWorksTabProps) {
                     aria-label="Additional resources"
                     className={styles.linksNav}
                 >
-                    <a
-                        href="#"
-                        className={styles.externalLink}
-                        aria-label="Withdrawal Guide (opens in new window)"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Withdrawal Guide
-                        <ExternalLink
-                            className={styles.externalLinkIcon}
-                            aria-hidden="true"
-                        />
-                    </a>
-                    <a
-                        href="#"
-                        className={styles.externalLink}
-                        aria-label="L2 Documentation (opens in new window)"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        L2 Documentation
-                        <ExternalLink
-                            className={styles.externalLinkIcon}
-                            aria-hidden="true"
-                        />
-                    </a>
+                    {selectedNetwork.documentationUrls?.map((doc, index) => (
+                        <a
+                            key={index}
+                            href={doc.url}
+                            className={styles.externalLink}
+                            aria-label={`${doc.label} (opens in new window)`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {doc.label}
+                            <ExternalLink
+                                className={styles.externalLinkIcon}
+                                aria-hidden="true"
+                            />
+                        </a>
+                    ))}
                 </nav>
             </div>
 
