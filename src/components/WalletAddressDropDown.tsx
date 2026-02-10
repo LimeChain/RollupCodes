@@ -42,26 +42,28 @@ export function WalletAddressDropdown({ address, onDisconnect, className }: Wall
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
       {/* Wallet Address Display */}
-      <div className="flex items-center gap-1 justify-end">
-        <span 
-          className="text-sm font-normal leading-body text-foreground" 
+      <div className="inline-flex items-center gap-1 justify-end">
+        <span
+          className="text-sm font-normal text-foreground"
+          style={{ lineHeight: '14px' }}
           aria-label={`Connected wallet address: ${address}`}
         >
           {address}
         </span>
-        
+
         {/* Three Dots Icon Button - Only this is clickable */}
         <button
           onClick={(e) => {
             e.stopPropagation()
             setIsOpen(!isOpen)
           }}
-          className="flex items-center justify-center min-w-touch min-h-touch transition-colors duration-200 text-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          style={{ background: 'none', border: 'none', padding: 0, margin: 0, display: 'inline-flex', alignItems: 'center', overflow: 'visible' }}
+          className="cursor-pointer transition-colors duration-200 text-neutral-500 hover:text-neutral-400"
           aria-label="Wallet options menu"
           aria-expanded={isOpen}
           aria-haspopup="menu"
         >
-          <MoreVertical className="w-4 h-4" aria-hidden="true" />
+          <MoreVertical className="w-2 h-2" style={{ transform: 'translateY(3px)' }} aria-hidden="true" />
         </button>
       </div>
       
