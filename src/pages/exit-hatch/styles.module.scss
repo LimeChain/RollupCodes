@@ -417,6 +417,7 @@
     border: none;
     cursor: pointer;
     color: var(--neutral50);
+    padding: 4px 0;
 
     &:hover {
         color: var(--text-color);
@@ -428,6 +429,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    padding: 4px 2px;
 }
 
 .tabBadge {
