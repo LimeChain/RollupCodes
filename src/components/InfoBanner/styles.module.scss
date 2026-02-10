@@ -10,6 +10,7 @@
     position: relative;
     overflow: hidden;
     background: var(--background);
+    margin-bottom: 16px;
 
     @include mixins.tablet {
         display: flex;
@@ -26,6 +27,7 @@
     position: relative;
     overflow: hidden;
     background: var(--background);
+    margin-bottom: 16px;
 
     @include mixins.tablet {
         display: none;

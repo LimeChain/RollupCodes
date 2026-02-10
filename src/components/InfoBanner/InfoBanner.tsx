@@ -47,11 +47,10 @@ export function InfoBanner({ className }: InfoBannerProps) {
                             Exit Hatch
                         </h3>
                         <p className={styles.description}>
-                            RollupCodes now has its own MCP server that feeds
-                            your favorite AI with the latest L2 development
-                            knowledge! Add the RollupCodes MCP to your favorite
-                            AI-powered development tools such as Cursor and
-                            Claude.
+                            Need to withdraw funds from an L2? RollupCodes now
+                            provides a secure and easy way to move your assets
+                            back to Ethereum mainnet, even if the rollup&apos;s
+                            sequencer goes offline.
                         </p>
                     </div>
 
@@ -102,11 +101,10 @@ export function InfoBanner({ className }: InfoBannerProps) {
                             Exit Hatch
                         </h3>
                         <p className={styles.description}>
-                            RollupCodes now has its own MCP server that feeds
-                            your favorite AI with the latest L2 development
-                            knowledge! Add the RollupCodes MCP to your favorite
-                            AI-powered development tools such as Cursor and
-                            Claude.
+                            Need to withdraw funds from an L2? RollupCodes now
+                            provides a secure and easy way to move your assets
+                            back to Ethereum mainnet, even if the rollup&apos;s
+                            sequencer goes offline.
                         </p>
                     </div>
 
