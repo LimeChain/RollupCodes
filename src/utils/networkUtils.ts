@@ -179,7 +179,7 @@ export function onNetworkChange(callback: (chainId: number) => void): () => void
     // Return cleanup function
     return () => {
         if (window.ethereum?.removeListener) {
-            window.ethereum.removeListener('chainChanged', handleChainChanged)
+            window.ethereum.removeListener('chainChanged', handleChainChanged as (...args: unknown[]) => void)
         }
     }
 }
@@ -201,7 +201,7 @@ export function onAccountChange(callback: (accounts: string[]) => void): () => v
     // Return cleanup function
     return () => {
         if (window.ethereum?.removeListener) {
-            window.ethereum.removeListener('accountsChanged', handleAccountsChanged)
+            window.ethereum.removeListener('accountsChanged', handleAccountsChanged as (...args: unknown[]) => void)
         }
     }
 }
