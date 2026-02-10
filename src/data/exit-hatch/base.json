@@ -183,12 +183,8 @@
 
   "documentation_urls": [
     {
-      "label": "Withdrawal Guide",
-      "url": "https://docs.base.org/docs/using-base"
-    },
-    {
-      "label": "Bridge Contracts",
-      "url": "https://docs.base.org/docs/contracts"
+      "label": "Bridges",
+      "url": "https://docs.base.org/chain/bridges-mainnet"
     }
   ]
 }

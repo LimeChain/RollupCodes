@@ -183,12 +183,12 @@
 
   "documentation_urls": [
     {
-      "label": "Withdrawal Guide",
-      "url": "https://docs.optimism.io/builders/app-developers/bridging/messaging"
+      "label": "Standard Bridge",
+      "url": "https://docs.optimism.io/app-developers/bridging/standard-bridge"
     },
     {
-      "label": "Bridge Contracts",
-      "url": "https://docs.optimism.io/builders/app-developers/bridging/standard-bridge"
+      "label": "Bridging Tutorials",
+      "url": "https://docs.optimism.io/app-developers/tutorials/bridging"
     }
   ]
 }

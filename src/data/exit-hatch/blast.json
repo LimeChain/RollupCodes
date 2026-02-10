@@ -183,12 +183,12 @@
 
   "documentation_urls": [
     {
-      "label": "Withdrawal Guide",
-      "url": "https://docs.blast.io/"
+      "label": "Bridges",
+      "url": "https://docs.blast.io/building/bridges/mainnet"
     },
     {
-      "label": "Bridge Contracts",
-      "url": "https://docs.blast.io/"
+      "label": "Contracts",
+      "url": "https://docs.blast.io/building/contracts"
     }
   ]
 }

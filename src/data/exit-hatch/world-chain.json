@@ -183,12 +183,12 @@
 
   "documentation_urls": [
     {
-      "label": "Withdrawal Guide",
-      "url": "https://docs.world.org"
+      "label": "Bridges",
+      "url": "https://docs.world.org/world-chain/providers/bridges"
     },
     {
-      "label": "Bridge Contracts",
-      "url": "https://docs.world.org"
+      "label": "Bridging Tokens",
+      "url": "https://docs.world.org/world-chain/tokens/bridging"
     }
   ]
 }

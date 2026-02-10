@@ -183,12 +183,12 @@
 
   "documentation_urls": [
     {
-      "label": "Withdrawal Guide",
-      "url": "https://docs.inkonchain.com"
+      "label": "Bridges",
+      "url": "https://docs.inkonchain.com/tools/bridges"
     },
     {
-      "label": "Bridge Contracts",
-      "url": "https://docs.inkonchain.com"
+      "label": "Getting Started",
+      "url": "https://docs.inkonchain.com/build/getting-started"
     }
   ]
 }

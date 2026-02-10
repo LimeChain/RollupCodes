@@ -187,12 +187,12 @@
       "url": "https://www.alchemy.com/faucets/ethereum-sepolia"
     },
     {
-      "label": "Optimism Sepolia Faucet",
+      "label": "OP Sepolia Faucet",
       "url": "https://app.optimism.io/faucet"
     },
     {
-      "label": "Withdrawal Guide",
-      "url": "https://docs.optimism.io/builders/app-developers/bridging/messaging"
+      "label": "Standard Bridge",
+      "url": "https://docs.optimism.io/app-developers/bridging/standard-bridge"
     }
   ]
 }
