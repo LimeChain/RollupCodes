@@ -116,7 +116,7 @@ function TabNavigation({
                 >
                     {tab.label}
                     {tab.id === 'pending' &&
-                        claimableCount &&
+                        typeof claimableCount === 'number' &&
                         claimableCount > 0 && (
                             <div className={styles.tabBadge}>
                                 {claimableCount > 9 ? '9+' : claimableCount}
@@ -129,7 +129,7 @@ function TabNavigation({
 }
 
 const TOKENS = [
-    { id: 'eth', name: 'ETH', icon: '💎' },
+    { id: 'eth', name: 'ETH', icon: '/images/ethereum.png' },
 ]
 
 function WithdrawalForm({
@@ -421,9 +421,11 @@ function WithdrawalForm({
                                     onMouseLeave={() => setIsTokenHovered(false)}
                                     className={styles.tokenButton}
                                 >
-                                    <span className={styles.tokenIcon}>
-                                        {selectedToken.icon}
-                                    </span>
+                                    <img
+                                        src={selectedToken.icon}
+                                        alt={selectedToken.name}
+                                        className={styles.tokenIcon}
+                                    />
                                     <span
                                         className={classNames(styles.tokenName, {
                                             [styles.tokenNameHovered]:
@@ -482,13 +484,11 @@ function WithdrawalForm({
                                                     }
                                                 )}
                                             >
-                                                <span
-                                                    className={
-                                                        styles.tokenOptionIcon
-                                                    }
-                                                >
-                                                    {token.icon}
-                                                </span>
+                                                <img
+                                                    src={token.icon}
+                                                    alt={token.name}
+                                                    className={styles.tokenOptionIcon}
+                                                />
                                                 <span
                                                     className={
                                                         styles.tokenOptionName
