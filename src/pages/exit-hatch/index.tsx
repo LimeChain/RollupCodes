@@ -22,6 +22,7 @@ import { checkStateRootPublished, getWithdrawalMessage } from '@services/optimis
 import { StoredWithdrawal } from '../../types/withdrawal'
 import { EXIT_HATCH_NETWORKS, ExitHatchNetwork } from '@data/networks'
 import classNames from 'classnames'
+import { Tooltip } from 'react-tooltip'
 import styles from './styles.module.scss'
 
 
@@ -636,6 +637,8 @@ function WithdrawalForm({
                                     height="16"
                                     viewBox="0 0 16 16"
                                     fill="none"
+                                    data-tooltip-id="estimated-time-tooltip"
+                                    className={styles.infoIcon}
                                 >
                                     <circle
                                         cx="8"
@@ -651,6 +654,22 @@ function WithdrawalForm({
                                         strokeLinecap="round"
                                     />
                                 </svg>
+                                <Tooltip
+                                    id="estimated-time-tooltip"
+                                    place="top"
+                                    style={{
+                                        backgroundColor: 'var(--opposite-background-color)',
+                                        color: 'var(--opposite-text-color)',
+                                        maxWidth: '280px',
+                                        fontSize: '12px',
+                                        lineHeight: '1.4',
+                                        padding: '8px 12px',
+                                        borderRadius: '4px',
+                                        zIndex: 1000,
+                                    }}
+                                >
+                                    This includes a mandatory 7-day challenge period required for security. During this time, the withdrawal can be disputed if fraudulent activity is detected.
+                                </Tooltip>
                             </span>
                             <span className={styles.txDetailsValue}>
                                 {txDetails.estimatedTime}
