@@ -2,7 +2,7 @@
  * PM2 Configuration for Production Deployment
  *
  * Usage:
- *   pm2 start ecosystem.config.js
+ *   pm2 start config/ecosystem.config.js
  *   pm2 logs exit-hatch-backend
  *   pm2 restart exit-hatch-backend
  *   pm2 stop exit-hatch-backend

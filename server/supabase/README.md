@@ -23,7 +23,7 @@ If Supabase is not configured, the app works perfectly with localStorage only.
 ### 2. Run the Database Schema
 
 1. In your Supabase dashboard, go to **SQL Editor**
-2. Copy the contents of `supabase/schema.sql`
+2. Copy the contents of `server/supabase/schema.sql`
 3. Paste and click **Run**
 4. You should see "Success. No rows returned"
 

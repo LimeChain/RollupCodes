@@ -42,9 +42,7 @@ const createLogger = (prefix) => ({
     },
 })
 
-module.exports = {
-    logger: createLogger(),
-    viemLogger: createLogger('viem'),
-    arbitrumLogger: createLogger('arbitrum'),
-    serverLogger: createLogger('server'),
-}
+export const logger = createLogger()
+export const viemLogger = createLogger('viem')
+export const arbitrumLogger = createLogger('arbitrum')
+export const serverLogger = createLogger('server')
