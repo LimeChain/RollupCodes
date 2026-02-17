@@ -20,7 +20,7 @@ import {
 import { getWithdrawalStatus } from '@services/apiClient'
 import { checkStateRootPublished, getWithdrawalMessage } from '@services/optimismApi'
 import { StoredWithdrawal } from '../../types/withdrawal'
-import { EXIT_HATCH_NETWORKS, ExitHatchNetwork } from '@data/networks'
+import { ExitHatchNetwork, getActiveNetworks } from '@data/networks'
 import classNames from 'classnames'
 import { Tooltip } from 'react-tooltip'
 import styles from './styles.module.scss'
@@ -170,7 +170,7 @@ function WithdrawalForm({
     const [isTokenOpen, setIsTokenOpen] = useState(false)
     const [isTokenHovered, setIsTokenHovered] = useState(false)
     const [selectedNetwork, setSelectedNetwork] = useState<
-        (typeof EXIT_HATCH_NETWORKS)[0] | null
+        ExitHatchNetwork | null
     >(null)
     const [selectedToken, setSelectedToken] = useState(TOKENS[0])
 
@@ -323,7 +323,7 @@ function WithdrawalForm({
                         {/* Network Dropdown */}
                         {isNetworkOpen && (
                             <div className={styles.networkDropdown}>
-                                {EXIT_HATCH_NETWORKS.map((network) => (
+                                {getActiveNetworks().map((network) => (
                                     <button
                                         key={network.id}
                                         onClick={async () => {

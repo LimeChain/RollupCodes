@@ -13,6 +13,8 @@ import inkConfig from './exit-hatch/ink.json'
 import soneiumConfig from './exit-hatch/soneium.json'
 import worldChainConfig from './exit-hatch/world-chain.json'
 
+export const TESTNETS_ENABLED = process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+
 export type RollupType = 'optimism' | 'arbitrum'
 
 export interface DocumentationUrl {
@@ -172,6 +174,13 @@ export const EXIT_HATCH_NETWORKS: ExitHatchNetwork[] = [
         ],
     },
 ]
+
+/**
+ * Get active networks based on TESTNETS_ENABLED flag
+ */
+export function getActiveNetworks(): ExitHatchNetwork[] {
+    return TESTNETS_ENABLED ? EXIT_HATCH_NETWORKS : getMainnetNetworks()
+}
 
 /**
  * Get mainnet networks only

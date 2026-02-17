@@ -32,8 +32,8 @@ export function PendingTransactionsTab({
     onClaimTransaction,
     submittingTxIds,
 }: PendingTransactionsTabProps) {
-    // Get network filter options from shared config (includes testnets for filtering)
-    const NETWORKS = useMemo(() => getNetworkFilterOptions(true), [])
+    // Get network filter options from shared config
+    const NETWORKS = useMemo(() => getNetworkFilterOptions(), [])
     const [selectedNetwork, setSelectedNetwork] = useState(NETWORKS[0])
     const [isNetworkOpen, setIsNetworkOpen] = useState(false)
     const [isNetworkHovered, setIsNetworkHovered] = useState(false)
