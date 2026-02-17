@@ -7,10 +7,6 @@ import GithubIcon from '../../../public/images/github-icon.svg'
 import XIcon from '../../../public/images/x-icon.svg'
 import styles from './styles.module.scss'
 
-function Separator() {
-    return <div className={styles.separator} />
-}
-
 interface FooterProps {
     className?: string
 }
@@ -41,8 +37,6 @@ export function Footer({ className }: FooterProps) {
                             <RollupCodesLogo />
                         )}
                     </div>
-
-                    <Separator />
 
                     {/* Theme Toggle */}
                     <div className={styles.themeToggle}>
@@ -108,8 +102,6 @@ export function Footer({ className }: FooterProps) {
                         </a>
                     </div>
 
-                    <Separator />
-
                     {/* Links */}
                     <a
                         href="https://github.com/LimeChain/rollup-codes"
@@ -120,8 +112,6 @@ export function Footer({ className }: FooterProps) {
                         Contribute on Github
                     </a>
 
-                    <Separator />
-
                     <a
                         href="https://github.com/LimeChain/rollup-codes-mcp"
                         target="_blank"
@@ -130,8 +120,6 @@ export function Footer({ className }: FooterProps) {
                     >
                         Get MCP
                     </a>
-
-                    <Separator />
 
                     <a href="#" className={styles.navLink}>
                         Privacy Policy
