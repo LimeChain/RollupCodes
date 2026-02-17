@@ -70,7 +70,7 @@ export function InfoBanner({ className }: InfoBannerProps) {
                 <div className={styles.imageContainer}>
                     <div className={styles.imageWrapper}>
                         <img
-                            src="/images/RollupCodes-Safe-Image.png"
+                            src="/images/Tactical-Armadilo-Smaller.png"
                             alt="Secure vault illustration representing the Exit Hatch safety mechanism"
                             className={styles.safeImage}
                         />
@@ -124,7 +124,7 @@ export function InfoBanner({ className }: InfoBannerProps) {
                 <div className={styles.imageContainer}>
                     <div className={styles.imageWrapper}>
                         <img
-                            src="/images/RollupCodes-Safe-Image.png"
+                            src="/images/Tactical-Armadilo-Smaller..png"
                             alt="Secure vault illustration representing the Exit Hatch safety mechanism"
                             className={styles.safeImage}
                         />
