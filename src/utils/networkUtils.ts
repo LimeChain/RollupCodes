@@ -129,39 +129,6 @@ export async function addNetwork(chainId: number): Promise<{ success: boolean; e
 }
 
 /**
- * Get balance for a specific address on current network
- */
-export async function getBalance(address: string): Promise<string | null> {
-    if (typeof window.ethereum === 'undefined') {
-        return null
-    }
-
-    try {
-        const provider = new BrowserProvider(window.ethereum)
-        const balance = await provider.getBalance(address)
-        return balance.toString()
-    } catch (error) {
-        console.error('Error fetching balance:', error)
-        return null
-    }
-}
-
-/**
- * Get network name from chain ID
- */
-export function getNetworkName(chainId: number): string {
-    return NETWORK_CONFIGS[chainId]?.chainName || `Unknown Network (${chainId})`
-}
-
-/**
- * Check if a chain ID is a testnet
- */
-export function isTestnet(chainId: number): boolean {
-    const testnets = [11155111, 11155420, 5, 420, 84531, 421613]
-    return testnets.includes(chainId)
-}
-
-/**
  * Listen for network changes
  */
 export function onNetworkChange(callback: (chainId: number) => void): () => void {

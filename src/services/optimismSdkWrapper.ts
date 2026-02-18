@@ -16,15 +16,14 @@ export async function generateProofWithBackend(
     l2ChainId: number,
     l1ChainId: number
 ): Promise<{ success: boolean; proofData?: WithdrawalProofData; error?: string }> {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'
-    const isDev = process.env.NODE_ENV !== 'production'
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''
 
     // Check if backend is reachable
     try {
         const controller = new AbortController()
         const timeoutId = setTimeout(() => controller.abort(), 5000)
 
-        const healthCheck = await fetch(`${backendUrl}/health`, {
+        const healthCheck = await fetch(`${backendUrl}/api/health`, {
             method: 'GET',
             signal: controller.signal
         })
@@ -34,17 +33,13 @@ export async function generateProofWithBackend(
         if (!healthCheck.ok) {
             return {
                 success: false,
-                error: isDev
-                    ? `Backend server is not healthy. Please start the backend:\n1. cd server\n2. npm install\n3. npm run dev`
-                    : 'Backend service unavailable. Please try again later.'
+                error: 'Backend service unavailable. Please try again later.'
             }
         }
     } catch (healthError: any) {
         return {
             success: false,
-            error: isDev
-                ? `Cannot connect to backend at ${backendUrl}\n\nTo start it:\n1. cd server\n2. npm install\n3. npm run dev`
-                : 'Unable to connect to backend service. Please try again later.'
+            error: 'Unable to connect to backend service. Please try again later.'
         }
     }
 

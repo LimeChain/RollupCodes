@@ -2,7 +2,7 @@
  * API Client for communicating with the Exit Hatch backend server
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || ''
 
 interface ApiResponse<T> {
     success: boolean
@@ -225,7 +225,7 @@ export interface HealthCheckResponse {
  * Check if the backend server is running
  */
 export async function checkServerHealth(): Promise<ApiResponse<HealthCheckResponse>> {
-    return apiRequest<HealthCheckResponse>('/health', {
+    return apiRequest<HealthCheckResponse>('/api/health', {
         method: 'GET',
     })
 }

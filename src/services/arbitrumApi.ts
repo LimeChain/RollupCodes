@@ -185,7 +185,7 @@ export async function getOutboxProofData(
     l1ChainId: number = 1
 ): Promise<{ success: boolean; proofData?: OutboxProofData; error?: string }> {
     try {
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''
 
         // Call backend to generate proof
         const response = await fetch(`${backendUrl}/api/arbitrum/withdrawal/generate-proof`, {
