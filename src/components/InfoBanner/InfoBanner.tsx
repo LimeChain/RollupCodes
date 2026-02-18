@@ -66,13 +66,17 @@ export function InfoBanner({ className }: InfoBannerProps) {
                     </Link>
                 </div>
 
-                {/* Right Content - Safe Image */}
+                {/* Right Content - Armadillo Image */}
                 <div className={styles.imageContainer}>
                     <div className={styles.imageWrapper}>
                         <img
-                            src="/images/Tactical-Armadilo-Smaller.png"
-                            alt="Secure vault illustration representing the Exit Hatch safety mechanism"
-                            className={styles.safeImage}
+                              src={
+                                theme === 'light'
+                                    ? '/images/Tactical-Armadillo-Smaller.png'
+                                    : '/images/Tactical-Armadillo-Smaller-Dark.png'
+                            }
+                            alt="Armadillo mascot"
+                            className={styles.armadillo}
                         />
                     </div>
                 </div>
@@ -120,13 +124,28 @@ export function InfoBanner({ className }: InfoBannerProps) {
                     </Link>
                 </div>
 
-                {/* Safe Image */}
+                {/* Armadillo Image */}
                 <div className={styles.imageContainer}>
                     <div className={styles.imageWrapper}>
                         <img
-                            src="/images/Tactical-Armadilo-Smaller..png"
-                            alt="Secure vault illustration representing the Exit Hatch safety mechanism"
-                            className={styles.safeImage}
+                            src={
+                                theme === 'light'
+                                    ? '/images/Tactical-Armadillo-Smaller.png'
+                                    : '/images/Tactical-Armadillo-Smaller-Dark.png'
+                            }
+                            alt="Armadillo mascot"
+                            width={40}
+                            height={40}
+                            className={styles.armadillo}
+                        />
+                        <img
+                            src={
+                                theme === 'light'
+                                    ? '/images/Tactical-Armadillo-Smaller.png'
+                                    : '/images/Tactical-Armadillo-Smaller-Dark.png'
+                            }
+                            alt="Armadillo mascot"
+                            className={styles.armadillo}
                         />
                     </div>
                 </div>
