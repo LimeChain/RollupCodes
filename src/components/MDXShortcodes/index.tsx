@@ -299,6 +299,7 @@ const Table = ({
     data: ChainSpecElementsMap,
     type: string
 }) => {
+    if (!data) return null
     // Only show different data
     const filteredData = Object.entries(data)
         .filter(([_, data]) => data.description !== data.ethDescription)

@@ -124,6 +124,7 @@ const getDocsContent = async (): Promise<DocsContent> => {
             const { data, content } = matter(fileContents)
             const mdxContent = await serialize(content, {
                 mdxOptions: { remarkPlugins: [remarkGfm] },
+                blockJS: false,
             })
 
             const hasDarkLogo = fs.existsSync(
@@ -221,9 +222,6 @@ export async function getStaticProps({
 }: Path): Promise<StaticPropsResult> {
     const { slug } = params
 
-    const contents = await getDocsContent()
-    const content = contents[slug]
-
     const chainSpecs = getChainSpecs(slug)
     const ethChainSpec = getChainSpecs('ethereum')['evm']
 
@@ -248,6 +246,9 @@ export async function getStaticProps({
             chainSpec.system_contracts[address].ethDescription = data.description
         })
     })
+
+    const contents = await getDocsContent()
+    const content = contents[slug]
 
     return { props: { content, chainSpecs } }
 }

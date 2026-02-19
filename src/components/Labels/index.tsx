@@ -32,6 +32,7 @@ const getNetworkColor = (value: string): string => {
 }
 
 const Labels = ({ labels, title }: ILabels) => {
+    if (!labels) return null
     const colors = [
         getRollupFirstColor(title),
         '#69DC6E',

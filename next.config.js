@@ -1,7 +1,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     outputFileTracingRoot: __dirname,
     webpack(config) {
         config.module.rules.push({

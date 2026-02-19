@@ -5,7 +5,6 @@ import { Inter, Chakra_Petch, Roboto_Mono } from 'next/font/google'
 import classNames from 'classnames'
 import Head from 'next/head'
 import Googleanalytics from '@components/GoogleAnalytics'
-import ErrorBoundary from '@components/ErrorBoundary'
 
 const robotoMono = Roboto_Mono({
     subsets: ['latin'],
@@ -96,7 +95,6 @@ export default function App({ Component, pageProps }: AppProps) {
                         name="viewport"
                         content="width=device-width, initial-scale=1"
                     />
-                    c
                 </Head>
                 <style jsx global>{`
                     :root {
@@ -107,11 +105,9 @@ export default function App({ Component, pageProps }: AppProps) {
                         font-family: ${inter.style.fontFamily};
                     }
                 `}</style>
-                <ErrorBoundary>
-                    <main className={classNames('main')}>
-                        <Component {...pageProps} />
-                    </main>
-                </ErrorBoundary>
+                <main className={classNames('main')}>
+                    <Component {...pageProps} />
+                </main>
             </ThemeProvider>
         </>
     )
