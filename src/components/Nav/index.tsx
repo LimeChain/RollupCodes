@@ -1,41 +1,98 @@
-import ThemeSwitch from '@components/ThemeSwitch'
-import styles from './styles.module.scss'
-import Typography from '@components/Typography'
-import { Font, Headings } from '@utils/types'
-import Link from 'next/link'
-import useScrollTo from '@hooks/useScrollTo'
 import classNames from 'classnames'
-import Breadcrumbs from '@components/Breadcrumbs'
-import MCPBanner from '@components/MCPBanner'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
+import ChevronRightIcon from '../../../public/images/chevron-right-icon.svg'
+import styles from './styles.module.scss'
 
-const Nav = () => {
-    const scrolled = useScrollTo()
-    const { pathname } = useRouter()
+interface NavLinkProps {
+    active?: boolean
+    showBadge?: boolean
+    badgeCount?: number
+    children: React.ReactNode
+    onClick?: () => void
+}
 
+function NavLink({
+    active = false,
+    showBadge = false,
+    badgeCount = 1,
+    children,
+    onClick,
+}: NavLinkProps) {
     return (
-        <div
-            className={classNames(styles.container, {
-                [styles.bg]: scrolled,
+        <button
+            onClick={onClick}
+            className={classNames(styles.navLink, {
+                [styles.navLinkActive]: active,
             })}
+            aria-current={active ? 'page' : undefined}
         >
-            {pathname === '/' && <MCPBanner />}
-            <div className={styles.nav} id="nav">
-                <Link href="/">
-                    <Typography
-                        variant={Headings.H5}
-                        fontWeight="500"
-                        textTransform="uppercase"
-                        font={Font.ChakraPetch}
-                    >
-                        RollupCodes
-                    </Typography>
-                </Link>
-                <Breadcrumbs />
-                <ThemeSwitch />
-            </div>
-        </div>
+            <span>{children}</span>
+            {showBadge && (
+                <div
+                    className={styles.badge}
+                    aria-label={`${badgeCount} pending transactions`}
+                >
+                    {badgeCount}
+                </div>
+            )}
+        </button>
     )
 }
 
-export default Nav
+interface NavbarProps {
+    activeLink?: 'rollups' | 'exit-hatch'
+    onLinkClick?: (link: 'rollups' | 'exit-hatch') => void
+    pendingCount?: number
+    rollupName?: string
+    className?: string
+}
+
+export function Navbar({
+    activeLink = 'rollups',
+    onLinkClick,
+    pendingCount = 0,
+    rollupName,
+    className,
+}: NavbarProps) {
+    return (
+        <nav
+            className={classNames(styles.navbar, className)}
+            aria-label="Main navigation"
+        >
+            {/* Logo */}
+            <div className={styles.logoContainer}>
+                <Link href="/">
+                    <h1 className={styles.logo}>ROLLUPCODES</h1>
+                </Link>
+            </div>
+
+            {/* Navigation Links */}
+            <div className={styles.navLinks} role="list">
+                <div role="listitem" className={styles.breadcrumbItem}>
+                    <NavLink
+                        active={activeLink === 'rollups' && !rollupName}
+                        onClick={() => onLinkClick?.('rollups')}
+                    >
+                        Rollups
+                    </NavLink>
+                    {rollupName && (
+                        <>
+                            <ChevronRightIcon className={styles.chevron} />
+                            <span className={styles.rollupName}>{rollupName}</span>
+                        </>
+                    )}
+                </div>
+                <div role="listitem">
+                    <NavLink
+                        active={activeLink === 'exit-hatch'}
+                        showBadge={pendingCount > 0}
+                        badgeCount={pendingCount}
+                        onClick={() => onLinkClick?.('exit-hatch')}
+                    >
+                        Exit Hatch
+                    </NavLink>
+                </div>
+            </div>
+        </nav>
+    )
+}

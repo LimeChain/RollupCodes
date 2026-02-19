@@ -1,0 +1,184 @@
+@use '@styles/mixins';
+
+.exitHatchForm {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 24px;
+    width: 100%;
+    max-width: 640px;
+    margin: 0;
+    background: var(--dropdown-body-background-color);
+    border: 1px solid var(--neutral70);
+
+    @media (max-width: 768px) {
+        padding: 20px;
+        gap: 20px;
+    }
+}
+
+.formSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 8px;
+    width: 100%;
+}
+
+.label {
+    width: 100%;
+    font-family: var(--font-inter);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 146%;
+    display: flex;
+    align-items: center;
+    color: var(--neutral40);
+    margin: 0;
+}
+
+.arrow {
+    width: 24px;
+    height: 68px;
+    font-size: 24px;
+    color: var(--neutral30);
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.destinationNetwork {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px 10px 12px;
+    gap: 8px;
+    width: 100%;
+    height: 60px;
+    border: 1px solid var(--neutral50);
+    background: transparent;
+}
+
+.networkIcon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.networkName {
+    font-family: var(--font-inter);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 146%;
+    display: flex;
+    align-items: center;
+    color: var(--neutral30);
+}
+
+.addressInput {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px 16px 10px 20px;
+    gap: 16px;
+    width: 100%;
+    height: 60px;
+    border: 1px solid var(--neutral50);
+    background: transparent;
+    outline: none;
+    font-family: var(--font-inter);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 146%;
+    color: var(--neutral40);
+
+    &::placeholder {
+        color: var(--neutral40);
+    }
+
+    &:focus:not(.error) {
+        border-color: var(--neutral30);
+    }
+
+    &.error {
+        border-color: var(--error50);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.errorMessage {
+    margin-top: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--error50);
+    background: var(--error10);
+}
+
+.submitButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    gap: 4px;
+    width: 100%;
+    height: 48px;
+    background: var(--neutral);
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: var(--font-inter);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 146%;
+    color: var(--neutral100);
+
+    &:hover:not(.disabled) {
+        opacity: 0.9;
+        transition: all 0.25s ease;
+    }
+
+    &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.walletInfo {
+    width: 100%;
+    padding: 8px 0;
+    font-family: var(--font-roboto-mono);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 146%;
+    color: var(--neutral40);
+    text-align: center;
+    background: transparent;
+    border: none;
+}

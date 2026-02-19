@@ -1,7 +1,7 @@
 import { useTheme } from 'next-themes'
 import styles from './styles.module.scss'
-import MoonIcon from '/public/images/moon-icon.svg'
-import SunIcon from '/public/images/sun-icon.svg'
+import MoonIcon from '../../../public/images/moon-icon.svg'
+import SunIcon from '../../../public/images/sun-icon.svg'
 
 const ThemeSwitch = () => {
     const { theme, setTheme } = useTheme()

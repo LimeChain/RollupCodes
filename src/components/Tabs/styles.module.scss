@@ -1,0 +1,579 @@
+@use '@styles/mixins';
+
+// Screen reader only
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+// Common styles
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    background: var(--background);
+    width: 100%;
+}
+
+.containerMinHeight {
+    min-height: 428px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @include mixins.tablet {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+}
+
+// Network selector
+.networkSelector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    position: relative;
+
+    @include mixins.tablet {
+        width: 424px;
+    }
+}
+
+.networkLabel {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--neutral50);
+}
+
+.networkButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 10px 16px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    min-height: 44px;
+    transition: border-color 0.2s ease-out;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover,
+    &.open {
+        border-color: var(--text-color);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.networkButtonContent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.networkIcon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.networkName {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--text-color);
+}
+
+.chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s ease-out;
+}
+
+.chevronRotated {
+    transform: rotate(180deg);
+}
+
+.chevronPath {
+    transition: stroke 0.2s ease-out;
+    stroke: var(--neutral50);
+}
+
+.chevronPathActive {
+    stroke: var(--text-color);
+}
+
+.networkDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    background: var(--background);
+    padding: 4px;
+    z-index: 50;
+}
+
+.networkOption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    transition: background-color 0.2s ease;
+    min-height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover,
+    &.selected {
+        background: var(--row-background-color-hover);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+// Links
+.linksNav {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.externalLink {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.46;
+    transition: color 0.2s ease;
+    min-height: 44px;
+    color: var(--neutral50);
+
+    &:hover {
+        color: var(--text-color);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.externalLinkIcon {
+    width: 16px;
+    height: 16px;
+}
+
+// Steps
+.stepsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.stepItem {
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.2s ease-out;
+
+    &:hover {
+        border-color: var(--text-color);
+    }
+}
+
+.stepButton {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 16px;
+    width: 100%;
+    text-align: left;
+    min-height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.stepNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background: var(--text-color);
+}
+
+.stepNumberText {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.46;
+    color: var(--background);
+}
+
+.stepContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stepTitle {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.stepDescription {
+    overflow: hidden;
+    transition: all 0.2s ease-out;
+}
+
+.stepDescriptionText {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--neutral50);
+}
+
+.stepChevron {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.stepChevronIcon {
+    width: 16px;
+    height: 16px;
+    transition: color 0.2s ease;
+    color: var(--neutral50);
+}
+
+.stepChevronIconActive {
+    color: var(--text-color);
+}
+
+// Empty state
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex: 1;
+    padding: 56px 0;
+}
+
+.emptyIcon {
+    width: 64px;
+    height: 64px;
+    color: var(--neutral50);
+}
+
+.emptyText {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--neutral50);
+}
+
+// Transactions table
+.tableContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tableHeader {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+    width: 100%;
+
+    @include mixins.tablet {
+        display: flex;
+    }
+}
+
+.tableHeaderCol {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--neutral50);
+}
+
+.tableHeaderColFlex {
+    flex: 1;
+    min-width: 0;
+}
+
+.tableHeaderColFixed {
+    width: 128px;
+}
+
+.tableRow {
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+    padding: 0;
+
+    &:hover {
+        border-color: var(--border-color);
+    }
+}
+
+.tableRowDesktop {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+
+    @include mixins.tablet {
+        display: flex;
+    }
+}
+
+.tableRowMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+
+    @include mixins.tablet {
+        display: none;
+    }
+}
+
+.tableCell {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tableCellFlex {
+    flex: 1;
+    min-width: 0;
+}
+
+.tableCellFixed {
+    width: 128px;
+}
+
+.tableCellRight {
+    justify-content: flex-end;
+}
+
+.cellText {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--text-color);
+}
+
+.cellTextTruncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cellTextSecondary {
+    font-size: 12px;
+    line-height: 1.46;
+    color: var(--neutral50);
+}
+
+.statusLabel {
+    font-size: 13px;
+    line-height: 1.46;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.cellLabel {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--neutral50);
+}
+
+.copyButton {
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.copyIcon {
+    width: 16px;
+    height: 16px;
+    color: var(--neutral50);
+}
+
+.claimButton {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.46;
+    transition: opacity 0.2s ease;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--success50);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.statusPending {
+    font-size: 14px;
+    line-height: 1.46;
+    color: var(--neutral50);
+}
+
+.submittingStatus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    color: var(--text-color);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Pagination
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 16px;
+}
+
+.paginationButton {
+    padding: 4px 12px;
+    font-size: 14px;
+    line-height: 1.46;
+    transition: color 0.2s ease;
+    min-height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--neutral50);
+
+    &:hover:not(:disabled) {
+        color: var(--text-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.paginationNumbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.paginationNumber {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1.46;
+    transition: color 0.2s ease;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--neutral50);
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.paginationNumberActive {
+    color: var(--text-color);
+    background: var(--neutral80);
+    font-weight: 700;
+}
+
+// Mobile cell container
+.mobileCellContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}

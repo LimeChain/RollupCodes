@@ -1,10 +1,8 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
-    serverRuntimeConfig: {
-        APP_ROOT: __dirname,
-    },
+    reactStrictMode: true,
+    outputFileTracingRoot: __dirname,
     webpack(config) {
         config.module.rules.push({
             test: /\.svg$/i,
@@ -13,6 +11,14 @@ const nextConfig = {
         })
 
         return config
+    },
+    turbopack: {
+        rules: {
+            '*.svg': {
+                loaders: ['@svgr/webpack'],
+                as: '*.js',
+            },
+        },
     }
 }
 

@@ -1,5 +1,16 @@
+.fixedHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--background);
+}
+
 .content {
     display: flex;
     flex: 1;
     flex-direction: column;
+    min-height: calc(100vh - 128px);
+    padding-bottom: 80px;
 }

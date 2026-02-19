@@ -11,26 +11,36 @@
         "format:fix": "prettier --write --ignore-path .gitignore ."
     },
     "dependencies": {
+        "@arbitrum/sdk": "^4.0.0",
+        "@supabase/supabase-js": "^2.95.3",
         "classnames": "^2.5.1",
         "date-fns": "^4.1.0",
-        "eslint": "9.22.0",
-        "eslint-config-next": "15.2.1",
+        "eslint-config-next": "16.1.1",
+        "ethers": "^6.16.0",
+        "ethers5": "npm:ethers@^5.7.2",
         "gray-matter": "^4.0.3",
-        "next": "^15.2.1",
-        "next-mdx-remote": "^5.0.0",
+        "lucide-react": "^0.562.0",
+        "next": "^16.1.6",
+        "next-mdx-remote": "^6.0.0",
         "next-themes": "^0.4.5",
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-tooltip": "^5.28.0",
         "remark-gfm": "^4.0.1",
-        "typescript": "5.8.2"
+        "typescript": "5.8.2",
+        "viem": "^2.45.1"
     },
     "devDependencies": {
         "@svgr/webpack": "^8.1.0",
         "@types/node": "22.13.10",
         "@types/react": "19.0.10",
         "@types/react-dom": "19.0.4",
-        "path": "^0.12.7",
+        "@typescript-eslint/eslint-plugin": "^8.15.0",
+        "@typescript-eslint/parser": "^8.15.0",
+        "autoprefixer": "^10.4.23",
+        "eslint": "^9.15.0",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "postcss": "^8.5.6",
         "prettier": "^3.5.3",
         "sass": "^1.85.1"
     }

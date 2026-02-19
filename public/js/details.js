@@ -4,7 +4,7 @@ var sections = document?.querySelectorAll('div[data-element-type="section"]')
 var sidebar = document.getElementById('sidebar')
 var nav = document.getElementById('nav')
 var hero = document.getElementById('hero')
-var scrollToPosition = nav.offsetHeight + hero.offsetHeight
+var scrollToPosition = (nav ? nav.offsetHeight : 0) + (hero ? hero.offsetHeight : 0)
 
 function removeActiveClassFromSidebarItem() {
     var elems = document.querySelectorAll(".sidebar-item-active");

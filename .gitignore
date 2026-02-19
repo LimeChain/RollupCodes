@@ -5,3 +5,23 @@ node_modules
 yarn.lock
 package-lock.json
 next-env.d.ts
+
+# Environment files (contain secrets)
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+
+# Build artifacts
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Lint cache
+.eslintcache
+
+# Logs
+*.log

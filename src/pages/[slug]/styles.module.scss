@@ -8,7 +8,7 @@
     padding: 40px 0;
     border-bottom: 1px solid var(--border-color);
     position: fixed;
-    top: 64px;
+    top: var(--header-height, 128px);
     z-index: 3;
     width: 100%;
     max-width: 1328px;
@@ -42,7 +42,7 @@
         margin-top: 32px;
         width: 270px;
         position: fixed;
-        top: 192px;
+        top: calc(var(--header-height, 128px) + 128px);
     }
 }
 

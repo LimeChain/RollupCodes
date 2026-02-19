@@ -1,34 +1,106 @@
 @use '@styles/mixins';
 
-.nav {
+.navbar {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
-    padding: 0 16px;
-    max-width: 1920px;
+    backdrop-filter: blur(12px);
     width: 100%;
-    align-self: center;
+    padding: 12px 16px;
+
     @include mixins.tablet {
-        padding: 0 64px;
+        padding: 20px 56px;
     }
 }
 
-.container {
-    position: fixed;
-    top: 0;
-    z-index: 2;
-    width: 100%;
-    left: 0;
+.logoContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: background .3s ease;
+    align-items: center;
 }
 
-.bg {
-    transition: background .3s ease;
-    backdrop-filter: blur(2px);
-    background: var(--nav-bg);
+.logo {
+    font-family: var(--font-chakra-petch);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.58;
+    letter-spacing: 0.9px;
+    color: var(--text-color);
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: color 0.2s ease;
+    min-width: 44px;
+    min-height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--neutral50);
+
+    &:hover {
+        color: var(--text-color);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--text-color);
+        outline-offset: 2px;
+    }
+}
+
+.navLinkActive {
+    background: linear-gradient(45deg, #FFEB36 0%, #6AFF36 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.breadcrumbItem {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.chevron {
+    width: 9px;
+    height: 13px;
+    margin: 0 8px;
+    fill: url(#chevronGradient);
+
+    path {
+        fill: #6AFF36;
+    }
+}
+
+.rollupName {
+    font-weight: 700;
+    font-size: 14px;
+    background: linear-gradient(45deg, #FFEB36 0%, #6AFF36 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--neutral100);
+    background: linear-gradient(5deg, #FFEB36 0%, #6AFF36 100%);
 }
