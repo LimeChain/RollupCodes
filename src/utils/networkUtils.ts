@@ -12,37 +12,69 @@ export interface NetworkConfig {
     }
 }
 
+// Client-side RPC URLs read from NEXT_PUBLIC_ env vars.
+// IMPORTANT: These must be public endpoints — never put private API keys
+// in NEXT_PUBLIC_ variables as they are embedded in the browser bundle.
 export const NETWORK_CONFIGS: Record<number, NetworkConfig> = {
-    // Mainnet
+    // L1
     1: {
         chainId: 1,
         chainName: 'Ethereum Mainnet',
-        rpcUrl: 'https://eth.llamarpc.com',
+        rpcUrl: process.env.NEXT_PUBLIC_ETHEREUM_RPC || 'https://eth.llamarpc.com',
         blockExplorerUrl: 'https://etherscan.io',
         nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
     },
+    // L2 — OP Stack
     10: {
         chainId: 10,
-        chainName: 'Optimism',
-        rpcUrl: 'https://mainnet.optimism.io',
+        chainName: 'OP Mainnet',
+        rpcUrl: process.env.NEXT_PUBLIC_OPTIMISM_RPC || 'https://mainnet.optimism.io',
         blockExplorerUrl: 'https://optimistic.etherscan.io',
         nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
     },
-    // Testnet
-    11155111: {
-        chainId: 11155111,
-        chainName: 'Sepolia',
-        rpcUrl: 'https://rpc.sepolia.org',
-        blockExplorerUrl: 'https://sepolia.etherscan.io',
-        nativeCurrency: { name: 'Sepolia Ether', symbol: 'ETH', decimals: 18 }
+    8453: {
+        chainId: 8453,
+        chainName: 'Base',
+        rpcUrl: process.env.NEXT_PUBLIC_BASE_RPC || 'https://mainnet.base.org',
+        blockExplorerUrl: 'https://basescan.org',
+        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
     },
-    11155420: {
-        chainId: 11155420,
-        chainName: 'Optimism Sepolia',
-        rpcUrl: 'https://sepolia.optimism.io',
-        blockExplorerUrl: 'https://sepolia-optimism.etherscan.io',
-        nativeCurrency: { name: 'Sepolia Ether', symbol: 'ETH', decimals: 18 }
-    }
+    81457: {
+        chainId: 81457,
+        chainName: 'Blast',
+        rpcUrl: process.env.NEXT_PUBLIC_BLAST_RPC || 'https://rpc.blast.io',
+        blockExplorerUrl: 'https://blastscan.io',
+        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
+    },
+    57073: {
+        chainId: 57073,
+        chainName: 'Ink',
+        rpcUrl: process.env.NEXT_PUBLIC_INK_RPC || 'https://rpc-gel.inkonchain.com',
+        blockExplorerUrl: 'https://explorer.inkonchain.com',
+        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
+    },
+    1868: {
+        chainId: 1868,
+        chainName: 'Soneium',
+        rpcUrl: process.env.NEXT_PUBLIC_SONEIUM_RPC || 'https://rpc.soneium.org',
+        blockExplorerUrl: 'https://soneium.blockscout.com',
+        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
+    },
+    480: {
+        chainId: 480,
+        chainName: 'World Chain',
+        rpcUrl: process.env.NEXT_PUBLIC_WORLDCHAIN_RPC || 'https://worldchain-mainnet.g.alchemy.com/public',
+        blockExplorerUrl: 'https://worldchain-mainnet.explorer.alchemy.com',
+        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
+    },
+    // L2 — Arbitrum
+    42161: {
+        chainId: 42161,
+        chainName: 'Arbitrum One',
+        rpcUrl: process.env.NEXT_PUBLIC_ARBITRUM_RPC || 'https://arb1.arbitrum.io/rpc',
+        blockExplorerUrl: 'https://arbiscan.io',
+        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
+    },
 }
 
 /**

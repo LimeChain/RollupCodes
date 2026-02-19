@@ -27,11 +27,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const result = await generateOptimismProof(txHash, l2ChainId, l1ChainId)
         return res.status(200).json(result)
     } catch (error: unknown) {
-        const isDev = process.env.NODE_ENV !== 'production'
+        console.error('[api/withdrawal/generate-proof]', error)
         const err = error as Error & { statusCode?: number }
-        const statusCode = err.statusCode ? 400 : 500
-        return res.status(statusCode).json({
-            error: isDev ? err.message : 'Failed to generate proof',
+        return res.status(err.statusCode ? 400 : 500).json({
+            error: 'Failed to generate proof',
             ...(err.statusCode && { statusCode: err.statusCode }),
         })
     }

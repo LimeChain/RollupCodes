@@ -28,10 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         return res.status(200).json(result)
     } catch (error: unknown) {
-        const isDev = process.env.NODE_ENV !== 'production'
-        const err = error as Error
+        console.error('[api/arbitrum/withdrawal/status]', error)
         return res.status(500).json({
-            error: isDev ? err.message : 'Failed to check withdrawal status'
+            error: 'Failed to check withdrawal status'
         })
     }
 }

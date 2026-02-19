@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { formatEther } from 'ethers'
+import { NETWORK_CONFIGS } from '@utils/networkUtils'
 
 export interface WalletState {
     isConnected: boolean
@@ -275,16 +276,47 @@ export function useWallet(): UseWalletReturn {
         const provider = activeProvider || getMetaMaskProvider()
         if (!provider) return false
 
+        const chainIdHex = `0x${chainId.toString(16)}`
+
         try {
             await provider.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: `0x${chainId.toString(16)}` }],
+                params: [{ chainId: chainIdHex }],
             })
+        } catch (error: any) {
+            // 4902: chain not added to wallet yet
+            if (error.code === 4902) {
+                const config = NETWORK_CONFIGS[chainId]
+                if (!config) {
+                    console.error('No config to add chain:', chainId)
+                    return false
+                }
+                try {
+                    await provider.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: chainIdHex,
+                            chainName: config.chainName,
+                            rpcUrls: [config.rpcUrl],
+                            blockExplorerUrls: [config.blockExplorerUrl],
+                            nativeCurrency: config.nativeCurrency,
+                        }],
+                    })
+                } catch (addError) {
+                    console.error('Error adding network:', addError)
+                    return false
+                }
+            } else {
+                console.error('Error switching network:', error)
+                return false
+            }
+        }
 
-            // Wait briefly for provider to fully switch RPC endpoints
-            await new Promise(resolve => setTimeout(resolve, 500))
+        // Wait briefly for provider to fully switch RPC endpoints
+        await new Promise(resolve => setTimeout(resolve, 500))
 
-            // Re-fetch balance on the new chain
+        // Re-fetch balance on the new chain
+        try {
             const accounts = await provider.request({ method: 'eth_accounts' })
             if (accounts && accounts.length > 0) {
                 const balance = await getBalance(accounts[0], provider)
@@ -294,12 +326,11 @@ export function useWallet(): UseWalletReturn {
                     balance,
                 }))
             }
-
-            return true
-        } catch (error: any) {
-            console.error('Error switching network:', error)
-            return false
+        } catch (balanceError) {
+            console.error('Error refreshing balance after switch:', balanceError)
         }
+
+        return true
     }, [activeProvider, getBalance])
 
     // Listen for account and chain changes

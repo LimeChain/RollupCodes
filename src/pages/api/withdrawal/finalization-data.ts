@@ -23,10 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const result = await getOptimismFinalizationData(txHash, l2ChainId, l1ChainId)
         return res.status(200).json(result)
     } catch (error: unknown) {
-        const isDev = process.env.NODE_ENV !== 'production'
-        const err = error as Error
+        console.error('[api/withdrawal/finalization-data]', error)
         return res.status(500).json({
-            error: isDev ? err.message : 'Failed to get finalization data'
+            error: 'Failed to get finalization data'
         })
     }
 }

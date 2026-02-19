@@ -31,9 +31,9 @@ function createL2Provider(l2ChainId: number) {
 
 function createL1Provider(l1ChainId: number) {
     const rpcUrl = l1ChainId === 1
-        ? process.env.ARBITRUM_L1_RPC || 'https://eth.llamarpc.com'
+        ? process.env.MAINNET_L1_RPC || 'https://eth.llamarpc.com'
         : l1ChainId === 11155111
-        ? process.env.ARBITRUM_SEPOLIA_L1_RPC || 'https://ethereum-sepolia-rpc.publicnode.com'
+        ? process.env.SEPOLIA_L1_RPC || 'https://ethereum-sepolia-rpc.publicnode.com'
         : null
 
     if (!rpcUrl) {

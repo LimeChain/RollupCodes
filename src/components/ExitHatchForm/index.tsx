@@ -279,7 +279,19 @@ const ExitHatchForm = ({ currentNetwork, allNetworks, onNetworkChange, onWalletC
         } catch (error: any) {
             console.error('Transaction error:', error)
             setIsConfirming(false)
-            addToast(error.message || 'Transaction failed', 'error')
+
+            let message = 'Transaction failed'
+            if (error.code === 'ACTION_REJECTED') {
+                message = 'Transaction rejected by user'
+            } else if (error.error?.code === -32002) {
+                message = 'RPC rate limited. Please wait a moment and try again.'
+            } else if (error.shortMessage) {
+                message = error.shortMessage
+            } else if (error.message && error.message.length < 200) {
+                message = error.message
+            }
+
+            addToast(message, 'error')
         }
     }
 

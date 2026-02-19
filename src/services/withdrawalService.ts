@@ -146,6 +146,10 @@ export async function initiateWithdrawal(
             errorMessage = 'Transaction rejected by user'
         } else if (error.code === 'INSUFFICIENT_FUNDS') {
             errorMessage = 'Insufficient funds for withdrawal'
+        } else if (error.code === 'UNKNOWN_ERROR' && error.error?.code === -32002) {
+            errorMessage = 'RPC rate limited. Please wait a moment and try again.'
+        } else if (error.code === 'UNKNOWN_ERROR' || error.code === 'SERVER_ERROR') {
+            errorMessage = 'Network error. Please check your wallet RPC settings and try again.'
         } else if (error.message) {
             errorMessage = error.message
         }

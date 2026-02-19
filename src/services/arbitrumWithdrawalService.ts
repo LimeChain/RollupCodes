@@ -90,7 +90,7 @@ export async function initiateArbitrumWithdrawal(
         // Try to estimate gas first to catch errors early
         try {
             console.log('Estimating gas for Arbitrum withdrawal...')
-            const gasEstimate = await arbSys.withdrawEth.estimateGas({ value: amountWei })
+            const gasEstimate = await arbSys.withdrawEth.estimateGas(params.toAddress, { value: amountWei })
             console.log('Gas estimate:', gasEstimate.toString())
         } catch (estimateError: any) {
             console.error('Gas estimation failed:', estimateError)
@@ -100,11 +100,19 @@ export async function initiateArbitrumWithdrawal(
             }
         }
 
+        // Get fee data and add 1% buffer for Arbitrum base fee fluctuations
+        const feeData = await provider.getFeeData()
+        const maxFeePerGas = feeData.maxFeePerGas
+            ? (feeData.maxFeePerGas * BigInt(101)) / BigInt(100)
+            : undefined
+
         // Execute the withdrawal
-        // For Arbitrum, we use withdrawEth() which sends ETH to the caller's address on L1
-        // The destination address is implicitly the sender's address
+        // For Arbitrum, we use withdrawEth(destination) which sends ETH to the destination on L1
         console.log('Calling ArbSys.withdrawEth()...')
-        const tx = await arbSys.withdrawEth({ value: amountWei })
+        const tx = await arbSys.withdrawEth(params.toAddress, {
+            value: amountWei,
+            ...(maxFeePerGas && { maxFeePerGas }),
+        })
 
         console.log('Transaction sent:', tx.hash)
         console.log('Waiting for confirmation...')
@@ -253,7 +261,7 @@ export async function estimateArbitrumWithdrawalGas(
         )
 
         const amountWei = parseEther(params.amount)
-        const gasEstimate = await arbSys.withdrawEth.estimateGas({ value: amountWei })
+        const gasEstimate = await arbSys.withdrawEth.estimateGas(params.toAddress, { value: amountWei })
 
         return {
             success: true,

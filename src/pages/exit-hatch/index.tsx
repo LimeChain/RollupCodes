@@ -11,13 +11,14 @@ import { PendingTransactionsTab } from '@components/Tabs/PendingTransactionsTab'
 import { HowItWorksTab } from '@components/Tabs/HowItWorksTab'
 import { useWallet } from '@hooks/useWallet'
 import { initiateWithdrawal, proveWithdrawal, finalizeWithdrawal } from '@services/withdrawalService'
+import { initiateArbitrumWithdrawal, executeOutboxTransaction } from '@services/arbitrumWithdrawalService'
 import {
     saveWithdrawal,
     getAllWithdrawals,
     generateWithdrawalId,
     updateWithdrawalStatus
 } from '@services/withdrawalStorage'
-import { getWithdrawalStatus } from '@services/apiClient'
+import { getWithdrawalStatus, getArbitrumWithdrawalStatus, generateArbitrumProof, checkArbitrumChallengePeriod } from '@services/apiClient'
 import { checkStateRootPublished, getWithdrawalMessage } from '@services/optimismApi'
 import { StoredWithdrawal } from '../../types/withdrawal'
 import { ExitHatchNetwork, getActiveNetworks } from '@data/networks'
@@ -955,13 +956,19 @@ export function ExitHatchPage() {
                 }
             }
 
-            // Call the real contract to initiate withdrawal
+            // Call the correct contract based on rollup type
             // This will prompt MetaMask for transaction signature
-            const result = await initiateWithdrawal({
-                amount: pendingTxDetails.amount,
-                toAddress: pendingTxDetails.toAddress,
-                l2BridgeAddress: network.l2BridgeAddress || network.arbSysAddress,
-            })
+            const result = network.rollupType === 'arbitrum'
+                ? await initiateArbitrumWithdrawal({
+                    amount: pendingTxDetails.amount,
+                    toAddress: pendingTxDetails.toAddress,
+                    arbSysAddress: network.arbSysAddress!,
+                })
+                : await initiateWithdrawal({
+                    amount: pendingTxDetails.amount,
+                    toAddress: pendingTxDetails.toAddress,
+                    l2BridgeAddress: network.l2BridgeAddress!,
+                })
 
             if (!result.success) {
                 throw new Error(result.error || 'Withdrawal failed')
@@ -1046,7 +1053,15 @@ export function ExitHatchPage() {
             return
         }
 
-        if (!withdrawal.l1PortalAddress) {
+        const isArbitrum = withdrawal.rollupType === 'arbitrum'
+
+        // Validate required addresses per rollup type
+        if (isArbitrum && !withdrawal.outboxAddress) {
+            setWalletErrorMessage('Outbox address not found for this withdrawal')
+            setShowWalletErrorToast(true)
+            return
+        }
+        if (!isArbitrum && !withdrawal.l1PortalAddress) {
             setWalletErrorMessage('L1 portal address not found for this withdrawal')
             setShowWalletErrorToast(true)
             return
@@ -1059,74 +1074,144 @@ export function ExitHatchPage() {
             const l1ChainId = withdrawal.destinationChainId || 1
             const l2ChainId = withdrawal.sourceChainId
 
-            // Check withdrawal status from the server
-            const statusResult = await getWithdrawalStatus(
-                withdrawal.transactionHash,
-                l2ChainId,
-                l1ChainId
-            )
-
-            if (!statusResult.success || !statusResult.data) {
-                throw new Error(statusResult.error || 'Failed to check withdrawal status')
-            }
-
-            const status = statusResult.data
-
-            if (status.ready) {
-                // Ready to prove — submit proof on L1
-                const proveResult = await proveWithdrawal(
+            if (isArbitrum) {
+                // Arbitrum flow: check challenge period → generate proof → execute outbox
+                const statusResult = await getArbitrumWithdrawalStatus(
                     withdrawal.transactionHash,
-                    withdrawal.l1PortalAddress,
                     l2ChainId,
                     l1ChainId
                 )
 
-                if (!proveResult.success) {
-                    throw new Error(proveResult.error || 'Failed to prove withdrawal')
+                if (!statusResult.success || !statusResult.data) {
+                    throw new Error(statusResult.error || 'Failed to check withdrawal status')
                 }
 
-                updateWithdrawalStatus(withdrawal.id, 'proven', {
-                    stateRootPublishedAt: Date.now(),
-                    provenAt: Date.now(),
-                    proveTransactionHash: proveResult.transactionHash,
-                    currentStep: 4
-                })
-                setShowClaimToast(true)
-            } else if (status.readyToFinalize) {
-                // Ready to finalize — call finalize on L1
-                const finalizeResult = await finalizeWithdrawal(
-                    withdrawal.transactionHash,
-                    withdrawal.l1PortalAddress,
-                    l2ChainId,
-                    l1ChainId
-                )
+                const status = statusResult.data
 
-                if (!finalizeResult.success) {
-                    throw new Error(finalizeResult.error || 'Failed to finalize withdrawal')
-                }
+                if (status.ready) {
+                    // Challenge period passed (CONFIRMED) — generate proof and execute
+                    const proofResult = await generateArbitrumProof(
+                        withdrawal.transactionHash,
+                        l2ChainId,
+                        l1ChainId
+                    )
 
-                updateWithdrawalStatus(withdrawal.id, 'finalized', {
-                    finalizedAt: Date.now(),
-                    finalizeTransactionHash: finalizeResult.transactionHash,
-                    currentStep: 5
-                })
-                setShowClaimToast(true)
-            } else {
-                // Not ready yet — update local status and show info message
-                if (status.status === 'STATE_ROOT_NOT_PUBLISHED') {
-                    updateWithdrawalStatus(withdrawal.id, 'waiting_state_root', {
-                        currentStep: 2
+                    if (!proofResult.success || !proofResult.data) {
+                        throw new Error(proofResult.error || 'Failed to generate outbox proof')
+                    }
+
+                    const proof = proofResult.data
+                    const execResult = await executeOutboxTransaction({
+                        proof: proof.proof,
+                        index: Number(proof.position),
+                        l2Sender: proof.caller,
+                        to: proof.destination,
+                        l2Block: Number(proof.arbBlockNum),
+                        l1Block: Number(proof.ethBlockNum),
+                        l2Timestamp: Number(proof.timestamp),
+                        value: proof.callvalue,
+                        data: proof.data,
+                        outboxAddress: withdrawal.outboxAddress!,
                     })
-                    setInfoToastMessage('Waiting for the state root to be published to L1. This usually takes about 1 hour.')
-                } else if (status.status === 'IN_CHALLENGE_PERIOD') {
-                    updateWithdrawalStatus(withdrawal.id, 'waiting_challenge', {
+
+                    if (!execResult.success) {
+                        throw new Error(execResult.error || 'Failed to execute outbox transaction')
+                    }
+
+                    updateWithdrawalStatus(withdrawal.id, 'finalized', {
+                        finalizedAt: Date.now(),
+                        finalizeTransactionHash: execResult.transactionHash,
+                        currentStep: 5
+                    })
+                    setShowClaimToast(true)
+                } else {
+                    // Not ready yet
+                    const challengeResult = await checkArbitrumChallengePeriod(
+                        withdrawal.transactionHash,
+                        l2ChainId,
+                        l1ChainId
+                    )
+
+                    if (challengeResult.success && challengeResult.data && !challengeResult.data.challengePassed) {
+                        updateWithdrawalStatus(withdrawal.id, 'waiting_challenge', {
+                            currentStep: 3
+                        })
+                        setInfoToastMessage(`Challenge period in progress. ${challengeResult.data.timeRemaining || 'Please wait for it to complete.'}`)
+                    } else {
+                        setInfoToastMessage(`Withdrawal status: ${status.status}. Not ready for next step yet.`)
+                    }
+                    setShowInfoToast(true)
+                }
+            } else {
+                // Optimism flow: check status → prove → finalize
+                const statusResult = await getWithdrawalStatus(
+                    withdrawal.transactionHash,
+                    l2ChainId,
+                    l1ChainId
+                )
+
+                if (!statusResult.success || !statusResult.data) {
+                    throw new Error(statusResult.error || 'Failed to check withdrawal status')
+                }
+
+                const status = statusResult.data
+
+                if (status.ready) {
+                    // Ready to prove — submit proof on L1
+                    const proveResult = await proveWithdrawal(
+                        withdrawal.transactionHash,
+                        withdrawal.l1PortalAddress!,
+                        l2ChainId,
+                        l1ChainId
+                    )
+
+                    if (!proveResult.success) {
+                        throw new Error(proveResult.error || 'Failed to prove withdrawal')
+                    }
+
+                    updateWithdrawalStatus(withdrawal.id, 'proven', {
+                        stateRootPublishedAt: Date.now(),
+                        provenAt: Date.now(),
+                        proveTransactionHash: proveResult.transactionHash,
                         currentStep: 4
                     })
-                    setInfoToastMessage('Challenge period in progress. Please wait for it to complete before finalizing.')
+                    setShowClaimToast(true)
+                } else if (status.readyToFinalize) {
+                    // Ready to finalize — call finalize on L1
+                    const finalizeResult = await finalizeWithdrawal(
+                        withdrawal.transactionHash,
+                        withdrawal.l1PortalAddress!,
+                        l2ChainId,
+                        l1ChainId
+                    )
+
+                    if (!finalizeResult.success) {
+                        throw new Error(finalizeResult.error || 'Failed to finalize withdrawal')
+                    }
+
+                    updateWithdrawalStatus(withdrawal.id, 'finalized', {
+                        finalizedAt: Date.now(),
+                        finalizeTransactionHash: finalizeResult.transactionHash,
+                        currentStep: 5
+                    })
+                    setShowClaimToast(true)
                 } else {
-                    setInfoToastMessage(`Withdrawal status: ${status.status}. Not ready for next step yet.`)
+                    // Not ready yet — update local status and show info message
+                    if (status.status === 'STATE_ROOT_NOT_PUBLISHED') {
+                        updateWithdrawalStatus(withdrawal.id, 'waiting_state_root', {
+                            currentStep: 2
+                        })
+                        setInfoToastMessage('Waiting for the state root to be published to L1. This usually takes about 1 hour.')
+                    } else if (status.status === 'IN_CHALLENGE_PERIOD') {
+                        updateWithdrawalStatus(withdrawal.id, 'waiting_challenge', {
+                            currentStep: 4
+                        })
+                        setInfoToastMessage('Challenge period in progress. Please wait for it to complete before finalizing.')
+                    } else {
+                        setInfoToastMessage(`Withdrawal status: ${status.status}. Not ready for next step yet.`)
+                    }
+                    setShowInfoToast(true)
                 }
-                setShowInfoToast(true)
             }
 
             // Reload withdrawals to reflect new status

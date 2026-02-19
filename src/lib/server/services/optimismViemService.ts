@@ -113,7 +113,7 @@ function getL1RpcUrl(chainId: number): string {
 
 function getL2RpcUrl(chainId: number): string {
     const urls: Record<number, string> = {
-        10: process.env.MAINNET_L2_RPC || 'https://mainnet.optimism.io',
+        10: process.env.OPTIMISM_L2_RPC || 'https://mainnet.optimism.io',
         11155420: process.env.SEPOLIA_L2_RPC || 'https://optimism-sepolia-rpc.publicnode.com',
         8453: process.env.BASE_L2_RPC || 'https://mainnet.base.org',
         81457: process.env.BLAST_L2_RPC || 'https://rpc.blast.io',
